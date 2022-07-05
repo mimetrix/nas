@@ -8,11 +8,11 @@ import (
 )
 
 type Status5GSM struct {
-	nasType.ExtendedProtocolDiscriminator
-	nasType.PDUSessionID
-	nasType.PTI
-	nasType.STATUSMessageIdentity5GSM
-	nasType.Cause5GSM
+	nasType.ExtendedProtocolDiscriminator `json:"ExtendedProtocolDiscriminator,omitempty"`
+	nasType.PDUSessionID                  `json:"PDUSessionID,omitempty"`
+	nasType.PTI                           `json:"PTI,omitempty"`
+	nasType.STATUSMessageIdentity5GSM     `json:"STATUSMessageIdentity5GSM,omitempty"`
+	nasType.Cause5GSM                     `json:"Cause5GSM,omitempty"`
 }
 
 func NewStatus5GSM(iei uint8) (status5GSM *Status5GSM) {

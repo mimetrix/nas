@@ -8,34 +8,34 @@ import (
 )
 
 type RegistrationAccept struct {
-	nasType.ExtendedProtocolDiscriminator
-	nasType.SpareHalfOctetAndSecurityHeaderType
-	nasType.RegistrationAcceptMessageIdentity
-	nasType.RegistrationResult5GS
-	*nasType.GUTI5G
-	*nasType.EquivalentPlmns
-	*nasType.TAIList
-	*nasType.AllowedNSSAI
-	*nasType.RejectedNSSAI
-	*nasType.ConfiguredNSSAI
-	*nasType.NetworkFeatureSupport5GS
-	*nasType.PDUSessionStatus
-	*nasType.PDUSessionReactivationResult
-	*nasType.PDUSessionReactivationResultErrorCause
-	*nasType.LADNInformation
-	*nasType.MICOIndication
-	*nasType.NetworkSlicingIndication
-	*nasType.ServiceAreaList
-	*nasType.T3512Value
-	*nasType.Non3GppDeregistrationTimerValue
-	*nasType.T3502Value
-	*nasType.EmergencyNumberList
-	*nasType.ExtendedEmergencyNumberList
-	*nasType.SORTransparentContainer
-	*nasType.EAPMessage
-	*nasType.NSSAIInclusionMode
-	*nasType.OperatordefinedAccessCategoryDefinitions
-	*nasType.NegotiatedDRXParameters
+	nasType.ExtendedProtocolDiscriminator             `json:"ExtendedProtocolDiscriminator,omitempty"`
+	nasType.SpareHalfOctetAndSecurityHeaderType       `json:"SpareHalfOctetAndSecurityHeaderType,omitempty"`
+	nasType.RegistrationAcceptMessageIdentity         `json:"RegistrationAcceptMessageIdentity,omitempty"`
+	nasType.RegistrationResult5GS                     `json:"RegistrationResult5GS,omitempty"`
+	*nasType.GUTI5G                                   `json:"GUTI5G,omitempty"`
+	*nasType.EquivalentPlmns                          `json:"EquivalentPlmns,omitempty"`
+	*nasType.TAIList                                  `json:"TAIList,omitempty"`
+	*nasType.AllowedNSSAI                             `json:"AllowedNSSAI,omitempty"`
+	*nasType.RejectedNSSAI                            `json:"RejectedNSSAI,omitempty"`
+	*nasType.ConfiguredNSSAI                          `json:"ConfiguredNSSAI,omitempty"`
+	*nasType.NetworkFeatureSupport5GS                 `json:"NetworkFeatureSupport5GS,omitempty"`
+	*nasType.PDUSessionStatus                         `json:"PDUSessionStatus,omitempty"`
+	*nasType.PDUSessionReactivationResult             `json:"PDUSessionReactivationResult,omitempty"`
+	*nasType.PDUSessionReactivationResultErrorCause   `json:"PDUSessionReactivationResultErrorCause,omitempty"`
+	*nasType.LADNInformation                          `json:"LADNInformation,omitempty"`
+	*nasType.MICOIndication                           `json:"MICOIndication,omitempty"`
+	*nasType.NetworkSlicingIndication                 `json:"NetworkSlicingIndication,omitempty"`
+	*nasType.ServiceAreaList                          `json:"ServiceAreaList,omitempty"`
+	*nasType.T3512Value                               `json:"T3512Value,omitempty"`
+	*nasType.Non3GppDeregistrationTimerValue          `json:"Non3GppDeregistrationTimerValue,omitempty"`
+	*nasType.T3502Value                               `json:"T3502Value,omitempty"`
+	*nasType.EmergencyNumberList                      `json:"EmergencyNumberList,omitempty"`
+	*nasType.ExtendedEmergencyNumberList              `json:"ExtendedEmergencyNumberList,omitempty"`
+	*nasType.SORTransparentContainer                  `json:"SORTransparentContainer,omitempty"`
+	*nasType.EAPMessage                               `json:"EAPMessage,omitempty"`
+	*nasType.NSSAIInclusionMode                       `json:"NSSAIInclusionMode,omitempty"`
+	*nasType.OperatordefinedAccessCategoryDefinitions `json:"OperatordefinedAccessCategoryDefinitions,omitempty"`
+	*nasType.NegotiatedDRXParameters                  `json:"NegotiatedDRXParameters,omitempty"`
 }
 
 func NewRegistrationAccept(iei uint8) (registrationAccept *RegistrationAccept) {

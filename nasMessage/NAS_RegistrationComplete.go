@@ -8,10 +8,10 @@ import (
 )
 
 type RegistrationComplete struct {
-	nasType.ExtendedProtocolDiscriminator
-	nasType.SpareHalfOctetAndSecurityHeaderType
-	nasType.RegistrationCompleteMessageIdentity
-	*nasType.SORTransparentContainer
+	nasType.ExtendedProtocolDiscriminator       `json:"ExtendedProtocolDiscriminator,omitempty"`
+	nasType.SpareHalfOctetAndSecurityHeaderType `json:"SpareHalfOctetAndSecurityHeaderType,omitempty"`
+	nasType.RegistrationCompleteMessageIdentity `json:"RegistrationCompleteMessageIdentity,omitempty"`
+	*nasType.SORTransparentContainer            `json:"SORTransparentContainer,omitempty"`
 }
 
 func NewRegistrationComplete(iei uint8) (registrationComplete *RegistrationComplete) {

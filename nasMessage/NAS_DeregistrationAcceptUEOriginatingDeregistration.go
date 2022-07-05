@@ -8,9 +8,9 @@ import (
 )
 
 type DeregistrationAcceptUEOriginatingDeregistration struct {
-	nasType.ExtendedProtocolDiscriminator
-	nasType.SpareHalfOctetAndSecurityHeaderType
-	nasType.DeregistrationAcceptMessageIdentity
+	nasType.ExtendedProtocolDiscriminator       `json:"ExtendedProtocolDiscriminator,omitempty"`
+	nasType.SpareHalfOctetAndSecurityHeaderType `json:"SpareHalfOctetAndSecurityHeaderType,omitempty"`
+	nasType.DeregistrationAcceptMessageIdentity `json:"DeregistrationAcceptMessageIdentity,omitempty"`
 }
 
 func NewDeregistrationAcceptUEOriginatingDeregistration(iei uint8) (deregistrationAcceptUEOriginatingDeregistration *DeregistrationAcceptUEOriginatingDeregistration) {

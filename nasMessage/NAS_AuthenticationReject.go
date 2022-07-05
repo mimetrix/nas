@@ -8,10 +8,10 @@ import (
 )
 
 type AuthenticationReject struct {
-	nasType.ExtendedProtocolDiscriminator
-	nasType.SpareHalfOctetAndSecurityHeaderType
-	nasType.AuthenticationRejectMessageIdentity
-	*nasType.EAPMessage
+	nasType.ExtendedProtocolDiscriminator       `json:"ExtendedProtocolDiscriminator,omitempty"`
+	nasType.SpareHalfOctetAndSecurityHeaderType `json:"SpareHalfOctetAndSecurityHeaderType,omitempty"`
+	nasType.AuthenticationRejectMessageIdentity `json:"AuthenticationRejectMessageIdentity,omitempty"`
+	*nasType.EAPMessage                         `json:"EAPMessage,omitempty"`
 }
 
 func NewAuthenticationReject(iei uint8) (authenticationReject *AuthenticationReject) {

@@ -8,15 +8,15 @@ import (
 )
 
 type ServiceRequest struct {
-	nasType.ExtendedProtocolDiscriminator
-	nasType.SpareHalfOctetAndSecurityHeaderType
-	nasType.ServiceRequestMessageIdentity
-	nasType.ServiceTypeAndNgksi
-	nasType.TMSI5GS
-	*nasType.UplinkDataStatus
-	*nasType.PDUSessionStatus
-	*nasType.AllowedPDUSessionStatus
-	*nasType.NASMessageContainer
+	nasType.ExtendedProtocolDiscriminator       `json:"ExtendedProtocolDiscriminator,omitempty"`
+	nasType.SpareHalfOctetAndSecurityHeaderType `json:"SpareHalfOctetAndSecurityHeaderType,omitempty"`
+	nasType.ServiceRequestMessageIdentity       `json:"ServiceRequestMessageIdentity,omitempty"`
+	nasType.ServiceTypeAndNgksi                 `json:"ServiceTypeAndNgksi,omitempty"`
+	nasType.TMSI5GS                             `json:"TMSI5GS,omitempty"`
+	*nasType.UplinkDataStatus                   `json:"UplinkDataStatus,omitempty"`
+	*nasType.PDUSessionStatus                   `json:"PDUSessionStatus,omitempty"`
+	*nasType.AllowedPDUSessionStatus            `json:"AllowedPDUSessionStatus,omitempty"`
+	*nasType.NASMessageContainer                `json:"NASMessageContainer,omitempty"`
 }
 
 func NewServiceRequest(iei uint8) (serviceRequest *ServiceRequest) {

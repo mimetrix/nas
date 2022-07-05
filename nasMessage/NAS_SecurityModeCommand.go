@@ -8,18 +8,18 @@ import (
 )
 
 type SecurityModeCommand struct {
-	nasType.ExtendedProtocolDiscriminator
-	nasType.SpareHalfOctetAndSecurityHeaderType
-	nasType.SecurityModeCommandMessageIdentity
-	nasType.SelectedNASSecurityAlgorithms
-	nasType.SpareHalfOctetAndNgksi
-	nasType.ReplayedUESecurityCapabilities
-	*nasType.IMEISVRequest
-	*nasType.SelectedEPSNASSecurityAlgorithms
-	*nasType.Additional5GSecurityInformation
-	*nasType.EAPMessage
-	*nasType.ABBA
-	*nasType.ReplayedS1UESecurityCapabilities
+	nasType.ExtendedProtocolDiscriminator       `json:"ExtendedProtocolDiscriminator,omitempty"`
+	nasType.SpareHalfOctetAndSecurityHeaderType `json:"SpareHalfOctetAndSecurityHeaderType,omitempty"`
+	nasType.SecurityModeCommandMessageIdentity  `json:"SecurityModeCommandMessageIdentity,omitempty"`
+	nasType.SelectedNASSecurityAlgorithms       `json:"SelectedNASSecurityAlgorithms,omitempty"`
+	nasType.SpareHalfOctetAndNgksi              `json:"SpareHalfOctetAndNgksi,omitempty"`
+	nasType.ReplayedUESecurityCapabilities      `json:"ReplayedUESecurityCapabilities,omitempty"`
+	*nasType.IMEISVRequest                      `json:"IMEISVRequest,omitempty"`
+	*nasType.SelectedEPSNASSecurityAlgorithms   `json:"SelectedEPSNASSecurityAlgorithms,omitempty"`
+	*nasType.Additional5GSecurityInformation    `json:"Additional5GSecurityInformation,omitempty"`
+	*nasType.EAPMessage                         `json:"EAPMessage,omitempty"`
+	*nasType.ABBA                               `json:"ABBA,omitempty"`
+	*nasType.ReplayedS1UESecurityCapabilities   `json:"ReplayedS1UESecurityCapabilities,omitempty"`
 }
 
 func NewSecurityModeCommand(iei uint8) (securityModeCommand *SecurityModeCommand) {

@@ -8,10 +8,10 @@ import (
 )
 
 type IdentityResponse struct {
-	nasType.ExtendedProtocolDiscriminator
-	nasType.SpareHalfOctetAndSecurityHeaderType
-	nasType.IdentityResponseMessageIdentity
-	nasType.MobileIdentity
+	nasType.ExtendedProtocolDiscriminator       `json:"ExtendedProtocolDiscriminator,omitempty"`
+	nasType.SpareHalfOctetAndSecurityHeaderType `json:"SpareHalfOctetAndSecurityHeaderType,omitempty"`
+	nasType.IdentityResponseMessageIdentity     `json:"IdentityResponseMessageIdentity,omitempty"`
+	nasType.MobileIdentity                      `json:"MobileIdentity,omitempty"`
 }
 
 func NewIdentityResponse(iei uint8) (identityResponse *IdentityResponse) {

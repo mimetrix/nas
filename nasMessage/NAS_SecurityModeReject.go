@@ -8,10 +8,10 @@ import (
 )
 
 type SecurityModeReject struct {
-	nasType.ExtendedProtocolDiscriminator
-	nasType.SpareHalfOctetAndSecurityHeaderType
-	nasType.SecurityModeRejectMessageIdentity
-	nasType.Cause5GMM
+	nasType.ExtendedProtocolDiscriminator       `json:"ExtendedProtocolDiscriminator,omitempty"`
+	nasType.SpareHalfOctetAndSecurityHeaderType `json:"SpareHalfOctetAndSecurityHeaderType,omitempty"`
+	nasType.SecurityModeRejectMessageIdentity   `json:"SecurityModeRejectMessageIdentity,omitempty"`
+	nasType.Cause5GMM                           `json:"Cause5GMM,omitempty"`
 }
 
 func NewSecurityModeReject(iei uint8) (securityModeReject *SecurityModeReject) {

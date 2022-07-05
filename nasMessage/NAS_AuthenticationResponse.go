@@ -8,11 +8,11 @@ import (
 )
 
 type AuthenticationResponse struct {
-	nasType.ExtendedProtocolDiscriminator
-	nasType.SpareHalfOctetAndSecurityHeaderType
-	nasType.AuthenticationResponseMessageIdentity
-	*nasType.AuthenticationResponseParameter
-	*nasType.EAPMessage
+	nasType.ExtendedProtocolDiscriminator         `json:"ExtendedProtocolDiscriminator,omitempty"`
+	nasType.SpareHalfOctetAndSecurityHeaderType   `json:"SpareHalfOctetAndSecurityHeaderType,omitempty"`
+	nasType.AuthenticationResponseMessageIdentity `json:"AuthenticationResponseMessageIdentity,omitempty"`
+	*nasType.AuthenticationResponseParameter      `json:"AuthenticationResponseParameter,omitempty"`
+	*nasType.EAPMessage                           `json:"EAPMessage,omitempty"`
 }
 
 func NewAuthenticationResponse(iei uint8) (authenticationResponse *AuthenticationResponse) {

@@ -8,10 +8,10 @@ import (
 )
 
 type IdentityRequest struct {
-	nasType.ExtendedProtocolDiscriminator
-	nasType.SpareHalfOctetAndSecurityHeaderType
-	nasType.IdentityRequestMessageIdentity
-	nasType.SpareHalfOctetAndIdentityType
+	nasType.ExtendedProtocolDiscriminator       `json:"ExtendedProtocolDiscriminator,omitempty"`
+	nasType.SpareHalfOctetAndSecurityHeaderType `json:"SpareHalfOctetAndSecurityHeaderType,omitempty"`
+	nasType.IdentityRequestMessageIdentity      `json:"IdentityRequestMessageIdentity,omitempty"`
+	nasType.SpareHalfOctetAndIdentityType       `json:"SpareHalfOctetAndIdentityType,omitempty"`
 }
 
 func NewIdentityRequest(iei uint8) (identityRequest *IdentityRequest) {

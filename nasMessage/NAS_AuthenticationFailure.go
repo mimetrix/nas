@@ -8,11 +8,11 @@ import (
 )
 
 type AuthenticationFailure struct {
-	nasType.ExtendedProtocolDiscriminator
-	nasType.SpareHalfOctetAndSecurityHeaderType
-	nasType.AuthenticationFailureMessageIdentity
-	nasType.Cause5GMM
-	*nasType.AuthenticationFailureParameter
+	nasType.ExtendedProtocolDiscriminator        `json:"ExtendedProtocolDiscriminator,omitempty"`
+	nasType.SpareHalfOctetAndSecurityHeaderType  `json:"SpareHalfOctetAndSecurityHeaderType,omitempty"`
+	nasType.AuthenticationFailureMessageIdentity `json:"AuthenticationFailureMessageIdentity,omitempty"`
+	nasType.Cause5GMM                            `json:"Cause5GMM,omitempty"`
+	*nasType.AuthenticationFailureParameter      `json:"AuthenticationFailureParameter,omitempty"`
 }
 
 func NewAuthenticationFailure(iei uint8) (authenticationFailure *AuthenticationFailure) {

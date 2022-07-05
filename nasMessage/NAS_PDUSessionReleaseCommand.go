@@ -8,14 +8,14 @@ import (
 )
 
 type PDUSessionReleaseCommand struct {
-	nasType.ExtendedProtocolDiscriminator
-	nasType.PDUSessionID
-	nasType.PTI
-	nasType.PDUSESSIONRELEASECOMMANDMessageIdentity
-	nasType.Cause5GSM
-	*nasType.BackoffTimerValue
-	*nasType.EAPMessage
-	*nasType.ExtendedProtocolConfigurationOptions
+	nasType.ExtendedProtocolDiscriminator           `json:"ExtendedProtocolDiscriminator,omitempty"`
+	nasType.PDUSessionID                            `json:"PDUSessionID,omitempty"`
+	nasType.PTI                                     `json:"PTI,omitempty"`
+	nasType.PDUSESSIONRELEASECOMMANDMessageIdentity `json:"PDUSESSIONRELEASECOMMANDMessageIdentity,omitempty"`
+	nasType.Cause5GSM                               `json:"Cause5GSM,omitempty"`
+	*nasType.BackoffTimerValue                      `json:"BackoffTimerValue,omitempty"`
+	*nasType.EAPMessage                             `json:"EAPMessage,omitempty"`
+	*nasType.ExtendedProtocolConfigurationOptions   `json:"ExtendedProtocolConfigurationOptions,omitempty"`
 }
 
 func NewPDUSessionReleaseCommand(iei uint8) (pDUSessionReleaseCommand *PDUSessionReleaseCommand) {

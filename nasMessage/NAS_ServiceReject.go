@@ -8,13 +8,13 @@ import (
 )
 
 type ServiceReject struct {
-	nasType.ExtendedProtocolDiscriminator
-	nasType.SpareHalfOctetAndSecurityHeaderType
-	nasType.ServiceRejectMessageIdentity
-	nasType.Cause5GMM
-	*nasType.PDUSessionStatus
-	*nasType.T3346Value
-	*nasType.EAPMessage
+	nasType.ExtendedProtocolDiscriminator       `json:"ExtendedProtocolDiscriminator,omitempty"`
+	nasType.SpareHalfOctetAndSecurityHeaderType `json:"SpareHalfOctetAndSecurityHeaderType,omitempty"`
+	nasType.ServiceRejectMessageIdentity        `json:"ServiceRejectMessageIdentity,omitempty"`
+	nasType.Cause5GMM                           `json:"Cause5GMM,omitempty"`
+	*nasType.PDUSessionStatus                   `json:"PDUSessionStatus,omitempty"`
+	*nasType.T3346Value                         `json:"T3346Value,omitempty"`
+	*nasType.EAPMessage                         `json:"EAPMessage,omitempty"`
 }
 
 func NewServiceReject(iei uint8) (serviceReject *ServiceReject) {

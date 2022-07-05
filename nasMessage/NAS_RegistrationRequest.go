@@ -8,31 +8,31 @@ import (
 )
 
 type RegistrationRequest struct {
-	nasType.ExtendedProtocolDiscriminator
-	nasType.SpareHalfOctetAndSecurityHeaderType
-	nasType.RegistrationRequestMessageIdentity
-	nasType.NgksiAndRegistrationType5GS
-	nasType.MobileIdentity5GS
-	*nasType.NoncurrentNativeNASKeySetIdentifier
-	*nasType.Capability5GMM
-	*nasType.UESecurityCapability
-	*nasType.RequestedNSSAI
-	*nasType.LastVisitedRegisteredTAI
-	*nasType.S1UENetworkCapability
-	*nasType.UplinkDataStatus
-	*nasType.PDUSessionStatus
-	*nasType.MICOIndication
-	*nasType.UEStatus
-	*nasType.AdditionalGUTI
-	*nasType.AllowedPDUSessionStatus
-	*nasType.UesUsageSetting
-	*nasType.RequestedDRXParameters
-	*nasType.EPSNASMessageContainer
-	*nasType.LADNIndication
-	*nasType.PayloadContainer
-	*nasType.NetworkSlicingIndication
-	*nasType.UpdateType5GS
-	*nasType.NASMessageContainer
+	nasType.ExtendedProtocolDiscriminator        `json:"ExtendedProtocolDiscriminator,omitempty"`
+	nasType.SpareHalfOctetAndSecurityHeaderType  `json:"SpareHalfOctetAndSecurityHeaderType,omitempty"`
+	nasType.RegistrationRequestMessageIdentity   `json:"RegistrationRequestMessageIdentity,omitempty"`
+	nasType.NgksiAndRegistrationType5GS          `json:"NgksiAndRegistrationType5GS,omitempty"`
+	nasType.MobileIdentity5GS                    `json:"MobileIdentity5GS,omitempty"`
+	*nasType.NoncurrentNativeNASKeySetIdentifier `json:"NoncurrentNativeNASKeySetIdentifier,omitempty"`
+	*nasType.Capability5GMM                      `json:"Capability5GMM,omitempty"`
+	*nasType.UESecurityCapability                `json:"UESecurityCapability,omitempty"`
+	*nasType.RequestedNSSAI                      `json:"RequestedNSSAI,omitempty"`
+	*nasType.LastVisitedRegisteredTAI            `json:"LastVisitedRegisteredTAI,omitempty"`
+	*nasType.S1UENetworkCapability               `json:"S1UENetworkCapability,omitempty"`
+	*nasType.UplinkDataStatus                    `json:"UplinkDataStatus,omitempty"`
+	*nasType.PDUSessionStatus                    `json:"PDUSessionStatus,omitempty"`
+	*nasType.MICOIndication                      `json:"MICOIndication,omitempty"`
+	*nasType.UEStatus                            `json:"UEStatus,omitempty"`
+	*nasType.AdditionalGUTI                      `json:"AdditionalGUTI,omitempty"`
+	*nasType.AllowedPDUSessionStatus             `json:"AllowedPDUSessionStatus,omitempty"`
+	*nasType.UesUsageSetting                     `json:"UesUsageSetting,omitempty"`
+	*nasType.RequestedDRXParameters              `json:"RequestedDRXParameters,omitempty"`
+	*nasType.EPSNASMessageContainer              `json:"EPSNASMessageContainer,omitempty"`
+	*nasType.LADNIndication                      `json:"LADNIndication,omitempty"`
+	*nasType.PayloadContainer                    `json:"PayloadContainer,omitempty"`
+	*nasType.NetworkSlicingIndication            `json:"NetworkSlicingIndication,omitempty"`
+	*nasType.UpdateType5GS                       `json:"UpdateType5GS,omitempty"`
+	*nasType.NASMessageContainer                 `json:"NASMessageContainer,omitempty"`
 }
 
 func NewRegistrationRequest(iei uint8) (registrationRequest *RegistrationRequest) {

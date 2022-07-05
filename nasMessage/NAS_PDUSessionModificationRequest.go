@@ -8,19 +8,19 @@ import (
 )
 
 type PDUSessionModificationRequest struct {
-	nasType.ExtendedProtocolDiscriminator
-	nasType.PDUSessionID
-	nasType.PTI
-	nasType.PDUSESSIONMODIFICATIONREQUESTMessageIdentity
-	*nasType.Capability5GSM
-	*nasType.Cause5GSM
-	*nasType.MaximumNumberOfSupportedPacketFilters
-	*nasType.AlwaysonPDUSessionRequested
-	*nasType.IntegrityProtectionMaximumDataRate
-	*nasType.RequestedQosRules
-	*nasType.RequestedQosFlowDescriptions
-	*nasType.MappedEPSBearerContexts
-	*nasType.ExtendedProtocolConfigurationOptions
+	nasType.ExtendedProtocolDiscriminator                `json:"ExtendedProtocolDiscriminator,omitempty"`
+	nasType.PDUSessionID                                 `json:"PDUSessionID,omitempty"`
+	nasType.PTI                                          `json:"PTI,omitempty"`
+	nasType.PDUSESSIONMODIFICATIONREQUESTMessageIdentity `json:"PDUSESSIONMODIFICATIONREQUESTMessageIdentity,omitempty"`
+	*nasType.Capability5GSM                              `json:"Capability5GSM,omitempty"`
+	*nasType.Cause5GSM                                   `json:"Cause5GSM,omitempty"`
+	*nasType.MaximumNumberOfSupportedPacketFilters       `json:"MaximumNumberOfSupportedPacketFilters,omitempty"`
+	*nasType.AlwaysonPDUSessionRequested                 `json:"AlwaysonPDUSessionRequested,omitempty"`
+	*nasType.IntegrityProtectionMaximumDataRate          `json:"IntegrityProtectionMaximumDataRate,omitempty"`
+	*nasType.RequestedQosRules                           `json:"RequestedQosRules,omitempty"`
+	*nasType.RequestedQosFlowDescriptions                `json:"RequestedQosFlowDescriptions,omitempty"`
+	*nasType.MappedEPSBearerContexts                     `json:"MappedEPSBearerContexts,omitempty"`
+	*nasType.ExtendedProtocolConfigurationOptions        `json:"ExtendedProtocolConfigurationOptions,omitempty"`
 }
 
 func NewPDUSessionModificationRequest(iei uint8) (pDUSessionModificationRequest *PDUSessionModificationRequest) {

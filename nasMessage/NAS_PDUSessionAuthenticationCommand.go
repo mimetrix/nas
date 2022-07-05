@@ -8,12 +8,12 @@ import (
 )
 
 type PDUSessionAuthenticationCommand struct {
-	nasType.ExtendedProtocolDiscriminator
-	nasType.PDUSessionID
-	nasType.PTI
-	nasType.PDUSESSIONAUTHENTICATIONCOMMANDMessageIdentity
-	nasType.EAPMessage
-	*nasType.ExtendedProtocolConfigurationOptions
+	nasType.ExtendedProtocolDiscriminator                  `json:"ExtendedProtocolDiscriminator,omitempty"`
+	nasType.PDUSessionID                                   `json:"PDUSessionID,omitempty"`
+	nasType.PTI                                            `json:"PTI,omitempty"`
+	nasType.PDUSESSIONAUTHENTICATIONCOMMANDMessageIdentity `json:"PDUSESSIONAUTHENTICATIONCOMMANDMessageIdentity,omitempty"`
+	nasType.EAPMessage                                     `json:"EAPMessage,omitempty"`
+	*nasType.ExtendedProtocolConfigurationOptions          `json:"ExtendedProtocolConfigurationOptions,omitempty"`
 }
 
 func NewPDUSessionAuthenticationCommand(iei uint8) (pDUSessionAuthenticationCommand *PDUSessionAuthenticationCommand) {

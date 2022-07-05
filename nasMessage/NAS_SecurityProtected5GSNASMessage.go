@@ -8,11 +8,11 @@ import (
 )
 
 type SecurityProtected5GSNASMessage struct {
-	nasType.ExtendedProtocolDiscriminator
-	nasType.SpareHalfOctetAndSecurityHeaderType
-	nasType.MessageAuthenticationCode
-	nasType.SequenceNumber
-	nasType.Plain5GSNASMessage
+	nasType.ExtendedProtocolDiscriminator       `json:"ExtendedProtocolDiscriminator,omitempty"`
+	nasType.SpareHalfOctetAndSecurityHeaderType `json:"SpareHalfOctetAndSecurityHeaderType,omitempty"`
+	nasType.MessageAuthenticationCode           `json:"MessageAuthenticationCode,omitempty"`
+	nasType.SequenceNumber                      `json:"SequenceNumber,omitempty"`
+	nasType.Plain5GSNASMessage                  `json:"Plain5GSNASMessage,omitempty"`
 }
 
 func NewSecurityProtected5GSNASMessage(iei uint8) (securityProtected5GSNASMessage *SecurityProtected5GSNASMessage) {

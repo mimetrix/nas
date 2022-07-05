@@ -8,18 +8,18 @@ import (
 )
 
 type PDUSessionModificationCommand struct {
-	nasType.ExtendedProtocolDiscriminator
-	nasType.PDUSessionID
-	nasType.PTI
-	nasType.PDUSESSIONMODIFICATIONCOMMANDMessageIdentity
-	*nasType.Cause5GSM
-	*nasType.SessionAMBR
-	*nasType.RQTimerValue
-	*nasType.AlwaysonPDUSessionIndication
-	*nasType.AuthorizedQosRules
-	*nasType.MappedEPSBearerContexts
-	*nasType.AuthorizedQosFlowDescriptions
-	*nasType.ExtendedProtocolConfigurationOptions
+	nasType.ExtendedProtocolDiscriminator                `json:"ExtendedProtocolDiscriminator,omitempty"`
+	nasType.PDUSessionID                                 `json:"PDUSessionID,omitempty"`
+	nasType.PTI                                          `json:"PTI,omitempty"`
+	nasType.PDUSESSIONMODIFICATIONCOMMANDMessageIdentity `json:"PDUSESSIONMODIFICATIONCOMMANDMessageIdentity,omitempty"`
+	*nasType.Cause5GSM                                   `json:"Cause5GSM,omitempty"`
+	*nasType.SessionAMBR                                 `json:"SessionAMBR,omitempty"`
+	*nasType.RQTimerValue                                `json:"RQTimerValue,omitempty"`
+	*nasType.AlwaysonPDUSessionIndication                `json:"AlwaysonPDUSessionIndication,omitempty"`
+	*nasType.AuthorizedQosRules                          `json:"AuthorizedQosRules,omitempty"`
+	*nasType.MappedEPSBearerContexts                     `json:"MappedEPSBearerContexts,omitempty"`
+	*nasType.AuthorizedQosFlowDescriptions               `json:"AuthorizedQosFlowDescriptions,omitempty"`
+	*nasType.ExtendedProtocolConfigurationOptions        `json:"ExtendedProtocolConfigurationOptions,omitempty"`
 }
 
 func NewPDUSessionModificationCommand(iei uint8) (pDUSessionModificationCommand *PDUSessionModificationCommand) {

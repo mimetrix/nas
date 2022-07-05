@@ -9,18 +9,18 @@ import (
 )
 
 type PDUSessionEstablishmentRequest struct {
-	nasType.ExtendedProtocolDiscriminator
-	nasType.PDUSessionID
-	nasType.PTI
-	nasType.PDUSESSIONESTABLISHMENTREQUESTMessageIdentity
-	nasType.IntegrityProtectionMaximumDataRate
-	*nasType.PDUSessionType
-	*nasType.SSCMode
-	*nasType.Capability5GSM
-	*nasType.MaximumNumberOfSupportedPacketFilters
-	*nasType.AlwaysonPDUSessionRequested
-	*nasType.SMPDUDNRequestContainer
-	*nasType.ExtendedProtocolConfigurationOptions
+	nasType.ExtendedProtocolDiscriminator                 `json:"ExtendedProtocolDiscriminator,omitempty"`
+	nasType.PDUSessionID                                  `json:"PDUSessionID,omitempty"`
+	nasType.PTI                                           `json:"PTI,omitempty"`
+	nasType.PDUSESSIONESTABLISHMENTREQUESTMessageIdentity `json:"PDUSESSIONESTABLISHMENTREQUESTMessageIdentity,omitempty"`
+	nasType.IntegrityProtectionMaximumDataRate            `json:"IntegrityProtectionMaximumDataRate,omitempty"`
+	*nasType.PDUSessionType                               `json:"PDUSessionType,omitempty"`
+	*nasType.SSCMode                                      `json:"SSCMode,omitempty"`
+	*nasType.Capability5GSM                               `json:"Capability5GSM,omitempty"`
+	*nasType.MaximumNumberOfSupportedPacketFilters        `json:"MaximumNumberOfSupportedPacketFilters,omitempty"`
+	*nasType.AlwaysonPDUSessionRequested                  `json:"AlwaysonPDUSessionRequested,omitempty"`
+	*nasType.SMPDUDNRequestContainer                      `json:"SMPDUDNRequestContainer,omitempty"`
+	*nasType.ExtendedProtocolConfigurationOptions         `json:"ExtendedProtocolConfigurationOptions,omitempty"`
 }
 
 func NewPDUSessionEstablishmentRequest(iei uint8) (pDUSessionEstablishmentRequest *PDUSessionEstablishmentRequest) {

@@ -8,13 +8,13 @@ import (
 )
 
 type ServiceAccept struct {
-	nasType.ExtendedProtocolDiscriminator
-	nasType.SpareHalfOctetAndSecurityHeaderType
-	nasType.ServiceAcceptMessageIdentity
-	*nasType.PDUSessionStatus
-	*nasType.PDUSessionReactivationResult
-	*nasType.PDUSessionReactivationResultErrorCause
-	*nasType.EAPMessage
+	nasType.ExtendedProtocolDiscriminator           `json:"ExtendedProtocolDiscriminator,omitempty"`
+	nasType.SpareHalfOctetAndSecurityHeaderType     `json:"SpareHalfOctetAndSecurityHeaderType,omitempty"`
+	nasType.ServiceAcceptMessageIdentity            `json:"ServiceAcceptMessageIdentity,omitempty"`
+	*nasType.PDUSessionStatus                       `json:"PDUSessionStatus,omitempty"`
+	*nasType.PDUSessionReactivationResult           `json:"PDUSessionReactivationResult,omitempty"`
+	*nasType.PDUSessionReactivationResultErrorCause `json:"PDUSessionReactivationResultErrorCause,omitempty"`
+	*nasType.EAPMessage                             `json:"EAPMessage,omitempty"`
 }
 
 func NewServiceAccept(iei uint8) (serviceAccept *ServiceAccept) {

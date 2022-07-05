@@ -8,15 +8,15 @@ import (
 )
 
 type PDUSessionEstablishmentReject struct {
-	nasType.ExtendedProtocolDiscriminator
-	nasType.PDUSessionID
-	nasType.PTI
-	nasType.PDUSESSIONESTABLISHMENTREJECTMessageIdentity
-	nasType.Cause5GSM
-	*nasType.BackoffTimerValue
-	*nasType.AllowedSSCMode
-	*nasType.EAPMessage
-	*nasType.ExtendedProtocolConfigurationOptions
+	nasType.ExtendedProtocolDiscriminator                `json:"ExtendedProtocolDiscriminator,omitempty"`
+	nasType.PDUSessionID                                 `json:"PDUSessionID,omitempty"`
+	nasType.PTI                                          `json:"PTI,omitempty"`
+	nasType.PDUSESSIONESTABLISHMENTREJECTMessageIdentity `json:"PDUSESSIONESTABLISHMENTREJECTMessageIdentity,omitempty"`
+	nasType.Cause5GSM                                    `json:"Cause5GSM,omitempty"`
+	*nasType.BackoffTimerValue                           `json:"BackoffTimerValue,omitempty"`
+	*nasType.AllowedSSCMode                              `json:"AllowedSSCMode,omitempty"`
+	*nasType.EAPMessage                                  `json:"EAPMessage,omitempty"`
+	*nasType.ExtendedProtocolConfigurationOptions        `json:"ExtendedProtocolConfigurationOptions,omitempty"`
 }
 
 func NewPDUSessionEstablishmentReject(iei uint8) (pDUSessionEstablishmentReject *PDUSessionEstablishmentReject) {

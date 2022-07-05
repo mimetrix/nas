@@ -8,13 +8,13 @@ import (
 )
 
 type RegistrationReject struct {
-	nasType.ExtendedProtocolDiscriminator
-	nasType.SpareHalfOctetAndSecurityHeaderType
-	nasType.RegistrationRejectMessageIdentity
-	nasType.Cause5GMM
-	*nasType.T3346Value
-	*nasType.T3502Value
-	*nasType.EAPMessage
+	nasType.ExtendedProtocolDiscriminator       `json:"ExtendedProtocolDiscriminator,omitempty"`
+	nasType.SpareHalfOctetAndSecurityHeaderType `json:"SpareHalfOctetAndSecurityHeaderType,omitempty"`
+	nasType.RegistrationRejectMessageIdentity   `json:"RegistrationRejectMessageIdentity,omitempty"`
+	nasType.Cause5GMM                           `json:"Cause5GMM,omitempty"`
+	*nasType.T3346Value                         `json:"T3346Value,omitempty"`
+	*nasType.T3502Value                         `json:"T3502Value,omitempty"`
+	*nasType.EAPMessage                         `json:"EAPMessage,omitempty"`
 }
 
 func NewRegistrationReject(iei uint8) (registrationReject *RegistrationReject) {

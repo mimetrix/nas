@@ -8,23 +8,23 @@ import (
 )
 
 type PDUSessionEstablishmentAccept struct {
-	nasType.ExtendedProtocolDiscriminator
-	nasType.PDUSessionID
-	nasType.PTI
-	nasType.PDUSESSIONESTABLISHMENTACCEPTMessageIdentity
-	nasType.SelectedSSCModeAndSelectedPDUSessionType
-	nasType.AuthorizedQosRules
-	nasType.SessionAMBR
-	*nasType.Cause5GSM
-	*nasType.PDUAddress
-	*nasType.RQTimerValue
-	*nasType.SNSSAI
-	*nasType.AlwaysonPDUSessionIndication
-	*nasType.MappedEPSBearerContexts
-	*nasType.EAPMessage
-	*nasType.AuthorizedQosFlowDescriptions
-	*nasType.ExtendedProtocolConfigurationOptions
-	*nasType.DNN
+	nasType.ExtendedProtocolDiscriminator                `json:"ExtendedProtocolDiscriminator,omitempty"`
+	nasType.PDUSessionID                                 `json:"PDUSessionID,omitempty"`
+	nasType.PTI                                          `json:"PTI,omitempty"`
+	nasType.PDUSESSIONESTABLISHMENTACCEPTMessageIdentity `json:"PDUSESSIONESTABLISHMENTACCEPTMessageIdentity,omitempty"`
+	nasType.SelectedSSCModeAndSelectedPDUSessionType     `json:"SelectedSSCModeAndSelectedPDUSessionType,omitempty"`
+	nasType.AuthorizedQosRules                           `json:"AuthorizedQosRules,omitempty"`
+	nasType.SessionAMBR                                  `json:"SessionAMBR,omitempty"`
+	*nasType.Cause5GSM                                   `json:"Cause5GSM,omitempty"`
+	*nasType.PDUAddress                                  `json:"PDUAddress,omitempty"`
+	*nasType.RQTimerValue                                `json:"RQTimerValue,omitempty"`
+	*nasType.SNSSAI                                      `json:"SNSSAI,omitempty"`
+	*nasType.AlwaysonPDUSessionIndication                `json:"AlwaysonPDUSessionIndication,omitempty"`
+	*nasType.MappedEPSBearerContexts                     `json:"MappedEPSBearerContexts,omitempty"`
+	*nasType.EAPMessage                                  `json:"EAPMessage,omitempty"`
+	*nasType.AuthorizedQosFlowDescriptions               `json:"AuthorizedQosFlowDescriptions,omitempty"`
+	*nasType.ExtendedProtocolConfigurationOptions        `json:"ExtendedProtocolConfigurationOptions,omitempty"`
+	*nasType.DNN                                         `json:"DNN,omitempty"`
 }
 
 func NewPDUSessionEstablishmentAccept(iei uint8) (pDUSessionEstablishmentAccept *PDUSessionEstablishmentAccept) {

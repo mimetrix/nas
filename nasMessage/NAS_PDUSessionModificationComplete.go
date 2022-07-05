@@ -8,11 +8,11 @@ import (
 )
 
 type PDUSessionModificationComplete struct {
-	nasType.ExtendedProtocolDiscriminator
-	nasType.PDUSessionID
-	nasType.PTI
-	nasType.PDUSESSIONMODIFICATIONCOMPLETEMessageIdentity
-	*nasType.ExtendedProtocolConfigurationOptions
+	nasType.ExtendedProtocolDiscriminator                 `json:"ExtendedProtocolDiscriminator,omitempty"`
+	nasType.PDUSessionID                                  `json:"PDUSessionID,omitempty"`
+	nasType.PTI                                           `json:"PTI,omitempty"`
+	nasType.PDUSESSIONMODIFICATIONCOMPLETEMessageIdentity `json:"PDUSESSIONMODIFICATIONCOMPLETEMessageIdentity,omitempty"`
+	*nasType.ExtendedProtocolConfigurationOptions         `json:"ExtendedProtocolConfigurationOptions,omitempty"`
 }
 
 func NewPDUSessionModificationComplete(iei uint8) (pDUSessionModificationComplete *PDUSessionModificationComplete) {

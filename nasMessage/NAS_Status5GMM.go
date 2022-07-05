@@ -8,10 +8,10 @@ import (
 )
 
 type Status5GMM struct {
-	nasType.ExtendedProtocolDiscriminator
-	nasType.SpareHalfOctetAndSecurityHeaderType
-	nasType.STATUSMessageIdentity5GMM
-	nasType.Cause5GMM
+	nasType.ExtendedProtocolDiscriminator       `json:"ExtendedProtocolDiscriminator,omitempty"`
+	nasType.SpareHalfOctetAndSecurityHeaderType `json:"SpareHalfOctetAndSecurityHeaderType,omitempty"`
+	nasType.STATUSMessageIdentity5GMM           `json:"STATUSMessageIdentity5GMM,omitempty"`
+	nasType.Cause5GMM                           `json:"Cause5GMM,omitempty"`
 }
 
 func NewStatus5GMM(iei uint8) (status5GMM *Status5GMM) {

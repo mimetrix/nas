@@ -8,17 +8,17 @@ import (
 )
 
 type ULNASTransport struct {
-	nasType.ExtendedProtocolDiscriminator
-	nasType.SpareHalfOctetAndSecurityHeaderType
-	nasType.ULNASTRANSPORTMessageIdentity
-	nasType.SpareHalfOctetAndPayloadContainerType
-	nasType.PayloadContainer
-	*nasType.PduSessionID2Value
-	*nasType.OldPDUSessionID
-	*nasType.RequestType
-	*nasType.SNSSAI
-	*nasType.DNN
-	*nasType.AdditionalInformation
+	nasType.ExtendedProtocolDiscriminator         `json:"ExtendedProtocolDiscriminator,omitempty"`
+	nasType.SpareHalfOctetAndSecurityHeaderType   `json:"SpareHalfOctetAndSecurityHeaderType,omitempty"`
+	nasType.ULNASTRANSPORTMessageIdentity         `json:"ULNASTRANSPORTMessageIdentity,omitempty"`
+	nasType.SpareHalfOctetAndPayloadContainerType `json:"SpareHalfOctetAndPayloadContainerType,omitempty"`
+	nasType.PayloadContainer                      `json:"PayloadContainer,omitempty"`
+	*nasType.PduSessionID2Value                   `json:"PduSessionID2Value,omitempty"`
+	*nasType.OldPDUSessionID                      `json:"OldPDUSessionID,omitempty"`
+	*nasType.RequestType                          `json:"RequestType,omitempty"`
+	*nasType.SNSSAI                               `json:"SNSSAI,omitempty"`
+	*nasType.DNN                                  `json:"DNN,omitempty"`
+	*nasType.AdditionalInformation                `json:"AdditionalInformation,omitempty"`
 }
 
 func NewULNASTransport(iei uint8) (uLNASTransport *ULNASTransport) {

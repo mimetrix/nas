@@ -8,12 +8,12 @@ import (
 )
 
 type DeregistrationRequestUETerminatedDeregistration struct {
-	nasType.ExtendedProtocolDiscriminator
-	nasType.SpareHalfOctetAndSecurityHeaderType
-	nasType.DeregistrationRequestMessageIdentity
-	nasType.SpareHalfOctetAndDeregistrationType
-	*nasType.Cause5GMM
-	*nasType.T3346Value
+	nasType.ExtendedProtocolDiscriminator        `json:"ExtendedProtocolDiscriminator,omitempty"`
+	nasType.SpareHalfOctetAndSecurityHeaderType  `json:"SpareHalfOctetAndSecurityHeaderType,omitempty"`
+	nasType.DeregistrationRequestMessageIdentity `json:"DeregistrationRequestMessageIdentity,omitempty"`
+	nasType.SpareHalfOctetAndDeregistrationType  `json:"SpareHalfOctetAndDeregistrationType,omitempty"`
+	*nasType.Cause5GMM                           `json:"Cause5GMM,omitempty"`
+	*nasType.T3346Value                          `json:"T3346Value,omitempty"`
 }
 
 func NewDeregistrationRequestUETerminatedDeregistration(iei uint8) (deregistrationRequestUETerminatedDeregistration *DeregistrationRequestUETerminatedDeregistration) {

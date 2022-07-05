@@ -8,15 +8,15 @@ import (
 )
 
 type DLNASTransport struct {
-	nasType.ExtendedProtocolDiscriminator
-	nasType.SpareHalfOctetAndSecurityHeaderType
-	nasType.DLNASTRANSPORTMessageIdentity
-	nasType.SpareHalfOctetAndPayloadContainerType
-	nasType.PayloadContainer
-	*nasType.PduSessionID2Value
-	*nasType.AdditionalInformation
-	*nasType.Cause5GMM
-	*nasType.BackoffTimerValue
+	nasType.ExtendedProtocolDiscriminator         `json:"ExtendedProtocolDiscriminator,omitempty"`
+	nasType.SpareHalfOctetAndSecurityHeaderType   `json:"SpareHalfOctetAndSecurityHeaderType,omitempty"`
+	nasType.DLNASTRANSPORTMessageIdentity         `json:"DLNASTRANSPORTMessageIdentity,omitempty"`
+	nasType.SpareHalfOctetAndPayloadContainerType `json:"SpareHalfOctetAndPayloadContainerType,omitempty"`
+	nasType.PayloadContainer                      `json:"PayloadContainer,omitempty"`
+	*nasType.PduSessionID2Value                   `json:"PduSessionID2Value,omitempty"`
+	*nasType.AdditionalInformation                `json:"AdditionalInformation,omitempty"`
+	*nasType.Cause5GMM                            `json:"Cause5GMM,omitempty"`
+	*nasType.BackoffTimerValue                    `json:"BackoffTimerValue,omitempty"`
 }
 
 func NewDLNASTransport(iei uint8) (dLNASTransport *DLNASTransport) {

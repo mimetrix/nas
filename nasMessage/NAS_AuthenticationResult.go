@@ -8,12 +8,12 @@ import (
 )
 
 type AuthenticationResult struct {
-	nasType.ExtendedProtocolDiscriminator
-	nasType.SpareHalfOctetAndSecurityHeaderType
-	nasType.AuthenticationResultMessageIdentity
-	nasType.SpareHalfOctetAndNgksi
-	nasType.EAPMessage
-	*nasType.ABBA
+	nasType.ExtendedProtocolDiscriminator       `json:"ExtendedProtocolDiscriminator,omitempty"`
+	nasType.SpareHalfOctetAndSecurityHeaderType `json:"SpareHalfOctetAndSecurityHeaderType,omitempty"`
+	nasType.AuthenticationResultMessageIdentity `json:"AuthenticationResultMessageIdentity,omitempty"`
+	nasType.SpareHalfOctetAndNgksi              `json:"SpareHalfOctetAndNgksi,omitempty"`
+	nasType.EAPMessage                          `json:"EAPMessage,omitempty"`
+	*nasType.ABBA                               `json:"ABBA,omitempty"`
 }
 
 func NewAuthenticationResult(iei uint8) (authenticationResult *AuthenticationResult) {

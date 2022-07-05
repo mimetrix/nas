@@ -8,14 +8,14 @@ import (
 )
 
 type AuthenticationRequest struct {
-	nasType.ExtendedProtocolDiscriminator
-	nasType.SpareHalfOctetAndSecurityHeaderType
-	nasType.AuthenticationRequestMessageIdentity
-	nasType.SpareHalfOctetAndNgksi
-	nasType.ABBA
-	*nasType.AuthenticationParameterRAND
-	*nasType.AuthenticationParameterAUTN
-	*nasType.EAPMessage
+	nasType.ExtendedProtocolDiscriminator        `json:"ExtendedProtocolDiscriminator,omitempty"`
+	nasType.SpareHalfOctetAndSecurityHeaderType  `json:"SpareHalfOctetAndSecurityHeaderType,omitempty"`
+	nasType.AuthenticationRequestMessageIdentity `json:"AuthenticationRequestMessageIdentity,omitempty"`
+	nasType.SpareHalfOctetAndNgksi               `json:"SpareHalfOctetAndNgksi,omitempty"`
+	nasType.ABBA                                 `json:"ABBA,omitempty"`
+	*nasType.AuthenticationParameterRAND         `json:"AuthenticationParameterRAND,omitempty"`
+	*nasType.AuthenticationParameterAUTN         `json:"AuthenticationParameterAUTN,omitempty"`
+	*nasType.EAPMessage                          `json:"EAPMessage,omitempty"`
 }
 
 func NewAuthenticationRequest(iei uint8) (authenticationRequest *AuthenticationRequest) {

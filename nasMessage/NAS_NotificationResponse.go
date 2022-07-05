@@ -8,10 +8,10 @@ import (
 )
 
 type NotificationResponse struct {
-	nasType.ExtendedProtocolDiscriminator
-	nasType.SpareHalfOctetAndSecurityHeaderType
-	nasType.NotificationResponseMessageIdentity
-	*nasType.PDUSessionStatus
+	nasType.ExtendedProtocolDiscriminator       `json:"ExtendedProtocolDiscriminator,omitempty"`
+	nasType.SpareHalfOctetAndSecurityHeaderType `json:"SpareHalfOctetAndSecurityHeaderType,omitempty"`
+	nasType.NotificationResponseMessageIdentity `json:"NotificationResponseMessageIdentity,omitempty"`
+	*nasType.PDUSessionStatus                   `json:"PDUSessionStatus,omitempty"`
 }
 
 func NewNotificationResponse(iei uint8) (notificationResponse *NotificationResponse) {

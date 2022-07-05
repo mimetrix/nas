@@ -8,26 +8,26 @@ import (
 )
 
 type ConfigurationUpdateCommand struct {
-	nasType.ExtendedProtocolDiscriminator
-	nasType.SpareHalfOctetAndSecurityHeaderType
-	nasType.ConfigurationUpdateCommandMessageIdentity
-	*nasType.ConfigurationUpdateIndication
-	*nasType.GUTI5G
-	*nasType.TAIList
-	*nasType.AllowedNSSAI
-	*nasType.ServiceAreaList
-	*nasType.FullNameForNetwork
-	*nasType.ShortNameForNetwork
-	*nasType.LocalTimeZone
-	*nasType.UniversalTimeAndLocalTimeZone
-	*nasType.NetworkDaylightSavingTime
-	*nasType.LADNInformation
-	*nasType.MICOIndication
-	*nasType.NetworkSlicingIndication
-	*nasType.ConfiguredNSSAI
-	*nasType.RejectedNSSAI
-	*nasType.OperatordefinedAccessCategoryDefinitions
-	*nasType.SMSIndication
+	nasType.ExtendedProtocolDiscriminator             `json:"ExtendedProtocolDiscriminator,omitempty"`
+	nasType.SpareHalfOctetAndSecurityHeaderType       `json:"SpareHalfOctetAndSecurityHeaderType,omitempty"`
+	nasType.ConfigurationUpdateCommandMessageIdentity `json:"ConfigurationUpdateCommandMessageIdentity,omitempty"`
+	*nasType.ConfigurationUpdateIndication            `json:"ConfigurationUpdateIndication,omitempty"`
+	*nasType.GUTI5G                                   `json:"GUTI5G,omitempty"`
+	*nasType.TAIList                                  `json:"TAIList,omitempty"`
+	*nasType.AllowedNSSAI                             `json:"AllowedNSSAI,omitempty"`
+	*nasType.ServiceAreaList                          `json:"ServiceAreaList,omitempty"`
+	*nasType.FullNameForNetwork                       `json:"FullNameForNetwork,omitempty"`
+	*nasType.ShortNameForNetwork                      `json:"ShortNameForNetwork,omitempty"`
+	*nasType.LocalTimeZone                            `json:"LocalTimeZone,omitempty"`
+	*nasType.UniversalTimeAndLocalTimeZone            `json:"UniversalTimeAndLocalTimeZone,omitempty"`
+	*nasType.NetworkDaylightSavingTime                `json:"NetworkDaylightSavingTime,omitempty"`
+	*nasType.LADNInformation                          `json:"LADNInformation,omitempty"`
+	*nasType.MICOIndication                           `json:"MICOIndication,omitempty"`
+	*nasType.NetworkSlicingIndication                 `json:"NetworkSlicingIndication,omitempty"`
+	*nasType.ConfiguredNSSAI                          `json:"ConfiguredNSSAI,omitempty"`
+	*nasType.RejectedNSSAI                            `json:"RejectedNSSAI,omitempty"`
+	*nasType.OperatordefinedAccessCategoryDefinitions `json:"OperatordefinedAccessCategoryDefinitions,omitempty"`
+	*nasType.SMSIndication                            `json:"SMSIndication,omitempty"`
 }
 
 func NewConfigurationUpdateCommand(iei uint8) (configurationUpdateCommand *ConfigurationUpdateCommand) {

@@ -8,11 +8,11 @@ import (
 )
 
 type DeregistrationRequestUEOriginatingDeregistration struct {
-	nasType.ExtendedProtocolDiscriminator
-	nasType.SpareHalfOctetAndSecurityHeaderType
-	nasType.DeregistrationRequestMessageIdentity
-	nasType.NgksiAndDeregistrationType
-	nasType.MobileIdentity5GS
+	nasType.ExtendedProtocolDiscriminator        `json:"ExtendedProtocolDiscriminator,omitempty"`
+	nasType.SpareHalfOctetAndSecurityHeaderType  `json:"SpareHalfOctetAndSecurityHeaderType,omitempty"`
+	nasType.DeregistrationRequestMessageIdentity `json:"DeregistrationRequestMessageIdentity,omitempty"`
+	nasType.NgksiAndDeregistrationType           `json:"NgksiAndDeregistrationType,omitempty"`
+	nasType.MobileIdentity5GS                    `json:"MobileIdentity5GS,omitempty"`
 }
 
 func NewDeregistrationRequestUEOriginatingDeregistration(iei uint8) (deregistrationRequestUEOriginatingDeregistration *DeregistrationRequestUEOriginatingDeregistration) {

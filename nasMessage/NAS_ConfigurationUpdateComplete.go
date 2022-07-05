@@ -8,9 +8,9 @@ import (
 )
 
 type ConfigurationUpdateComplete struct {
-	nasType.ExtendedProtocolDiscriminator
-	nasType.SpareHalfOctetAndSecurityHeaderType
-	nasType.ConfigurationUpdateCompleteMessageIdentity
+	nasType.ExtendedProtocolDiscriminator              `json:"ExtendedProtocolDiscriminator,omitempty"`
+	nasType.SpareHalfOctetAndSecurityHeaderType        `json:"SpareHalfOctetAndSecurityHeaderType,omitempty"`
+	nasType.ConfigurationUpdateCompleteMessageIdentity `json:"ConfigurationUpdateCompleteMessageIdentity,omitempty"`
 }
 
 func NewConfigurationUpdateComplete(iei uint8) (configurationUpdateComplete *ConfigurationUpdateComplete) {

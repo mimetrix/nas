@@ -8,11 +8,11 @@ import (
 )
 
 type SecurityModeComplete struct {
-	nasType.ExtendedProtocolDiscriminator
-	nasType.SpareHalfOctetAndSecurityHeaderType
-	nasType.SecurityModeCompleteMessageIdentity
-	*nasType.IMEISV
-	*nasType.NASMessageContainer
+	nasType.ExtendedProtocolDiscriminator       `json:"ExtendedProtocolDiscriminator,omitempty"`
+	nasType.SpareHalfOctetAndSecurityHeaderType `json:"SpareHalfOctetAndSecurityHeaderType,omitempty"`
+	nasType.SecurityModeCompleteMessageIdentity `json:"SecurityModeCompleteMessageIdentity,omitempty"`
+	*nasType.IMEISV                             `json:"IMEISV,omitempty"`
+	*nasType.NASMessageContainer                `json:"NASMessageContainer,omitempty"`
 }
 
 func NewSecurityModeComplete(iei uint8) (securityModeComplete *SecurityModeComplete) {
