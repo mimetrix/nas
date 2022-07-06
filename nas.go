@@ -10,17 +10,17 @@ import (
 
 // Message TODO：description
 type Message struct {
-	SecurityHeader
-	*GmmMessage
-	*GsmMessage
+	SecurityHeader `json:"SecurityHeader,omitempty"`
+	*GmmMessage    `json:"GmmMessage,omitempty"`
+	*GsmMessage    `json:"GsmMessage,omitempty"`
 }
 
 // SecurityHeader TODO：description
 type SecurityHeader struct {
-	ProtocolDiscriminator     uint8
-	SecurityHeaderType        uint8
-	MessageAuthenticationCode uint32
-	SequenceNumber            uint8
+	ProtocolDiscriminator     uint8  `json:"ProtocolDiscriminator,omitempty"`
+	SecurityHeaderType        uint8  `json:"SecurityHeaderType,omitempty"`
+	MessageAuthenticationCode uint32 `json:"MessageAuthenticationCode,omitempty"`
+	SequenceNumber            uint8  `json:"SequenceNumber,omitempty"`
 }
 
 const (
@@ -52,11 +52,11 @@ func NewGsmMessage() *GsmMessage {
 // GmmHeader Octet1 protocolDiscriminator securityHeaderType
 //           Octet2 MessageType
 type GmmHeader struct {
-	Octet [3]uint8
+	Octet [3]uint8 `json:"Octet,omitempty"`
 }
 
 type GsmHeader struct {
-	Octet [4]uint8
+	Octet [4]uint8 `json:"Octet,omitempty"`
 }
 
 // GetMessageType 9.8
@@ -106,36 +106,36 @@ func GetSecurityHeaderType(byteArray []byte) uint8 {
 }
 
 type GmmMessage struct {
-	GmmHeader
-	*nasMessage.AuthenticationRequest                            // 8.2.1
-	*nasMessage.AuthenticationResponse                           // 8.2.2
-	*nasMessage.AuthenticationResult                             // 8.2.3
-	*nasMessage.AuthenticationFailure                            // 8.2.4
-	*nasMessage.AuthenticationReject                             // 8.2.5
-	*nasMessage.RegistrationRequest                              // 8.2.6
-	*nasMessage.RegistrationAccept                               // 8.2.7
-	*nasMessage.RegistrationComplete                             // 8.2.8
-	*nasMessage.RegistrationReject                               // 8.2.9
-	*nasMessage.ULNASTransport                                   // 8.2.10
-	*nasMessage.DLNASTransport                                   // 8.2.11
-	*nasMessage.DeregistrationRequestUEOriginatingDeregistration // 8.2.12
-	*nasMessage.DeregistrationAcceptUEOriginatingDeregistration  // 8.2.13
-	*nasMessage.DeregistrationRequestUETerminatedDeregistration  // 8.2.14
-	*nasMessage.DeregistrationAcceptUETerminatedDeregistration   // 8.2.15
-	*nasMessage.ServiceRequest                                   // 8.2.16
-	*nasMessage.ServiceAccept                                    // 8.2.17
-	*nasMessage.ServiceReject                                    // 8.2.18
-	*nasMessage.ConfigurationUpdateCommand                       // 8.2.19
-	*nasMessage.ConfigurationUpdateComplete                      // 8.2.20
-	*nasMessage.IdentityRequest                                  // 8.2.21
-	*nasMessage.IdentityResponse                                 // 8.2.22
-	*nasMessage.Notification                                     // 8.2.23
-	*nasMessage.NotificationResponse                             // 8.2.24
-	*nasMessage.SecurityModeCommand                              // 8.2.25
-	*nasMessage.SecurityModeComplete                             // 8.2.26
-	*nasMessage.SecurityModeReject                               // 8.2.27
-	*nasMessage.SecurityProtected5GSNASMessage                   // 8.2.28
-	*nasMessage.Status5GMM                                       // 8.2.29
+	GmmHeader                                                    `json:"GmmHeader,omitempty"`
+	*nasMessage.AuthenticationRequest                            `json:"AuthenticationRequest,omitempty"`
+	*nasMessage.AuthenticationResponse                           `json:"AuthenticationResponse,omitempty"`
+	*nasMessage.AuthenticationResult                             `json:"AuthenticationResult,omitempty"`
+	*nasMessage.AuthenticationFailure                            `json:"AuthenticationFailure,omitempty"`
+	*nasMessage.AuthenticationReject                             `json:"AuthenticationReject,omitempty"`
+	*nasMessage.RegistrationRequest                              `json:"RegistrationRequest,omitempty"`
+	*nasMessage.RegistrationAccept                               `json:"RegistrationAccept,omitempty"`
+	*nasMessage.RegistrationComplete                             `json:"RegistrationComplete,omitempty"`
+	*nasMessage.RegistrationReject                               `json:"RegistrationReject,omitempty"`
+	*nasMessage.ULNASTransport                                   `json:"ULNASTransport,omitempty"`
+	*nasMessage.DLNASTransport                                   `json:"DLNASTransport,omitempty"`
+	*nasMessage.DeregistrationRequestUEOriginatingDeregistration `json:"DeregistrationRequestUEOriginatingDeregistration,omitempty"`
+	*nasMessage.DeregistrationAcceptUEOriginatingDeregistration  `json:"DeregistrationAcceptUEOriginatingDeregistration,omitempty"`
+	*nasMessage.DeregistrationRequestUETerminatedDeregistration  `json:"DeregistrationRequestUETerminatedDeregistration,omitempty"`
+	*nasMessage.DeregistrationAcceptUETerminatedDeregistration   `json:"DeregistrationAcceptUETerminatedDeregistration,omitempty"`
+	*nasMessage.ServiceRequest                                   `json:"ServiceRequest,omitempty"`
+	*nasMessage.ServiceAccept                                    `json:"ServiceAccept,omitempty"`
+	*nasMessage.ServiceReject                                    `json:"ServiceReject,omitempty"`
+	*nasMessage.ConfigurationUpdateCommand                       `json:"ConfigurationUpdateCommand,omitempty"`
+	*nasMessage.ConfigurationUpdateComplete                      `json:"ConfigurationUpdateComplete,omitempty"`
+	*nasMessage.IdentityRequest                                  `json:"IdentityRequest,omitempty"`
+	*nasMessage.IdentityResponse                                 `json:"IdentityResponse,omitempty"`
+	*nasMessage.Notification                                     `json:"Notification,omitempty"`
+	*nasMessage.NotificationResponse                             `json:"NotificationResponse,omitempty"`
+	*nasMessage.SecurityModeCommand                              `json:"SecurityModeCommand,omitempty"`
+	*nasMessage.SecurityModeComplete                             `json:"SecurityModeComplete,omitempty"`
+	*nasMessage.SecurityModeReject                               `json:"SecurityModeReject,omitempty"`
+	*nasMessage.SecurityProtected5GSNASMessage                   `json:"SecurityProtected5GSNASMessage,omitempty"`
+	*nasMessage.Status5GMM                                       `json:"Status5GMM,omitempty"`
 }
 
 const (
@@ -366,23 +366,23 @@ func (a *Message) GmmMessageEncode(buffer *bytes.Buffer) error {
 }
 
 type GsmMessage struct {
-	GsmHeader
-	*nasMessage.PDUSessionEstablishmentRequest      // 8.3.1
-	*nasMessage.PDUSessionEstablishmentAccept       // 8.3.2
-	*nasMessage.PDUSessionEstablishmentReject       // 8.3.3
-	*nasMessage.PDUSessionAuthenticationCommand     // 8.3.4
-	*nasMessage.PDUSessionAuthenticationComplete    // 8.3.5
-	*nasMessage.PDUSessionAuthenticationResult      // 8.3.6
-	*nasMessage.PDUSessionModificationRequest       // 8.3.7
-	*nasMessage.PDUSessionModificationReject        // 8.3.8
-	*nasMessage.PDUSessionModificationCommand       // 8.3.9
-	*nasMessage.PDUSessionModificationComplete      // 8.3.10
-	*nasMessage.PDUSessionModificationCommandReject // 8.3.11
-	*nasMessage.PDUSessionReleaseRequest            // 8.3.12
-	*nasMessage.PDUSessionReleaseReject             // 8.3.13
-	*nasMessage.PDUSessionReleaseCommand            // 8.3.14
-	*nasMessage.PDUSessionReleaseComplete           // 8.3.15
-	*nasMessage.Status5GSM                          // 8.3.16
+	GsmHeader                                       `json:"GsmHeader,omitempty"`
+	*nasMessage.PDUSessionEstablishmentRequest      `json:"PDUSessionEstablishmentRequest,omitempty"`
+	*nasMessage.PDUSessionEstablishmentAccept       `json:"PDUSessionEstablishmentAccept,omitempty"`
+	*nasMessage.PDUSessionEstablishmentReject       `json:"PDUSessionEstablishmentReject,omitempty"`
+	*nasMessage.PDUSessionAuthenticationCommand     `json:"PDUSessionAuthenticationCommand,omitempty"`
+	*nasMessage.PDUSessionAuthenticationComplete    `json:"PDUSessionAuthenticationComplete,omitempty"`
+	*nasMessage.PDUSessionAuthenticationResult      `json:"PDUSessionAuthenticationResult,omitempty"`
+	*nasMessage.PDUSessionModificationRequest       `json:"PDUSessionModificationRequest,omitempty"`
+	*nasMessage.PDUSessionModificationReject        `json:"PDUSessionModificationReject,omitempty"`
+	*nasMessage.PDUSessionModificationCommand       `json:"PDUSessionModificationCommand,omitempty"`
+	*nasMessage.PDUSessionModificationComplete      `json:"PDUSessionModificationComplete,omitempty"`
+	*nasMessage.PDUSessionModificationCommandReject `json:"PDUSessionModificationCommandReject,omitempty"`
+	*nasMessage.PDUSessionReleaseRequest            `json:"PDUSessionReleaseRequest,omitempty"`
+	*nasMessage.PDUSessionReleaseReject             `json:"PDUSessionReleaseReject,omitempty"`
+	*nasMessage.PDUSessionReleaseCommand            `json:"PDUSessionReleaseCommand,omitempty"`
+	*nasMessage.PDUSessionReleaseComplete           `json:"PDUSessionReleaseComplete,omitempty"`
+	*nasMessage.Status5GSM                          `json:"Status5GSM,omitempty"`
 }
 
 const (
