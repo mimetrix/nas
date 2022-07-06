@@ -3,7 +3,7 @@ package nasType
 // ServiceAcceptMessageIdentity 9.7
 // MessageType Row, sBit, len = [0, 0], 8 , 8
 type ServiceAcceptMessageIdentity struct {
-	Octet uint8
+	Octet uint8 `json:"Octet,omitempty"`
 }
 
 func NewServiceAcceptMessageIdentity() (serviceAcceptMessageIdentity *ServiceAcceptMessageIdentity) {

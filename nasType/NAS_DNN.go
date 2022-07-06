@@ -9,9 +9,9 @@ import (
 // DNN 9.11.2.1A
 // DNN Row, sBit, len = [0, 0], 8 , INF
 type DNN struct {
-	Iei    uint8
-	Len    uint8
-	Buffer []uint8
+	Iei    uint8   `json:"Iei,omitempty"`
+	Len    uint8   `json:"Len,omitempty"`
+	Buffer []uint8 `json:"Buffer,omitempty"`
 }
 
 func NewDNN(iei uint8) (dNN *DNN) {

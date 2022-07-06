@@ -4,7 +4,7 @@ package nasType
 // SpareHalfOctet Row, sBit, len = [0, 0], 8 , 4
 // SecurityHeaderType Row, sBit, len = [0, 0], 4 , 4
 type SpareHalfOctetAndSecurityHeaderType struct {
-	Octet uint8
+	Octet uint8 `json:"Octet,omitempty"`
 }
 
 func NewSpareHalfOctetAndSecurityHeaderType() (spareHalfOctetAndSecurityHeaderType *SpareHalfOctetAndSecurityHeaderType) {

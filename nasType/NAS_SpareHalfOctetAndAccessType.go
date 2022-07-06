@@ -3,7 +3,7 @@ package nasType
 // SpareHalfOctetAndAccessType 9.11.3.11 9.5
 // AccessType Row, sBit, len = [0, 0], 2 , 2
 type SpareHalfOctetAndAccessType struct {
-	Octet uint8
+	Octet uint8 `json:"Octet,omitempty"`
 }
 
 func NewSpareHalfOctetAndAccessType() (spareHalfOctetAndAccessType *SpareHalfOctetAndAccessType) {

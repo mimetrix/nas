@@ -4,9 +4,9 @@ package nasType
 // SMSAllowed Row, sBit, len = [0, 0], 4 , 1
 // RegistrationResultValue5GS Row, sBit, len = [0, 0], 3 , 3
 type RegistrationResult5GS struct {
-	Iei   uint8
-	Len   uint8
-	Octet uint8
+	Iei   uint8 `json:"Iei,omitempty"`
+	Len   uint8 `json:"Len,omitempty"`
+	Octet uint8 `json:"Octet,omitempty"`
 }
 
 func NewRegistrationResult5GS(iei uint8) (registrationResult5GS *RegistrationResult5GS) {

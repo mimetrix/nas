@@ -3,9 +3,9 @@ package nasType
 // ConfiguredNSSAI 9.11.3.37
 // SNSSAIValue Row, sBit, len = [0, 0], 0 , INF
 type ConfiguredNSSAI struct {
-	Iei    uint8
-	Len    uint8
-	Buffer []uint8
+	Iei    uint8   `json:"Iei,omitempty"`
+	Len    uint8   `json:"Len,omitempty"`
+	Buffer []uint8 `json:"Buffer,omitempty"`
 }
 
 func NewConfiguredNSSAI(iei uint8) (configuredNSSAI *ConfiguredNSSAI) {

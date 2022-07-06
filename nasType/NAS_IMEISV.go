@@ -21,9 +21,9 @@ package nasType
 // IdentityDigitP_15 Row, sBit, len = [8, 8], 8 , 4
 // IdentityDigitP_14 Row, sBit, len = [8, 8], 4 , 4
 type IMEISV struct {
-	Iei   uint8
-	Len   uint16
-	Octet [9]uint8
+	Iei   uint8    `json:"Iei,omitempty"`
+	Len   uint16   `json:"Len,omitempty"`
+	Octet [9]uint8 `json:"Octet,omitempty"`
 }
 
 func NewIMEISV(iei uint8) (iMEISV *IMEISV) {

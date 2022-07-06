@@ -3,9 +3,9 @@ package nasType
 // AuthenticationResponseParameter 9.11.3.17
 // RES Row, sBit, len = [0, 15], 8 , 128
 type AuthenticationResponseParameter struct {
-	Iei   uint8
-	Len   uint8
-	Octet [16]uint8
+	Iei   uint8     `json:"Iei,omitempty"`
+	Len   uint8     `json:"Len,omitempty"`
+	Octet [16]uint8 `json:"Octet,omitempty"`
 }
 
 func NewAuthenticationResponseParameter(iei uint8) (authenticationResponseParameter *AuthenticationResponseParameter) {

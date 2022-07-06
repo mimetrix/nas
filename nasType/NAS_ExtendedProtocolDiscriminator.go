@@ -3,7 +3,7 @@ package nasType
 // ExtendedProtocolDiscriminator 9.2
 // ExtendedProtocolDiscriminator Row, sBit, len = [0, 0], 8 , 8
 type ExtendedProtocolDiscriminator struct {
-	Octet uint8
+	Octet uint8 `json:"Octet,omitempty"`
 }
 
 func NewExtendedProtocolDiscriminator() (extendedProtocolDiscriminator *ExtendedProtocolDiscriminator) {

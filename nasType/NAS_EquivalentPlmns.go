@@ -92,9 +92,9 @@ package nasType
 // MNCDigit2PLMN15 Row, sBit, len = [44, 44], 8 , 4
 // MNCDigit1PLMN15 Row, sBit, len = [44, 44], 4 , 4
 type EquivalentPlmns struct {
-	Iei   uint8
-	Len   uint8
-	Octet [45]uint8
+	Iei   uint8     `json:"Iei,omitempty"`
+	Len   uint8     `json:"Len,omitempty"`
+	Octet [45]uint8 `json:"Octet,omitempty"`
 }
 
 func NewEquivalentPlmns(iei uint8) (equivalentPlmns *EquivalentPlmns) {

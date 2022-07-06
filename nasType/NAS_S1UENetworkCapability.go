@@ -59,9 +59,9 @@ package nasType
 // MulitpeDRB Row, sBit, len = [6, 6], 1 , 1
 // Spare Row, sBit, len = [7, 12], 8 , INF
 type S1UENetworkCapability struct {
-	Iei    uint8
-	Len    uint8
-	Buffer []uint8
+	Iei    uint8   `json:"Iei,omitempty"`
+	Len    uint8   `json:"Len,omitempty"`
+	Buffer []uint8 `json:"Buffer,omitempty"`
 }
 
 func NewS1UENetworkCapability(iei uint8) (s1UENetworkCapability *S1UENetworkCapability) {

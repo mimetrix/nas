@@ -12,9 +12,9 @@ import (
 // AMFPointer Row, sBit, len = [2, 2], 6 , 6
 // TMSI5G Row, sBit, len = [3, 6], 8 , 32
 type TMSI5GS struct {
-	Iei   uint8
-	Len   uint16
-	Octet [7]uint8
+	Iei   uint8    `json:"Iei,omitempty"`
+	Len   uint16   `json:"Len,omitempty"`
+	Octet [7]uint8 `json:"Octet,omitempty"`
 }
 
 func NewTMSI5GS(iei uint8) (tMSI5GS *TMSI5GS) {

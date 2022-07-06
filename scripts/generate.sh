@@ -11,10 +11,11 @@ main() {
   local -r __dirname="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
   local -r __filename="${__dirname}/$(basename "${BASH_SOURCE[0]}")"
 
-  target="${__dirname}"/../nasMessage
+  target="${__dirname}"/../$1
 
   for item in $(ls "${target}" | awk '{print $0}' | grep -v _test | grep -v scripts); do
-    if [ "${item}" == "coverage.out" ]; then
+    # skip some edges case.
+    if [ "${item}" == "coverage.out" ] || [ "${item}" == "NAS_Plain5GSNASMessage.go" ]; then
       echo "Skipping "${item}""
       continue
     fi

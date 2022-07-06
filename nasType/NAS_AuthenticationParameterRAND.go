@@ -3,8 +3,8 @@ package nasType
 // AuthenticationParameterRAND 9.11.3.16
 // RANDValue Row, sBit, len = [0, 15], 8 , 128
 type AuthenticationParameterRAND struct {
-	Iei   uint8
-	Octet [16]uint8
+	Iei   uint8     `json:"Iei,omitempty"`
+	Octet [16]uint8 `json:"Octet,omitempty"`
 }
 
 func NewAuthenticationParameterRAND(iei uint8) (authenticationParameterRAND *AuthenticationParameterRAND) {

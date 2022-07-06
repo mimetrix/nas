@@ -3,7 +3,7 @@ package nasType
 // AuthenticationResponseMessageIdentity 9.7
 // MessageType Row, sBit, len = [0, 0], 8 , 8
 type AuthenticationResponseMessageIdentity struct {
-	Octet uint8
+	Octet uint8 `json:"Octet,omitempty"`
 }
 
 func NewAuthenticationResponseMessageIdentity() (authenticationResponseMessageIdentity *AuthenticationResponseMessageIdentity) {

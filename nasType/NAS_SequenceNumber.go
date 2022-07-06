@@ -3,7 +3,7 @@ package nasType
 // SequenceNumber 9.10
 // SQN Row, sBit, len = [0, 0], 8 , 8
 type SequenceNumber struct {
-	Octet uint8
+	Octet uint8 `json:"Octet,omitempty"`
 }
 
 func NewSequenceNumber() (sequenceNumber *SequenceNumber) {

@@ -23,13 +23,13 @@ const (
 type QoSRules []QoSRule
 
 type QoSRule struct {
-	Identifier       uint8
-	Operation        QoSRuleOperationCode
-	DQR              bool
-	PacketFilterList PacketFilterList
-	Precedence       uint8
-	Segregation      bool
-	QFI              uint8
+	Identifier       uint8                `json:"Identifier,omitempty"`
+	Operation        QoSRuleOperationCode `json:"Operation,omitempty"`
+	DQR              bool                 `json:"DQR,omitempty"`
+	PacketFilterList PacketFilterList     `json:"PacketFilterList,omitempty"`
+	Precedence       uint8                `json:"Precedence,omitempty"`
+	Segregation      bool                 `json:"Segregation,omitempty"`
+	QFI              uint8                `json:"QFI,omitempty"`
 }
 
 func bool2bit(b bool) uint8 {
@@ -332,9 +332,9 @@ func newPacketFilterComponent(id PacketFilterComponentType) PacketFilterComponen
 }
 
 type PacketFilter struct {
-	Identifier uint8
-	Direction  PacketFilterDirection
-	Components PacketFilterComponentList
+	Identifier uint8                     `json:"Identifier,omitempty"`
+	Direction  PacketFilterDirection     `json:"Direction,omitempty"`
+	Components PacketFilterComponentList `json:"Components,omitempty"`
 }
 
 type PacketFilterComponentList []PacketFilterComponent
@@ -418,8 +418,8 @@ func (p *PacketFilterMatchAll) Length() int {
 }
 
 type pfIPv4Address struct {
-	Address net.IP
-	Mask    net.IPMask
+	Address net.IP     `json:"Address,omitempty"`
+	Mask    net.IPMask `json:"Mask,omitempty"`
 }
 
 func (p *pfIPv4Address) MarshalBinary() ([]byte, error) {
@@ -496,7 +496,7 @@ func (p *PacketFilterIPv4LocalAddress) Length() int {
 }
 
 type PacketFilterProtocolIdentifier struct {
-	Value uint8
+	Value uint8 `json:"Value,omitempty"`
 }
 
 func (p *PacketFilterProtocolIdentifier) Type() PacketFilterComponentType {
@@ -521,7 +521,7 @@ func (p *PacketFilterProtocolIdentifier) Length() int {
 }
 
 type pfPort struct {
-	Value uint16
+	Value uint16 `json:"Value,omitempty"`
 }
 
 func (p *pfPort) MarshalBinary() ([]byte, error) {
@@ -581,8 +581,8 @@ func (p *PacketFilterSingleRemotePort) Length() int {
 }
 
 type pfPortRange struct {
-	LowLimit  uint16
-	HighLimit uint16
+	LowLimit  uint16 `json:"LowLimit,omitempty"`
+	HighLimit uint16 `json:"HighLimit,omitempty"`
 }
 
 func (p *pfPortRange) MarshalBinary() ([]byte, error) {
@@ -656,7 +656,7 @@ func (p *PacketFilterRemotePortRange) Length() int {
 }
 
 type PacketFilterSecurityParameterIndex struct {
-	Index uint32
+	Index uint32 `json:"Index,omitempty"`
 }
 
 func (p *PacketFilterSecurityParameterIndex) Type() PacketFilterComponentType {
@@ -684,8 +684,8 @@ func (p *PacketFilterSecurityParameterIndex) Length() int {
 }
 
 type PacketFilterServiceClass struct {
-	Class uint8
-	Mask  uint8
+	Class uint8 `json:"Class,omitempty"`
+	Mask  uint8 `json:"Mask,omitempty"`
 }
 
 func (p *PacketFilterServiceClass) Type() PacketFilterComponentType {
@@ -714,7 +714,7 @@ func (p *PacketFilterServiceClass) Length() int {
 }
 
 type PacketFilterFlowLabel struct {
-	Label uint32
+	Label uint32 `json:"Label,omitempty"`
 }
 
 func (p *PacketFilterFlowLabel) Type() PacketFilterComponentType {
@@ -747,7 +747,7 @@ func (p *PacketFilterFlowLabel) Length() int {
 }
 
 type pfMACAddress struct {
-	MAC net.HardwareAddr
+	MAC net.HardwareAddr `json:"MAC,omitempty"`
 }
 
 func (p *pfMACAddress) MarshalBinary() ([]byte, error) {
@@ -805,7 +805,7 @@ func (p *PacketFilterSourceMACAddress) Length() int {
 }
 
 type pfVID struct {
-	VID uint16
+	VID uint16 `json:"VID,omitempty"`
 }
 
 func (p *pfVID) MarshalBinary() ([]byte, error) {
@@ -867,7 +867,7 @@ func (p *PacketFilterSTagVID) Length() int {
 }
 
 type pfPCPDEI struct {
-	Value uint8
+	Value uint8 `json:"Value,omitempty"`
 }
 
 func (p *pfPCPDEI) MarshalBinary() ([]byte, error) {
@@ -925,7 +925,7 @@ func (p *PacketFilterCTagPCPDEI) Length() int {
 }
 
 type PacketFilterEtherType struct {
-	EtherType uint16
+	EtherType uint16 `json:"EtherType,omitempty"`
 }
 
 func (s *PacketFilterEtherType) Type() PacketFilterComponentType {

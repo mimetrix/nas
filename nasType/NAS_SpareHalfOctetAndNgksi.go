@@ -5,7 +5,7 @@ package nasType
 // TSC Row, sBit, len = [0, 0], 4 , 1
 // NasKeySetIdentifiler Row, sBit, len = [0, 0], 3 , 3
 type SpareHalfOctetAndNgksi struct {
-	Octet uint8
+	Octet uint8 `json:"Octet,omitempty"`
 }
 
 func NewSpareHalfOctetAndNgksi() (spareHalfOctetAndNgksi *SpareHalfOctetAndNgksi) {

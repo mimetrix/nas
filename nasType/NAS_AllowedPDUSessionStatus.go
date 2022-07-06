@@ -19,9 +19,9 @@ package nasType
 // PSI8 Row, sBit, len = [1, 1], 1 , 1
 // Spare Row, sBit, len = [2, 2], 1 , INF
 type AllowedPDUSessionStatus struct {
-	Iei    uint8
-	Len    uint8
-	Buffer []uint8
+	Iei    uint8   `json:"Iei,omitempty"`
+	Len    uint8   `json:"Len,omitempty"`
+	Buffer []uint8 `json:"Buffer,omitempty"`
 }
 
 func NewAllowedPDUSessionStatus(iei uint8) (allowedPDUSessionStatus *AllowedPDUSessionStatus) {

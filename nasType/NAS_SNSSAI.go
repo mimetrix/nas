@@ -6,9 +6,9 @@ package nasType
 // MappedHPLMNSST Row, sBit, len = [4, 4], 8 , 8
 // MappedHPLMNSD Row, sBit, len = [5, 7], 8 , 24
 type SNSSAI struct {
-	Iei   uint8
-	Len   uint8
-	Octet [8]uint8
+	Iei   uint8    `json:"Iei,omitempty"`
+	Len   uint8    `json:"Len,omitempty"`
+	Octet [8]uint8 `json:"Octet,omitempty"`
 }
 
 func NewSNSSAI(iei uint8) (sNSSAI *SNSSAI) {

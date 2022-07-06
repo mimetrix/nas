@@ -6,9 +6,9 @@ package nasType
 // UnitForSessionAMBRForUplink Row, sBit, len = [3, 3], 8 , 8
 // SessionAMBRForUplink Row, sBit, len = [4, 5], 8 , 16
 type SessionAMBR struct {
-	Iei   uint8
-	Len   uint8
-	Octet [6]uint8
+	Iei   uint8    `json:"Iei,omitempty"`
+	Len   uint8    `json:"Len,omitempty"`
+	Octet [6]uint8 `json:"Octet,omitempty"`
 }
 
 func NewSessionAMBR(iei uint8) (sessionAMBR *SessionAMBR) {

@@ -9,8 +9,8 @@ package nasType
 // MNCDigit1 Row, sBit, len = [2, 2], 4 , 4
 // TAC Row, sBit, len = [3, 5], 8 , 24
 type LastVisitedRegisteredTAI struct {
-	Iei   uint8
-	Octet [6]uint8
+	Iei   uint8    `json:"Iei,omitempty"`
+	Octet [6]uint8 `json:"Octet,omitempty"`
 }
 
 func NewLastVisitedRegisteredTAI(iei uint8) (lastVisitedRegisteredTAI *LastVisitedRegisteredTAI) {

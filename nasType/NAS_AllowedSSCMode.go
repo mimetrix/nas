@@ -6,7 +6,7 @@ package nasType
 // SSC2 Row, sBit, len = [0, 0], 2 , 1
 // SSC1 Row, sBit, len = [0, 0], 1 , 1
 type AllowedSSCMode struct {
-	Octet uint8
+	Octet uint8 `json:"Octet,omitempty"`
 }
 
 func NewAllowedSSCMode(iei uint8) (allowedSSCMode *AllowedSSCMode) {

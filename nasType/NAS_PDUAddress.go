@@ -4,9 +4,9 @@ package nasType
 // PDUSessionTypeValue Row, sBit, len = [0, 0], 3 , 3
 // PDUAddressInformation Row, sBit, len = [1, 12], 8 , 96
 type PDUAddress struct {
-	Iei   uint8
-	Len   uint8
-	Octet [13]uint8
+	Iei   uint8     `json:"Iei,omitempty"`
+	Len   uint8     `json:"Len,omitempty"`
+	Octet [13]uint8 `json:"Octet,omitempty"`
 }
 
 func NewPDUAddress(iei uint8) (pDUAddress *PDUAddress) {

@@ -4,9 +4,9 @@ package nasType
 // Unit Row, sBit, len = [0, 0], 8 , 3
 // TimerValue Row, sBit, len = [0, 0], 5 , 5
 type T3512Value struct {
-	Iei   uint8
-	Len   uint8
-	Octet uint8
+	Iei   uint8 `json:"Iei,omitempty"`
+	Len   uint8 `json:"Len,omitempty"`
+	Octet uint8 `json:"Octet,omitempty"`
 }
 
 func NewT3512Value(iei uint8) (t3512Value *T3512Value) {

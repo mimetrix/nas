@@ -3,7 +3,7 @@ package nasType
 // ServiceRequestMessageIdentity 9.7
 // MessageType Row, sBit, len = [0, 0], 8 , 8
 type ServiceRequestMessageIdentity struct {
-	Octet uint8
+	Octet uint8 `json:"Octet,omitempty"`
 }
 
 func NewServiceRequestMessageIdentity() (serviceRequestMessageIdentity *ServiceRequestMessageIdentity) {

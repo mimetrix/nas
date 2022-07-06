@@ -4,7 +4,7 @@ package nasType
 // Iei Row, sBit, len = [0, 0], 8 , 4
 // APSI Row, sBit, len = [0, 0], 1 , 1
 type AlwaysonPDUSessionIndication struct {
-	Octet uint8
+	Octet uint8 `json:"Octet,omitempty"`
 }
 
 func NewAlwaysonPDUSessionIndication(iei uint8) (alwaysonPDUSessionIndication *AlwaysonPDUSessionIndication) {

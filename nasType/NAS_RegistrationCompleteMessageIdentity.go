@@ -3,7 +3,7 @@ package nasType
 // RegistrationCompleteMessageIdentity 9.7
 // MessageType Row, sBit, len = [0, 0], 8 , 8
 type RegistrationCompleteMessageIdentity struct {
-	Octet uint8
+	Octet uint8 `json:"Octet,omitempty"`
 }
 
 func NewRegistrationCompleteMessageIdentity() (registrationCompleteMessageIdentity *RegistrationCompleteMessageIdentity) {

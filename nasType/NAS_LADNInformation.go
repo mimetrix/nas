@@ -3,9 +3,9 @@ package nasType
 // LADNInformation 9.11.3.30
 // LADND Row, sBit, len = [0, 0], 8 , INF
 type LADNInformation struct {
-	Iei    uint8
-	Len    uint16
-	Buffer []uint8
+	Iei    uint8   `json:"Iei,omitempty"`
+	Len    uint16  `json:"Len,omitempty"`
+	Buffer []uint8 `json:"Buffer,omitempty"`
 }
 
 func NewLADNInformation(iei uint8) (lADNInformation *LADNInformation) {

@@ -4,8 +4,8 @@ package nasType
 // MaximumDataRatePerUEForUserPlaneIntegrityProtectionForUpLink Row, sBit, len = [0, 0], 8 , 8
 // MaximumDataRatePerUEForUserPlaneIntegrityProtectionForDownLink Row, sBit, len = [1, 1], 8 , 8
 type IntegrityProtectionMaximumDataRate struct {
-	Iei   uint8
-	Octet [2]uint8
+	Iei   uint8    `json:"Iei,omitempty"`
+	Octet [2]uint8 `json:"Octet,omitempty"`
 }
 
 func NewIntegrityProtectionMaximumDataRate(iei uint8) (integrityProtectionMaximumDataRate *IntegrityProtectionMaximumDataRate) {

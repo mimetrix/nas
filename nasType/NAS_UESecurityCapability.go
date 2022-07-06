@@ -35,9 +35,9 @@ package nasType
 // EIA7 Row, sBit, len = [3, 3], 1 , 1
 // Spare Row, sBit, len = [4, 7], 8 , 32
 type UESecurityCapability struct {
-	Iei    uint8
-	Len    uint8
-	Buffer []uint8
+	Iei    uint8   `json:"Iei,omitempty"`
+	Len    uint8   `json:"Len,omitempty"`
+	Buffer []uint8 `json:"Buffer,omitempty"`
 }
 
 func NewUESecurityCapability(iei uint8) (uESecurityCapability *UESecurityCapability) {

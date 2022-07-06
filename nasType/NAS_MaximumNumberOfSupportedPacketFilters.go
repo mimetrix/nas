@@ -3,8 +3,8 @@ package nasType
 // MaximumNumberOfSupportedPacketFilters 9.11.4.9
 // MaximumNumberOfSupportedPacketFilters Row, sBit, len = [0, 1], 8 , 10
 type MaximumNumberOfSupportedPacketFilters struct {
-	Iei   uint8
-	Octet [2]uint8
+	Iei   uint8    `json:"Iei,omitempty"`
+	Octet [2]uint8 `json:"Octet,omitempty"`
 }
 
 func NewMaximumNumberOfSupportedPacketFilters(iei uint8) (maximumNumberOfSupportedPacketFilters *MaximumNumberOfSupportedPacketFilters) {

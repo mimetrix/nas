@@ -3,9 +3,9 @@ package nasType
 // NetworkDaylightSavingTime 9.11.3.19
 // value Row, sBit, len = [0, 0], 2 , 2
 type NetworkDaylightSavingTime struct {
-	Iei   uint8
-	Len   uint8
-	Octet uint8
+	Iei   uint8 `json:"Iei,omitempty"`
+	Len   uint8 `json:"Len,omitempty"`
+	Octet uint8 `json:"Octet,omitempty"`
 }
 
 func NewNetworkDaylightSavingTime(iei uint8) (networkDaylightSavingTime *NetworkDaylightSavingTime) {

@@ -3,9 +3,9 @@ package nasType
 // T3346Value 9.11.2.4
 // GPRSTimer2Value Row, sBit, len = [0, 0], 8 , 8
 type T3346Value struct {
-	Iei   uint8
-	Len   uint8
-	Octet uint8
+	Iei   uint8 `json:"Iei,omitempty"`
+	Len   uint8 `json:"Len,omitempty"`
+	Octet uint8 `json:"Octet,omitempty"`
 }
 
 func NewT3346Value(iei uint8) (t3346Value *T3346Value) {

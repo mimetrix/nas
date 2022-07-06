@@ -3,9 +3,9 @@ package nasType
 // Non3GppDeregistrationTimerValue 9.11.2.4
 // GPRSTimer2Value Row, sBit, len = [0, 0], 8 , 8
 type Non3GppDeregistrationTimerValue struct {
-	Iei   uint8
-	Len   uint8
-	Octet uint8
+	Iei   uint8 `json:"Iei,omitempty"`
+	Len   uint8 `json:"Len,omitempty"`
+	Octet uint8 `json:"Octet,omitempty"`
 }
 
 func NewNon3GppDeregistrationTimerValue(iei uint8) (non3GppDeregistrationTimerValue *Non3GppDeregistrationTimerValue) {

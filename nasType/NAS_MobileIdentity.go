@@ -3,9 +3,9 @@ package nasType
 // MobileIdentity 9.11.3.4
 // MobileIdentityContents Row, sBit, len = [0, 0], 8 , INF
 type MobileIdentity struct {
-	Iei    uint8
-	Len    uint16
-	Buffer []uint8
+	Iei    uint8   `json:"Iei,omitempty"`
+	Len    uint16  `json:"Len,omitempty"`
+	Buffer []uint8 `json:"Buffer,omitempty"`
 }
 
 func NewMobileIdentity(iei uint8) (mobileIdentity *MobileIdentity) {

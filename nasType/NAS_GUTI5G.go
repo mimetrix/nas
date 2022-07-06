@@ -15,9 +15,9 @@ package nasType
 // AMFPointer Row, sBit, len = [6, 6], 6 , 6
 // TMSI5G Row, sBit, len = [7, 10], 8 , 32
 type GUTI5G struct {
-	Iei   uint8
-	Len   uint16
-	Octet [11]uint8
+	Iei   uint8     `json:"Iei,omitempty"`
+	Len   uint16    `json:"Len,omitempty"`
+	Octet [11]uint8 `json:"Octet,omitempty"`
 }
 
 func NewGUTI5G(iei uint8) (gUTI5G *GUTI5G) {

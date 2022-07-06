@@ -4,9 +4,9 @@ package nasType
 // NGRanRcu Row, sBit, len = [0, 0], 2 , 1
 // SMSRequested Row, sBit, len = [0, 0], 1 , 1
 type UpdateType5GS struct {
-	Iei   uint8
-	Len   uint8
-	Octet uint8
+	Iei   uint8 `json:"Iei,omitempty"`
+	Len   uint8 `json:"Len,omitempty"`
+	Octet uint8 `json:"Octet,omitempty"`
 }
 
 func NewUpdateType5GS(iei uint8) (updateType5GS *UpdateType5GS) {

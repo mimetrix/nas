@@ -3,8 +3,8 @@ package nasType
 // Cause5GMM 9.11.3.2
 // CauseValue Row, sBit, len = [0, 0], 8 , 8
 type Cause5GMM struct {
-	Iei   uint8
-	Octet uint8
+	Iei   uint8 `json:"Iei,omitempty"`
+	Octet uint8 `json:"Octet,omitempty"`
 }
 
 func NewCause5GMM(iei uint8) (cause5GMM *Cause5GMM) {

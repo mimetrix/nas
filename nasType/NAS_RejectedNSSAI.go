@@ -3,9 +3,9 @@ package nasType
 // RejectedNSSAI 9.11.3.46
 // RejectedNSSAIContents Row, sBit, len = [0, 0], 0 , INF
 type RejectedNSSAI struct {
-	Iei    uint8
-	Len    uint8
-	Buffer []uint8
+	Iei    uint8   `json:"Iei,omitempty"`
+	Len    uint8   `json:"Len,omitempty"`
+	Buffer []uint8 `json:"Buffer,omitempty"`
 }
 
 func NewRejectedNSSAI(iei uint8) (rejectedNSSAI *RejectedNSSAI) {

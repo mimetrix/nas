@@ -3,8 +3,8 @@ package nasType
 // LocalTimeZone 9.11.3.52
 // TimeZone Row, sBit, len = [0, 0], 8 , 8
 type LocalTimeZone struct {
-	Iei   uint8
-	Octet uint8
+	Iei   uint8 `json:"Iei,omitempty"`
+	Octet uint8 `json:"Octet,omitempty"`
 }
 
 func NewLocalTimeZone(iei uint8) (localTimeZone *LocalTimeZone) {

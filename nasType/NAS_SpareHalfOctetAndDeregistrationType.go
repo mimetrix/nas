@@ -5,7 +5,7 @@ package nasType
 // ReRegistrationRequired Row, sBit, len = [0, 0], 3 , 1
 // AccessType Row, sBit, len = [0, 0], 2 , 2
 type SpareHalfOctetAndDeregistrationType struct {
-	Octet uint8
+	Octet uint8 `json:"Octet,omitempty"`
 }
 
 func NewSpareHalfOctetAndDeregistrationType() (spareHalfOctetAndDeregistrationType *SpareHalfOctetAndDeregistrationType) {

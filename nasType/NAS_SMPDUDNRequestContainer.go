@@ -3,9 +3,9 @@ package nasType
 // SMPDUDNRequestContainer 9.11.4.15
 // DNSpecificIdentity Row, sBit, len = [0, 0], 8 , INF
 type SMPDUDNRequestContainer struct {
-	Iei    uint8
-	Len    uint8
-	Buffer []uint8
+	Iei    uint8   `json:"Iei,omitempty"`
+	Len    uint8   `json:"Len,omitempty"`
+	Buffer []uint8 `json:"Buffer,omitempty"`
 }
 
 func NewSMPDUDNRequestContainer(iei uint8) (sMPDUDNRequestContainer *SMPDUDNRequestContainer) {

@@ -5,7 +5,7 @@ package nasType
 // Tsc  Row, sBit, len = [0, 0], 4 , 1
 // NasKeySetIdentifiler  Row, sBit, len = [0, 0], 3 , 3
 type NoncurrentNativeNASKeySetIdentifier struct {
-	Octet uint8
+	Octet uint8 `json:"Octet,omitempty"`
 }
 
 func NewNoncurrentNativeNASKeySetIdentifier(iei uint8) (noncurrentNativeNASKeySetIdentifier *NoncurrentNativeNASKeySetIdentifier) {

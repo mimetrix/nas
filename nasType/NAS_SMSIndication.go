@@ -4,7 +4,7 @@ package nasType
 // Iei Row, sBit, len = [0, 0], 8 , 4
 // SAI Row, sBit, len = [0, 0], 1 , 1
 type SMSIndication struct {
-	Octet uint8
+	Octet uint8 `json:"Octet,omitempty"`
 }
 
 func NewSMSIndication(iei uint8) (sMSIndication *SMSIndication) {

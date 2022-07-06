@@ -6,7 +6,7 @@ package nasType
 // FOR  Row, sBit, len = [0, 0], 4 , 1
 // RegistrationType5GS Row, sBit, len = [0, 0], 3 , 3
 type NgksiAndRegistrationType5GS struct {
-	Octet uint8
+	Octet uint8 `json:"Octet,omitempty"`
 }
 
 func NewNgksiAndRegistrationType5GS() (ngksiAndRegistrationType5GS *NgksiAndRegistrationType5GS) {

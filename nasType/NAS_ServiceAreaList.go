@@ -3,9 +3,9 @@ package nasType
 // ServiceAreaList 9.11.3.49
 // PartialServiceAreaList Row, sBit, len = [0, 0], 8 , INF
 type ServiceAreaList struct {
-	Iei    uint8
-	Len    uint8
-	Buffer []uint8
+	Iei    uint8   `json:"Iei,omitempty"`
+	Len    uint8   `json:"Len,omitempty"`
+	Buffer []uint8 `json:"Buffer,omitempty"`
 }
 
 func NewServiceAreaList(iei uint8) (serviceAreaList *ServiceAreaList) {

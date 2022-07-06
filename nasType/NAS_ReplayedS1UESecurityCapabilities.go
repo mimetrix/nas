@@ -40,9 +40,9 @@ package nasType
 // GEA6 Row, sBit, len = [4, 4], 2 , 1
 // GEA7 Row, sBit, len = [4, 4], 1 , 1
 type ReplayedS1UESecurityCapabilities struct {
-	Iei    uint8
-	Len    uint8
-	Buffer []uint8
+	Iei    uint8   `json:"Iei,omitempty"`
+	Len    uint8   `json:"Len,omitempty"`
+	Buffer []uint8 `json:"Buffer,omitempty"`
 }
 
 func NewReplayedS1UESecurityCapabilities(iei uint8) (replayedS1UESecurityCapabilities *ReplayedS1UESecurityCapabilities) {

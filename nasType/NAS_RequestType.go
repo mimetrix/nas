@@ -4,7 +4,7 @@ package nasType
 // Iei Row, sBit, len = [0, 0], 8 , 4
 // RequestTypeValue Row, sBit, len = [0, 0], 3 , 3
 type RequestType struct {
-	Octet uint8
+	Octet uint8 `json:"Octet,omitempty"`
 }
 
 func NewRequestType(iei uint8) (requestType *RequestType) {

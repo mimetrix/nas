@@ -49,9 +49,9 @@ const (
 
 // QoSFlowDesc represnets the QoS Flow Description in NAS
 type QoSFlowDesc struct {
-	QFI           uint8
-	OperationCode QoSFlowOperationCode
-	Parameters    QoSFlowParameterList
+	QFI           uint8                `json:"QFI,omitempty"`
+	OperationCode QoSFlowOperationCode `json:"OperationCode,omitempty"`
+	Parameters    QoSFlowParameterList `json:"Parameters,omitempty"`
 }
 
 func (q *QoSFlowDesc) MarshalBinary() ([]byte, error) {
@@ -208,7 +208,7 @@ func newQoSFlowParameters(id QoSFlowParameterIdentifier) QoSFlowParameter {
 }
 
 type QoSFlow5QI struct {
-	FiveQI uint8
+	FiveQI uint8 `json:"FiveQI,omitempty"`
 }
 
 func (q *QoSFlow5QI) Identifier() QoSFlowParameterIdentifier {
@@ -268,8 +268,8 @@ const (
 )
 
 type qoSFlowBitRate struct {
-	Unit  QoSFlowBitRateUnit
-	Value uint16
+	Unit  QoSFlowBitRateUnit `json:"Unit,omitempty"`
+	Value uint16             `json:"Value,omitempty"`
 }
 
 func (q *qoSFlowBitRate) MarshalBinary() ([]byte, error) {
@@ -360,7 +360,7 @@ func (q *QoSFlowMFBRDownlink) UnmarshalBinary(b []byte) error {
 }
 
 type QoSFlowAveragingWindow struct {
-	AverageWindow uint16
+	AverageWindow uint16 `json:"AverageWindow,omitempty"`
 }
 
 func (q *QoSFlowAveragingWindow) Identifier() QoSFlowParameterIdentifier {
@@ -389,7 +389,7 @@ func (q *QoSFlowAveragingWindow) UnmarshalBinary(b []byte) error {
 }
 
 type QoSFlowEBI struct {
-	EBI uint8
+	EBI uint8 `json:"EBI,omitempty"`
 }
 
 func (q *QoSFlowEBI) Identifier() QoSFlowParameterIdentifier {

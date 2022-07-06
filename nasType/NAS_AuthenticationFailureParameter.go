@@ -3,9 +3,9 @@ package nasType
 // AuthenticationFailureParameter 9.11.3.14
 // AuthenticationFailureParameter Row, sBit, len = [0, 13], 8 , 112
 type AuthenticationFailureParameter struct {
-	Iei   uint8
-	Len   uint8
-	Octet [14]uint8
+	Iei   uint8     `json:"Iei,omitempty"`
+	Len   uint8     `json:"Len,omitempty"`
+	Octet [14]uint8 `json:"Octet,omitempty"`
 }
 
 func NewAuthenticationFailureParameter(iei uint8) (authenticationFailureParameter *AuthenticationFailureParameter) {

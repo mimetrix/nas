@@ -4,8 +4,8 @@ package nasType
 // TypeOfCipheringAlgorithm Row, sBit, len = [0, 0], 8 , 4
 // TypeOfIntegrityProtectionAlgorithm Row, sBit, len = [0, 0], 4 , 4
 type SelectedNASSecurityAlgorithms struct {
-	Iei   uint8
-	Octet uint8
+	Iei   uint8 `json:"Iei,omitempty"`
+	Octet uint8 `json:"Octet,omitempty"`
 }
 
 func NewSelectedNASSecurityAlgorithms(iei uint8) (selectedNASSecurityAlgorithms *SelectedNASSecurityAlgorithms) {

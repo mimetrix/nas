@@ -5,7 +5,7 @@ package nasType
 // RED Row, sBit, len = [0, 0], 2 , 1
 // ACK Row, sBit, len = [0, 0], 1 , 1
 type ConfigurationUpdateIndication struct {
-	Octet uint8
+	Octet uint8 `json:"Octet,omitempty"`
 }
 
 func NewConfigurationUpdateIndication(iei uint8) (configurationUpdateIndication *ConfigurationUpdateIndication) {

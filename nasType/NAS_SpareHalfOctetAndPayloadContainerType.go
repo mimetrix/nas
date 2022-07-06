@@ -3,7 +3,7 @@ package nasType
 // SpareHalfOctetAndPayloadContainerType 9.11.3.40 9.5
 // PayloadContainerType Row, sBit, len = [0, 0], 4 , 4
 type SpareHalfOctetAndPayloadContainerType struct {
-	Octet uint8
+	Octet uint8 `json:"Octet,omitempty"`
 }
 
 func NewSpareHalfOctetAndPayloadContainerType() (spareHalfOctetAndPayloadContainerType *SpareHalfOctetAndPayloadContainerType) {

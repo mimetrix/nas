@@ -3,7 +3,7 @@ package nasType
 // PDUSESSIONESTABLISHMENTREJECTMessageIdentity 9.7
 // MessageType Row, sBit, len = [0, 0], 8 , 8
 type PDUSESSIONESTABLISHMENTREJECTMessageIdentity struct {
-	Octet uint8
+	Octet uint8 `json:"Octet,omitempty"`
 }
 
 func NewPDUSESSIONESTABLISHMENTREJECTMessageIdentity() (pDUSESSIONESTABLISHMENTREJECTMessageIdentity *PDUSESSIONESTABLISHMENTREJECTMessageIdentity) {

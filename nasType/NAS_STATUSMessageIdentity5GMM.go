@@ -3,7 +3,7 @@ package nasType
 // STATUSMessageIdentity5GMM 9.7
 // MessageType Row, sBit, len = [0, 0], 8 , 8
 type STATUSMessageIdentity5GMM struct {
-	Octet uint8
+	Octet uint8 `json:"Octet,omitempty"`
 }
 
 func NewSTATUSMessageIdentity5GMM() (sTATUSMessageIdentity5GMM *STATUSMessageIdentity5GMM) {

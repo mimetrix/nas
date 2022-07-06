@@ -4,7 +4,7 @@ package nasType
 // Iei Row, sBit, len = [0, 0], 8 , 4
 // NSSAIInclusionMode Row, sBit, len = [0, 0], 2 , 2
 type NSSAIInclusionMode struct {
-	Octet uint8
+	Octet uint8 `json:"Octet,omitempty"`
 }
 
 func NewNSSAIInclusionMode(iei uint8) (nSSAIInclusionMode *NSSAIInclusionMode) {

@@ -5,7 +5,7 @@ package nasType
 // Spare Row, sBit, len = [0, 0], 4 , 1
 // PDUSessionTypeValue Row, sBit, len = [0, 0], 3 , 3
 type PDUSessionType struct {
-	Octet uint8
+	Octet uint8 `json:"Octet,omitempty"`
 }
 
 func NewPDUSessionType(iei uint8) (pDUSessionType *PDUSessionType) {

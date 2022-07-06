@@ -5,9 +5,9 @@ package nasType
 // RqoS Row, sBit, len = [0, 0], 1 , 1
 // Spare Row, sBit, len = [1, 12], 8 , 96
 type Capability5GSM struct {
-	Iei   uint8
-	Len   uint8
-	Octet [13]uint8
+	Iei   uint8     `json:"Iei,omitempty"`
+	Len   uint8     `json:"Len,omitempty"`
+	Octet [13]uint8 `json:"Octet,omitempty"`
 }
 
 func NewCapability5GSM(iei uint8) (capability5GSM *Capability5GSM) {

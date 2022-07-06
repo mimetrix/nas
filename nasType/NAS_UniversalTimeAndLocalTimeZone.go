@@ -9,8 +9,8 @@ package nasType
 // Second Row, sBit, len = [5, 5], 8 , 8
 // TimeZone Row, sBit, len = [6, 6], 8 , 8
 type UniversalTimeAndLocalTimeZone struct {
-	Iei   uint8
-	Octet [7]uint8
+	Iei   uint8    `json:"Iei,omitempty"`
+	Octet [7]uint8 `json:"Octet,omitempty"`
 }
 
 func NewUniversalTimeAndLocalTimeZone(iei uint8) (universalTimeAndLocalTimeZone *UniversalTimeAndLocalTimeZone) {

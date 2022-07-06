@@ -3,7 +3,7 @@ package nasType
 // SpareHalfOctetAndIdentityType 9.11.3.3 9.5
 // TypeOfIdentity Row, sBit, len = [0, 0], 3 , 3
 type SpareHalfOctetAndIdentityType struct {
-	Octet uint8
+	Octet uint8 `json:"Octet,omitempty"`
 }
 
 func NewSpareHalfOctetAndIdentityType() (spareHalfOctetAndIdentityType *SpareHalfOctetAndIdentityType) {

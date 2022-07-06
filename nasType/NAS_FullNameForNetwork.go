@@ -7,9 +7,9 @@ package nasType
 // NumberOfSpareBitsInLastOctet Row, sBit, len = [0, 0], 3 , 3
 // TextString Row, sBit, len = [1, 1], 4 , INF
 type FullNameForNetwork struct {
-	Iei    uint8
-	Len    uint8
-	Buffer []uint8
+	Iei    uint8   `json:"Iei,omitempty"`
+	Len    uint8   `json:"Len,omitempty"`
+	Buffer []uint8 `json:"Buffer,omitempty"`
 }
 
 func NewFullNameForNetwork(iei uint8) (fullNameForNetwork *FullNameForNetwork) {

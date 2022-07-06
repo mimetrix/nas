@@ -4,7 +4,7 @@ package nasType
 // SSCMode Row, sBit, len = [0, 0], 7 , 3
 // PDUSessionType  Row, sBit, len = [0, 0], 3 , 3
 type SelectedSSCModeAndSelectedPDUSessionType struct {
-	Octet uint8
+	Octet uint8 `json:"Octet,omitempty"`
 }
 
 func NewSelectedSSCModeAndSelectedPDUSessionType() (selectedSSCModeAndSelectedPDUSessionType *SelectedSSCModeAndSelectedPDUSessionType) {
