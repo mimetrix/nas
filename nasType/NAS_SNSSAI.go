@@ -1,14 +1,50 @@
 package nasType
 
+import "errors"
+
 // SNSSAI 9.11.2.8
 // SST Row, sBit, len = [0, 0], 8 , 8
 // SD Row, sBit, len = [1, 3], 8 , 24
 // MappedHPLMNSST Row, sBit, len = [4, 4], 8 , 8
 // MappedHPLMNSD Row, sBit, len = [5, 7], 8 , 24
 type SNSSAI struct {
-	Iei   uint8    `json:"Iei,omitempty"`
-	Len   uint8    `json:"Len,omitempty"`
-	Octet [8]uint8 `json:"Octet,omitempty"`
+	Iei            uint8    `json:"-"`
+	Len            uint8    `json:"-"`
+	Octet          [8]uint8 `json:"-"`
+	SST            uint8    `json:"SST,omitempty"`
+	SD             [3]uint8 `json:"SD,omitempty"`
+	MappedHPLMNSST uint8    `json:"MappedHPLMSST,omitempty"`
+	MappedHPLMNSD  [3]uint8 `json:"MappedHPLMNSD,omitempty"`
+}
+
+const (
+	SNSSAILenghContentSST                           = 1
+	SNSSAILenghContentSSTAndHPLMNSST                = 2
+	SNSSAILenghContentSSTAndSD                      = 4
+	SNSSAILenghContentSSTAndSDAndHPLMNSST           = 5
+	SNSSAILenghContentSSTAndSDAndHPLMNSSTAndHPLMNSD = 8
+)
+
+func (a *SNSSAI) Parse() error {
+	switch a.Len {
+	case SNSSAILenghContentSST:
+		a.SST = a.GetSST()
+	case SNSSAILenghContentSSTAndSD:
+		a.SST = a.GetSST()
+		a.SD = a.GetSD()
+	case SNSSAILenghContentSSTAndSDAndHPLMNSST:
+		a.SST = a.GetSST()
+		a.SD = a.GetSD()
+		a.MappedHPLMNSST = a.GetMappedHPLMNSST()
+	case SNSSAILenghContentSSTAndSDAndHPLMNSSTAndHPLMNSD:
+		a.SST = a.GetSST()
+		a.SD = a.GetSD()
+		a.MappedHPLMNSST = a.GetMappedHPLMNSST()
+		a.MappedHPLMNSD = a.GetMappedHPLMNSD()
+	default:
+		return errors.New("snssai lenght is invalid")
+	}
+	return nil
 }
 
 func NewSNSSAI(iei uint8) (sNSSAI *SNSSAI) {

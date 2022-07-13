@@ -136,6 +136,7 @@ func (a *PDUSessionEstablishmentAccept) DecodePDUSessionEstablishmentAccept(byte
 			binary.Read(buffer, binary.BigEndian, &a.PDUAddress.Len)
 			a.PDUAddress.SetLen(a.PDUAddress.GetLen())
 			binary.Read(buffer, binary.BigEndian, a.PDUAddress.Octet[:a.PDUAddress.GetLen()])
+			a.PDUAddress.Parse()
 		case PDUSessionEstablishmentAcceptRQTimerValueType:
 			a.RQTimerValue = nasType.NewRQTimerValue(ieiN)
 			binary.Read(buffer, binary.BigEndian, &a.RQTimerValue.Octet)
@@ -144,6 +145,7 @@ func (a *PDUSessionEstablishmentAccept) DecodePDUSessionEstablishmentAccept(byte
 			binary.Read(buffer, binary.BigEndian, &a.SNSSAI.Len)
 			a.SNSSAI.SetLen(a.SNSSAI.GetLen())
 			binary.Read(buffer, binary.BigEndian, a.SNSSAI.Octet[:a.SNSSAI.GetLen()])
+			a.SNSSAI.Parse()
 		case PDUSessionEstablishmentAcceptAlwaysonPDUSessionIndicationType:
 			a.AlwaysonPDUSessionIndication = nasType.NewAlwaysonPDUSessionIndication(ieiN)
 			a.AlwaysonPDUSessionIndication.Octet = ieiN

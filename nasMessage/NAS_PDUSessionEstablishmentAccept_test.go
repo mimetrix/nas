@@ -2,6 +2,7 @@ package nasMessage_test
 
 import (
 	"bytes"
+	"fmt"
 	"reflect"
 	"testing"
 
@@ -154,6 +155,8 @@ func TestNasTypeNewPDUSessionEstablishmentAcceptMessage(t *testing.T) {
 
 		buff := new(bytes.Buffer)
 		a.EncodePDUSessionEstablishmentAccept(buff)
+		a.PDUAddress.Parse()
+		a.SNSSAI.Parse()
 		logger.NasMsgLog.Debugln("Encode: ", a)
 
 		data := make([]byte, buff.Len())
@@ -161,6 +164,8 @@ func TestNasTypeNewPDUSessionEstablishmentAcceptMessage(t *testing.T) {
 		logger.NasMsgLog.Debugln(data)
 		b.DecodePDUSessionEstablishmentAccept(&data)
 		logger.NasMsgLog.Debugln("Decode: ", b)
+		fmt.Println(b.PDUAddress.IPv4Address)
+		fmt.Println(b.SNSSAI.SST)
 
 		if reflect.DeepEqual(a, b) != true {
 			t.Errorf("Not correct")
