@@ -1,6 +1,9 @@
 package nasType
 
-import "errors"
+import (
+	"encoding/binary"
+	"errors"
+)
 
 // SNSSAI 9.11.2.8
 // SST Row, sBit, len = [0, 0], 8 , 8
@@ -11,10 +14,10 @@ type SNSSAI struct {
 	Iei            uint8    `json:"-"`
 	Len            uint8    `json:"-"`
 	Octet          [8]uint8 `json:"-"`
-	SST            uint8    `json:"SST,omitempty"`
-	SD             [3]uint8 `json:"SD,omitempty"`
-	MappedHPLMNSST uint8    `json:"MappedHPLMSST,omitempty"`
-	MappedHPLMNSD  [3]uint8 `json:"MappedHPLMNSD,omitempty"`
+	SST            *uint8   `json:"SST,omitempty"`
+	SD             *uint32  `json:"SD,omitempty"`
+	MappedHPLMNSST *uint8   `json:"MappedHPLMSST,omitempty"`
+	MappedHPLMNSD  *uint32  `json:"MappedHPLMNSD,omitempty"`
 }
 
 const (
@@ -28,19 +31,38 @@ const (
 func (a *SNSSAI) Parse() error {
 	switch a.Len {
 	case SNSSAILenghContentSST:
-		a.SST = a.GetSST()
+		sst := a.GetSST()
+		a.SST = &sst
+	case SNSSAILenghContentSSTAndHPLMNSST:
+		sst := a.GetSST()
+		a.SST = &sst
+		mappedHPLMNSST := a.GetMappedHPLMNSST()
+		a.MappedHPLMNSST = &mappedHPLMNSST
 	case SNSSAILenghContentSSTAndSD:
-		a.SST = a.GetSST()
-		a.SD = a.GetSD()
+		sst := a.GetSST()
+		a.SST = &sst
+		sdArray := a.GetSD()
+		sd := binary.BigEndian.Uint32(append(sdArray[:], byte(0))) >> 8
+		a.SD = &sd
 	case SNSSAILenghContentSSTAndSDAndHPLMNSST:
-		a.SST = a.GetSST()
-		a.SD = a.GetSD()
-		a.MappedHPLMNSST = a.GetMappedHPLMNSST()
+		sst := a.GetSST()
+		a.SST = &sst
+		sdArray := a.GetSD()
+		sd := binary.BigEndian.Uint32(append(sdArray[:], byte(0))) >> 8
+		a.SD = &sd
+		mappedSST := a.GetSST()
+		a.MappedHPLMNSST = &mappedSST
 	case SNSSAILenghContentSSTAndSDAndHPLMNSSTAndHPLMNSD:
-		a.SST = a.GetSST()
-		a.SD = a.GetSD()
-		a.MappedHPLMNSST = a.GetMappedHPLMNSST()
-		a.MappedHPLMNSD = a.GetMappedHPLMNSD()
+		sst := a.GetSST()
+		a.SST = &sst
+		sdArray := a.GetSD()
+		sd := binary.BigEndian.Uint32(append(sdArray[:], byte(0))) >> 8
+		a.SD = &sd
+		mappedSST := a.GetSST()
+		a.MappedHPLMNSST = &mappedSST
+		mappedSDArray := a.GetMappedHPLMNSD()
+		mappedSD := binary.BigEndian.Uint32(append(mappedSDArray[:], byte(0))) >> 8
+		a.SD = &mappedSD
 	default:
 		return errors.New("snssai lenght is invalid")
 	}
