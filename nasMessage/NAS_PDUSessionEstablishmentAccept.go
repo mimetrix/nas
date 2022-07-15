@@ -113,6 +113,7 @@ func (a *PDUSessionEstablishmentAccept) DecodePDUSessionEstablishmentAccept(byte
 	binary.Read(buffer, binary.BigEndian, &a.AuthorizedQosRules.Len)
 	a.AuthorizedQosRules.SetLen(a.AuthorizedQosRules.GetLen())
 	binary.Read(buffer, binary.BigEndian, &a.AuthorizedQosRules.Buffer)
+	a.AuthorizedQosRules.Parse()
 	binary.Read(buffer, binary.BigEndian, &a.SessionAMBR.Len)
 	a.SessionAMBR.SetLen(a.SessionAMBR.GetLen())
 	binary.Read(buffer, binary.BigEndian, &a.SessionAMBR.Octet)

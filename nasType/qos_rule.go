@@ -291,41 +291,131 @@ func parsePacketFilterDeleteList(buf *bytes.Buffer, n int) (PacketFilterList, er
 func newPacketFilterComponent(id PacketFilterComponentType) PacketFilterComponent {
 	switch id {
 	case PacketFilterComponentTypeMatchAll:
-		return &PacketFilterMatchAll{}
+		return &PacketFilterMatchAll{
+			PacketFilterComponentFilterBase: PacketFilterComponentFilterBase{
+				Id:    PacketFilterComponentTypeMatchAll,
+				IdStr: "PacketFilterMatchAll",
+			},
+		}
 	case PacketFilterComponentTypeIPv4RemoteAddress:
-		return &PacketFilterIPv4RemoteAddress{}
+		return &PacketFilterIPv4RemoteAddress{
+			PacketFilterComponentFilterBase: PacketFilterComponentFilterBase{
+				Id:    PacketFilterComponentTypeIPv4RemoteAddress,
+				IdStr: "PacketFilterIPv4RemoteAddress",
+			},
+		}
 	case PacketFilterComponentTypeIPv4LocalAddress:
-		return &PacketFilterIPv4LocalAddress{}
+		return &PacketFilterIPv4LocalAddress{
+			PacketFilterComponentFilterBase: PacketFilterComponentFilterBase{
+				Id:    PacketFilterComponentTypeIPv4LocalAddress,
+				IdStr: "PacketFilterIPv4LocalAddress",
+			},
+		}
 	case PacketFilterComponentTypeProtocolIdentifierOrNextHeader:
-		return &PacketFilterProtocolIdentifier{}
+		return &PacketFilterProtocolIdentifier{
+			PacketFilterComponentFilterBase: PacketFilterComponentFilterBase{
+				Id:    PacketFilterComponentTypeProtocolIdentifierOrNextHeader,
+				IdStr: "PacketFilterProtocolIdentifier",
+			},
+		}
 	case PacketFilterComponentTypeSingleLocalPort:
-		return &PacketFilterSingleLocalPort{}
+		return &PacketFilterSingleLocalPort{
+			PacketFilterComponentFilterBase: PacketFilterComponentFilterBase{
+				Id:    PacketFilterComponentTypeSingleLocalPort,
+				IdStr: "PacketFilterSingleLocalPort",
+			},
+		}
 	case PacketFilterComponentTypeLocalPortRange:
-		return &PacketFilterLocalPortRange{}
+		return &PacketFilterLocalPortRange{
+			PacketFilterComponentFilterBase: PacketFilterComponentFilterBase{
+				Id:    PacketFilterComponentTypeLocalPortRange,
+				IdStr: "PacketFilterLocalPortRange",
+			},
+		}
 	case PacketFilterComponentTypeSingleRemotePort:
-		return &PacketFilterSingleRemotePort{}
+		return &PacketFilterSingleRemotePort{
+			PacketFilterComponentFilterBase: PacketFilterComponentFilterBase{
+				Id:    PacketFilterComponentTypeSingleRemotePort,
+				IdStr: "PacketFilterSingleRemotePort",
+			},
+		}
 	case PacketFilterComponentTypeRemotePortRange:
-		return &PacketFilterRemotePortRange{}
+		return &PacketFilterRemotePortRange{
+			PacketFilterComponentFilterBase: PacketFilterComponentFilterBase{
+				Id:    PacketFilterComponentTypeRemotePortRange,
+				IdStr: "PacketFilterRemotePortRange",
+			},
+		}
 	case PacketFilterComponentTypeSecurityParameterIndex:
-		return &PacketFilterSecurityParameterIndex{}
+		return &PacketFilterSecurityParameterIndex{
+			PacketFilterComponentFilterBase: PacketFilterComponentFilterBase{
+				Id:    PacketFilterComponentTypeSecurityParameterIndex,
+				IdStr: "PacketFilterSecurityParameterIndex",
+			},
+		}
 	case PacketFilterComponentTypeTypeOfServiceOrTrafficClass:
-		return &PacketFilterServiceClass{}
+		return &PacketFilterServiceClass{
+			PacketFilterComponentFilterBase: PacketFilterComponentFilterBase{
+				Id:    PacketFilterComponentTypeTypeOfServiceOrTrafficClass,
+				IdStr: "PacketFilterServiceClass",
+			},
+		}
 	case PacketFilterComponentTypeFlowLabel:
-		return &PacketFilterFlowLabel{}
+		return &PacketFilterFlowLabel{
+			PacketFilterComponentFilterBase: PacketFilterComponentFilterBase{
+				Id:    PacketFilterComponentTypeFlowLabel,
+				IdStr: "PacketFilterFlowLabel",
+			},
+		}
 	case PacketFilterComponentTypeDestinationMACAddress:
-		return &PacketFilterDestinationMACAddress{}
+		return &PacketFilterDestinationMACAddress{
+			PacketFilterComponentFilterBase: PacketFilterComponentFilterBase{
+				Id:    PacketFilterComponentTypeDestinationMACAddress,
+				IdStr: "PacketFilterDestinationMACAddress",
+			},
+		}
 	case PacketFilterComponentTypeSourceMACAddress:
-		return &PacketFilterSourceMACAddress{}
+		return &PacketFilterSourceMACAddress{
+			PacketFilterComponentFilterBase: PacketFilterComponentFilterBase{
+				Id:    PacketFilterComponentTypeSourceMACAddress,
+				IdStr: "PacketFilterSourceMACAddress",
+			},
+		}
 	case PacketFilterComponentType8021Q_CTAG_VID:
-		return &PacketFilterCTagVID{}
+		return &PacketFilterCTagVID{
+			PacketFilterComponentFilterBase: PacketFilterComponentFilterBase{
+				Id:    PacketFilterComponentType8021Q_CTAG_VID,
+				IdStr: "PacketFilterCTagVID",
+			},
+		}
 	case PacketFilterComponentType8021Q_STAG_VID:
-		return &PacketFilterSTagVID{}
+		return &PacketFilterSTagVID{
+			PacketFilterComponentFilterBase: PacketFilterComponentFilterBase{
+				Id:    PacketFilterComponentType8021Q_STAG_VID,
+				IdStr: "PacketFilterSTagVID",
+			},
+		}
 	case PacketFilterComponentType8021Q_CTAG_PCPOrDEI:
-		return &PacketFilterCTagPCPDEI{}
+		return &PacketFilterCTagPCPDEI{
+			PacketFilterComponentFilterBase: PacketFilterComponentFilterBase{
+				Id:    PacketFilterComponentType8021Q_CTAG_PCPOrDEI,
+				IdStr: "PacketFilterCTagPCPDEI",
+			},
+		}
 	case PacketFilterComponentType8021Q_STAG_PCPOrDEI:
-		return &PacketFilterSTagPCPDEI{}
+		return &PacketFilterSTagPCPDEI{
+			PacketFilterComponentFilterBase: PacketFilterComponentFilterBase{
+				Id:    PacketFilterComponentType8021Q_STAG_PCPOrDEI,
+				IdStr: "PacketFilterSTagPCPDEI",
+			},
+		}
 	case PacketFilterComponentTypeEthertype:
-		return &PacketFilterEtherType{}
+		return &PacketFilterEtherType{
+			PacketFilterComponentFilterBase: PacketFilterComponentFilterBase{
+				Id:    PacketFilterComponentTypeEthertype,
+				IdStr: "PacketFilterEtherType",
+			},
+		}
 	}
 
 	return nil
@@ -396,7 +486,14 @@ type PacketFilterComponent interface {
 	Length() int
 }
 
-type PacketFilterMatchAll struct{}
+type PacketFilterComponentFilterBase struct {
+	Id    PacketFilterComponentType `json:"Id,omitempty"`
+	IdStr string                    `json:"IdStr,omitempty"`
+}
+
+type PacketFilterMatchAll struct {
+	PacketFilterComponentFilterBase
+}
 
 func (p *PacketFilterMatchAll) Type() PacketFilterComponentType {
 	return PacketFilterComponentTypeMatchAll
@@ -418,6 +515,7 @@ func (p *PacketFilterMatchAll) Length() int {
 }
 
 type pfIPv4Address struct {
+	PacketFilterComponentFilterBase
 	Address net.IP     `json:"Address,omitempty"`
 	Mask    net.IPMask `json:"Mask,omitempty"`
 }
@@ -496,6 +594,7 @@ func (p *PacketFilterIPv4LocalAddress) Length() int {
 }
 
 type PacketFilterProtocolIdentifier struct {
+	PacketFilterComponentFilterBase
 	Value uint8 `json:"Value,omitempty"`
 }
 
@@ -521,6 +620,7 @@ func (p *PacketFilterProtocolIdentifier) Length() int {
 }
 
 type pfPort struct {
+	PacketFilterComponentFilterBase
 	Value uint16 `json:"Value,omitempty"`
 }
 
@@ -581,6 +681,7 @@ func (p *PacketFilterSingleRemotePort) Length() int {
 }
 
 type pfPortRange struct {
+	PacketFilterComponentFilterBase
 	LowLimit  uint16 `json:"LowLimit,omitempty"`
 	HighLimit uint16 `json:"HighLimit,omitempty"`
 }
@@ -656,6 +757,7 @@ func (p *PacketFilterRemotePortRange) Length() int {
 }
 
 type PacketFilterSecurityParameterIndex struct {
+	PacketFilterComponentFilterBase
 	Index uint32 `json:"Index,omitempty"`
 }
 
@@ -684,6 +786,7 @@ func (p *PacketFilterSecurityParameterIndex) Length() int {
 }
 
 type PacketFilterServiceClass struct {
+	PacketFilterComponentFilterBase
 	Class uint8 `json:"Class,omitempty"`
 	Mask  uint8 `json:"Mask,omitempty"`
 }
@@ -714,6 +817,7 @@ func (p *PacketFilterServiceClass) Length() int {
 }
 
 type PacketFilterFlowLabel struct {
+	PacketFilterComponentFilterBase
 	Label uint32 `json:"Label,omitempty"`
 }
 
@@ -747,6 +851,7 @@ func (p *PacketFilterFlowLabel) Length() int {
 }
 
 type pfMACAddress struct {
+	PacketFilterComponentFilterBase
 	MAC net.HardwareAddr `json:"MAC,omitempty"`
 }
 
@@ -805,6 +910,7 @@ func (p *PacketFilterSourceMACAddress) Length() int {
 }
 
 type pfVID struct {
+	PacketFilterComponentFilterBase
 	VID uint16 `json:"VID,omitempty"`
 }
 
@@ -867,6 +973,7 @@ func (p *PacketFilterSTagVID) Length() int {
 }
 
 type pfPCPDEI struct {
+	PacketFilterComponentFilterBase
 	Value uint8 `json:"Value,omitempty"`
 }
 
@@ -925,6 +1032,7 @@ func (p *PacketFilterCTagPCPDEI) Length() int {
 }
 
 type PacketFilterEtherType struct {
+	PacketFilterComponentFilterBase
 	EtherType uint16 `json:"EtherType,omitempty"`
 }
 

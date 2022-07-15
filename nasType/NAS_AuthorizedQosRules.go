@@ -3,9 +3,14 @@ package nasType
 // AuthorizedQosRules 9.11.4.13
 // QosRule Row, sBit, len = [0, 0], 3 , INF
 type AuthorizedQosRules struct {
-	Iei    uint8   `json:"Iei,omitempty"`
-	Len    uint16  `json:"Len,omitempty"`
-	Buffer []uint8 `json:"Buffer,omitempty"`
+	Iei      uint8   `json:"-"`
+	Len      uint16  `json:"-"`
+	Buffer   []uint8 `json:"-"`
+	QoSRules QoSRules
+}
+
+func (a *AuthorizedQosRules) Parse() error {
+	return a.QoSRules.UnmarshalBinary(a.Buffer)
 }
 
 func NewAuthorizedQosRules(iei uint8) (authorizedQosRules *AuthorizedQosRules) {

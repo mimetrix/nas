@@ -2,16 +2,16 @@ package nasMessage_test
 
 import (
 	"bytes"
+	"encoding/json"
 	"fmt"
 	"reflect"
 	"testing"
-
-	"github.com/stretchr/testify/assert"
 
 	"github.com/free5gc/nas"
 	"github.com/free5gc/nas/logger"
 	"github.com/free5gc/nas/nasMessage"
 	"github.com/free5gc/nas/nasType"
+	"github.com/stretchr/testify/assert"
 )
 
 type nasMessagePDUSessionEstablishmentAcceptData struct {
@@ -157,6 +157,7 @@ func TestNasTypeNewPDUSessionEstablishmentAcceptMessage(t *testing.T) {
 		a.EncodePDUSessionEstablishmentAccept(buff)
 		a.PDUAddress.Parse()
 		a.SNSSAI.Parse()
+		a.AuthorizedQosRules.Parse()
 		logger.NasMsgLog.Debugln("Encode: ", a)
 
 		data := make([]byte, buff.Len())
@@ -164,12 +165,109 @@ func TestNasTypeNewPDUSessionEstablishmentAcceptMessage(t *testing.T) {
 		logger.NasMsgLog.Debugln(data)
 		b.DecodePDUSessionEstablishmentAccept(&data)
 		logger.NasMsgLog.Debugln("Decode: ", b)
-		fmt.Println(b.PDUAddress.IPv4Address)
-		fmt.Println(b.SNSSAI.SST)
+		j, _ := json.Marshal(b)
+
+		fmt.Println(string(j))
 
 		if reflect.DeepEqual(a, b) != true {
 			t.Errorf("Not correct")
 		}
 
+	}
+}
+
+func TestPDUSessionEstablishmentAccept_DecodePDUSessionEstablishmentAccept(t *testing.T) {
+	m := []byte{
+		0x2e, 0x01, 0x01, 0xc2, 0x11, 0x00, 0x09, 0x01,
+		0x00, 0x06, 0x31, 0x31, 0x01, 0x01, 0xff, 0x09,
+		0x06, 0x06, 0x00, 0x64, 0x06, 0x00, 0xc8, 0x29,
+		0x05, 0x01, 0x0a, 0x01, 0x00, 0x02, 0x22, 0x04,
+		0x01, 0x01, 0x02, 0x03, 0x79, 0x00, 0x06, 0x09,
+		0x20, 0x41, 0x01, 0x01, 0x09, 0x7b, 0x00, 0x08,
+		0x80, 0x00, 0x0d, 0x04, 0x08, 0x08, 0x08, 0x08,
+		0x25, 0x09, 0x08, 0x69, 0x6e, 0x74, 0x65, 0x72,
+		0x6e, 0x65, 0x74,
+	}
+
+	type fields struct {
+		ExtendedProtocolDiscriminator                nasType.ExtendedProtocolDiscriminator
+		PDUSessionID                                 nasType.PDUSessionID
+		PTI                                          nasType.PTI
+		PDUSESSIONESTABLISHMENTACCEPTMessageIdentity nasType.PDUSESSIONESTABLISHMENTACCEPTMessageIdentity
+		SelectedSSCModeAndSelectedPDUSessionType     nasType.SelectedSSCModeAndSelectedPDUSessionType
+		AuthorizedQosRules                           nasType.AuthorizedQosRules
+		SessionAMBR                                  nasType.SessionAMBR
+		Cause5GSM                                    *nasType.Cause5GSM
+		PDUAddress                                   *nasType.PDUAddress
+		RQTimerValue                                 *nasType.RQTimerValue
+		SNSSAI                                       *nasType.SNSSAI
+		AlwaysonPDUSessionIndication                 *nasType.AlwaysonPDUSessionIndication
+		MappedEPSBearerContexts                      *nasType.MappedEPSBearerContexts
+		EAPMessage                                   *nasType.EAPMessage
+		AuthorizedQosFlowDescriptions                *nasType.AuthorizedQosFlowDescriptions
+		ExtendedProtocolConfigurationOptions         *nasType.ExtendedProtocolConfigurationOptions
+		DNN                                          *nasType.DNN
+	}
+	type args struct {
+		byteArray *[]byte
+	}
+	tests := []struct {
+		name   string
+		fields fields
+		args   args
+	}{
+		{
+			name: "pdu_session_establishement_accept_successful",
+			args: args{
+				byteArray: &m,
+			},
+			fields: fields{
+				AuthorizedQosRules: nasType.AuthorizedQosRules{
+					QoSRules: nasType.QoSRules{
+						{
+							Identifier: 1,
+							PacketFilterList: nasType.PacketFilterList{
+								{
+									Identifier: 1,
+									Direction:  3, //bidirectional
+									Components: nasType.PacketFilterComponentList{
+										&nasType.PacketFilterMatchAll{},
+									},
+								},
+							},
+							Precedence: 255,
+							QFI:        9,
+							DQR:        true,
+						},
+					},
+				},
+			},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			a := &nasMessage.PDUSessionEstablishmentAccept{
+				// ExtendedProtocolDiscriminator: tt.fields.ExtendedProtocolDiscriminator,
+				// PDUSessionID:                  tt.fields.PDUSessionID,
+				// PTI:                           tt.fields.PTI,
+				// PDUSESSIONESTABLISHMENTACCEPTMessageIdentity: tt.fields.PDUSESSIONESTABLISHMENTACCEPTMessageIdentity,
+				// SelectedSSCModeAndSelectedPDUSessionType:     tt.fields.SelectedSSCModeAndSelectedPDUSessionType,
+				AuthorizedQosRules: tt.fields.AuthorizedQosRules,
+				// SessionAMBR:                                  tt.fields.SessionAMBR,
+				// Cause5GSM:                                    tt.fields.Cause5GSM,
+				// PDUAddress:                                   tt.fields.PDUAddress,
+				// RQTimerValue:                                 tt.fields.RQTimerValue,
+				// SNSSAI:                                       tt.fields.SNSSAI,
+				// AlwaysonPDUSessionIndication:                 tt.fields.AlwaysonPDUSessionIndication,
+				// MappedEPSBearerContexts:                      tt.fields.MappedEPSBearerContexts,
+				// EAPMessage:                                   tt.fields.EAPMessage,
+				// AuthorizedQosFlowDescriptions:                tt.fields.AuthorizedQosFlowDescriptions,
+				// ExtendedProtocolConfigurationOptions:         tt.fields.ExtendedProtocolConfigurationOptions,
+				// DNN:                                          tt.fields.DNN,
+			}
+			a.DecodePDUSessionEstablishmentAccept(tt.args.byteArray)
+			j, _ := json.Marshal(a)
+			fmt.Println(string(j))
+		})
 	}
 }
