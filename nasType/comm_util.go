@@ -10,3 +10,7 @@ func GetBitMask(ub uint8, lb uint8) (bitMask uint8) {
 	bitMask = ((1<<(ub-lb) - 1) << (lb))
 	return bitMask
 }
+
+type Parser interface {
+	Parse() error
+}

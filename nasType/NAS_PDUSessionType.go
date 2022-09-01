@@ -1,11 +1,44 @@
 package nasType
 
+import (
+	"errors"
+)
+
+const (
+	PDUSessionTypeIPv4   = 0b001
+	PDUSessionTypeIPv6   = 0b010
+	PDUSessionTypeIPv4v6 = 0b011
+	Ethernet             = 0b101
+	Reserved             = 0b111
+)
+
 // PDUSessionType 9.11.4.11
 // Iei Row, sBit, len = [0, 0], 8 , 4
 // Spare Row, sBit, len = [0, 0], 4 , 1
 // PDUSessionTypeValue Row, sBit, len = [0, 0], 3 , 3
 type PDUSessionType struct {
-	Octet uint8 `json:"Octet,omitempty"`
+	Octet   uint8  `json:"-"`
+	Type    uint8  `json:"Type,omitempty"`
+	TypeStr string `json:"TypeStr,omitempty"`
+}
+
+func (a *PDUSessionType) Parse() error {
+	a.Type = a.Octet
+	switch a.Type {
+	case PDUSessionTypeIPv4:
+		a.TypeStr = "PDUSessionTypeIPv4"
+	case PDUSessionTypeIPv6:
+		a.TypeStr = "PDUSessionTypeIPv6"
+	case PDUSessionTypeIPv4v6:
+		a.TypeStr = "PDUSessionTypeIPv4v6"
+	case Ethernet:
+		a.TypeStr = "Ethernet"
+	case Reserved:
+		a.TypeStr = "Reserved"
+	default:
+		return errors.New("pdu session type not valid")
+	}
+	return nil
 }
 
 func NewPDUSessionType(iei uint8) (pDUSessionType *PDUSessionType) {

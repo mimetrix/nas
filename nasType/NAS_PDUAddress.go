@@ -8,11 +8,6 @@ import (
 // PDUAddress 9.11.4.10
 // PDUSessionTypeValue Row, sBit, len = [0, 0], 3 , 3
 // PDUAddressInformation Row, sBit, len = [1, 12], 8 , 96
-const (
-	PDUSessionTypeIPv4   = 1
-	PDUSessionTypeIPv6   = 2
-	PDUSessionTypeIPv4v6 = 3
-)
 
 type PDUAddress struct {
 	Iei            uint8     `json:"-"`

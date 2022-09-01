@@ -1,14 +1,53 @@
 package nasType
 
+import "github.com/free5gc/nas/nasMessage"
+
 // SessionAMBR 9.11.4.14
 // UnitForSessionAMBRForDownlink Row, sBit, len = [0, 0], 8 , 8
 // SessionAMBRForDownlink Row, sBit, len = [1, 2], 8 , 16
 // UnitForSessionAMBRForUplink Row, sBit, len = [3, 3], 8 , 8
 // SessionAMBRForUplink Row, sBit, len = [4, 5], 8 , 16
 type SessionAMBR struct {
-	Iei   uint8    `json:"Iei,omitempty"`
-	Len   uint8    `json:"Len,omitempty"`
-	Octet [6]uint8 `json:"Octet,omitempty"`
+	Iei           uint8    `json:"-"`
+	Len           uint8    `json:"-"`
+	Octet         [6]uint8 `json:"-"`
+	DownlinkValue uint16   `json:"DownlinkValue,omitempty"`
+	DownlinkUnit  string   `json:"DownlinkUnit,omitempty"`
+	UplinkValue   uint16   `json:"UplinkValue,omitempty"`
+	UplinkUnit    string   `json:"UplinkUnit,omitempty"`
+}
+
+func (a *SessionAMBR) Parse() error {
+	switch a.GetUnitForSessionAMBRForDownlink() {
+	case nasMessage.SessionAMBRUnitNotUsed:
+
+	case nasMessage.SessionAMBRUnit1Kbps:
+	case nasMessage.SessionAMBRUnit5Kbps:
+	case nasMessage.SessionAMBRUnit16Kbps:
+	case nasMessage.SessionAMBRUnit64Kbps:
+	case nasMessage.SessionAMBRUnit256Kbps:
+	case nasMessage.SessionAMBRUnit1Mbps:
+	case nasMessage.SessionAMBRUnit4Mbps:
+	case nasMessage.SessionAMBRUnit16Mbps:
+	case nasMessage.SessionAMBRUnit64Mbps:
+	case nasMessage.SessionAMBRUnit256Mbps:
+	case nasMessage.SessionAMBRUnit1Gbps:
+	case nasMessage.SessionAMBRUnit4Gbps:
+	case nasMessage.SessionAMBRUnit16Gbps:
+	case nasMessage.SessionAMBRUnit64Gbps:
+	case nasMessage.SessionAMBRUnit256Gbps:
+	case nasMessage.SessionAMBRUnit1Tbps:
+	case nasMessage.SessionAMBRUnit4Tbps:
+	case nasMessage.SessionAMBRUnit16Tbps:
+	case nasMessage.SessionAMBRUnit64Tbps:
+	case nasMessage.SessionAMBRUnit256Tbps:
+	case nasMessage.SessionAMBRUnit1Pbps:
+	case nasMessage.SessionAMBRUnit4Pbps:
+	case nasMessage.SessionAMBRUnit16Pbps:
+	case nasMessage.SessionAMBRUnit64Pbps:
+	case nasMessage.SessionAMBRUnit256Pbps:
+	}
+	return nil
 }
 
 func NewSessionAMBR(iei uint8) (sessionAMBR *SessionAMBR) {
