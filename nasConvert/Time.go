@@ -3,7 +3,7 @@ package nasConvert
 import (
 	"strings"
 
-	"github.com/free5gc/nas/nasType"
+	"github.com/mimetrix/nas/nasType"
 )
 
 func LocalTimeZoneToNas(timezone string) (nasTimezone nasType.LocalTimeZone) {

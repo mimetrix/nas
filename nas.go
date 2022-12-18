@@ -5,7 +5,7 @@ import (
 	"encoding/binary"
 	"fmt"
 
-	"github.com/free5gc/nas/nasMessage"
+	"github.com/mimetrix/nas/nasMessage"
 )
 
 // Message TODO：description
@@ -17,10 +17,10 @@ type Message struct {
 
 // SecurityHeader TODO：description
 type SecurityHeader struct {
-	ProtocolDiscriminator     uint8  `json:"ProtocolDiscriminator,omitempty"`
-	SecurityHeaderType        uint8  `json:"SecurityHeaderType,omitempty"`
-	MessageAuthenticationCode uint32 `json:"MessageAuthenticationCode,omitempty"`
-	SequenceNumber            uint8  `json:"SequenceNumber,omitempty"`
+	ProtocolDiscriminator     uint8  `json:"ProtocolDiscriminator"`
+	SecurityHeaderType        uint8  `json:"SecurityHeaderType"`
+	MessageAuthenticationCode uint32 `json:"MessageAuthenticationCode"`
+	SequenceNumber            uint8  `json:"SequenceNumber"`
 }
 
 const (
@@ -139,6 +139,8 @@ type GmmMessage struct {
 }
 
 const (
+
+	MsgTypeSecurityProtected5GSNASMessage                   uint8 = 37  
 	MsgTypeRegistrationRequest                              uint8 = 65
 	MsgTypeRegistrationAccept                               uint8 = 66
 	MsgTypeRegistrationComplete                             uint8 = 67
@@ -293,8 +295,11 @@ func (a *Message) GmmMessageDecode(byteArray *[]byte) error {
 	case MsgTypeDLNASTransport:
 		a.GmmMessage.DLNASTransport = nasMessage.NewDLNASTransport(MsgTypeDLNASTransport)
 		a.GmmMessage.DecodeDLNASTransport(byteArray)
+    case MsgTypeSecurityProtected5GSNASMessage:  
+		a.GmmMessage.SecurityProtected5GSNASMessage = nasMessage.NewSecurityProtected5GSNASMessage(MsgTypeSecurityProtected5GSNASMessage)
+		a.GmmMessage.DecodeSecurityProtected5GSNASMessage(byteArray)
 	default:
-		return fmt.Errorf("NAS decode Fail: MsgType[%d] doesn't exist in GMM Message",
+		return fmt.Errorf("NAS decode Fail: MsgType[%x] doesn't exist in GMM Message",
 			a.GmmMessage.GmmHeader.GetMessageType())
 	}
 	return nil

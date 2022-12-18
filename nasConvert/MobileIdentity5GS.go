@@ -7,9 +7,9 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/free5gc/nas/logger"
-	"github.com/free5gc/nas/nasMessage"
-	"github.com/free5gc/nas/nasType"
+	"github.com/mimetrix/nas/logger"
+	"github.com/mimetrix/nas/nasMessage"
+	"github.com/mimetrix/nas/nasType"
 	"github.com/free5gc/openapi/models"
 )
 
