@@ -124,11 +124,11 @@ type testSNSSAIDataTemplate struct {
 }
 
 var SNSSAITestData = []nasType.SNSSAI{
-	{nasMessage.PDUSessionEstablishmentAcceptSNSSAIType, 8, [8]uint8{}},
+	{nasMessage.PDUSessionEstablishmentAcceptSNSSAIType, 8, [8]uint8{},0,[3]uint8{},0,[3]uint8{}},
 }
 
 var SNSSAIExpectedData = []nasType.SNSSAI{
-	{nasMessage.PDUSessionEstablishmentAcceptSNSSAIType, 8, [8]uint8{0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01}},
+	{nasMessage.PDUSessionEstablishmentAcceptSNSSAIType, 8, [8]uint8{0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01},0,[3]uint8{},0,[3]uint8{}},
 }
 
 var SNSSAITable = []testSNSSAIDataTemplate{

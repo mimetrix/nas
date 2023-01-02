@@ -53,11 +53,11 @@ type SelectedSSCModeAndSelectedPDUSessionTypeTestDataTemplate struct {
 }
 
 var SelectedSSCModeAndSelectedPDUSessionTypeTestData = []nasType.SelectedSSCModeAndSelectedPDUSessionType{
-	{0x00},
+	{0x00,"",""},
 }
 
 var SelectedSSCModeAndSelectedPDUSessionTypeExpectedTestData = []nasType.SelectedSSCModeAndSelectedPDUSessionType{
-	{0x11},
+	{0x11,"",""},
 }
 
 var SelectedSSCModeAndSelectedPDUSessionTypeTable = []SelectedSSCModeAndSelectedPDUSessionTypeTestDataTemplate{
