@@ -14,7 +14,7 @@ import (
 type MobileIdentity5GS struct {
 	Iei    uint8   `json:"Iei,omitempty"`
 	Len    uint16  `json:"Len,omitempty"`
-	Buffer []uint8 `json:"Buffer,omitempty"`
+	Buffer []uint8 `json:"Bufferx,omitempty"`
 }
 
 // const

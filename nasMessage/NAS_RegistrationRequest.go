@@ -171,6 +171,7 @@ func (a *RegistrationRequest) DecodeRegistrationRequest(byteArray *[]byte) {
 	binary.Read(buffer, binary.BigEndian, &a.SpareHalfOctetAndSecurityHeaderType.Octet)
 	binary.Read(buffer, binary.BigEndian, &a.RegistrationRequestMessageIdentity.Octet)
 	binary.Read(buffer, binary.BigEndian, &a.NgksiAndRegistrationType5GS.Octet)
+    a.DecodeNASType()
 	binary.Read(buffer, binary.BigEndian, &a.MobileIdentity5GS.Len)
 	a.MobileIdentity5GS.SetLen(a.MobileIdentity5GS.GetLen())
 	binary.Read(buffer, binary.BigEndian, &a.MobileIdentity5GS.Buffer)

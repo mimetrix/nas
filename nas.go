@@ -139,40 +139,41 @@ type GmmMessage struct {
 }
 
 const (
-
 	MsgTypeSecurityProtected5GSNASMessage                   uint8 = 37  
-	MsgTypeRegistrationRequest                              uint8 = 65
+	MsgTypeRegistrationRequest                              uint8 = 65 //0x41
 	MsgTypeRegistrationAccept                               uint8 = 66
 	MsgTypeRegistrationComplete                             uint8 = 67
 	MsgTypeRegistrationReject                               uint8 = 68
-	MsgTypeDeregistrationRequestUEOriginatingDeregistration uint8 = 69
+	MsgTypeDeregistrationRequestUEOriginatingDeregistration uint8 = 69 //0x45
 	MsgTypeDeregistrationAcceptUEOriginatingDeregistration  uint8 = 70
 	MsgTypeDeregistrationRequestUETerminatedDeregistration  uint8 = 71
 	MsgTypeDeregistrationAcceptUETerminatedDeregistration   uint8 = 72
 	MsgTypeServiceRequest                                   uint8 = 76
-	MsgTypeServiceReject                                    uint8 = 77
+	MsgTypeServiceReject                                    uint8 = 77 //0x4a
 	MsgTypeServiceAccept                                    uint8 = 78
 	MsgTypeConfigurationUpdateCommand                       uint8 = 84
 	MsgTypeConfigurationUpdateComplete                      uint8 = 85
 	MsgTypeAuthenticationRequest                            uint8 = 86
 	MsgTypeAuthenticationResponse                           uint8 = 87
-	MsgTypeAuthenticationReject                             uint8 = 88
+	MsgTypeAuthenticationReject                             uint8 = 88 //0x50
 	MsgTypeAuthenticationFailure                            uint8 = 89
 	MsgTypeAuthenticationResult                             uint8 = 90
 	MsgTypeIdentityRequest                                  uint8 = 91
 	MsgTypeIdentityResponse                                 uint8 = 92
 	MsgTypeSecurityModeCommand                              uint8 = 93
-	MsgTypeSecurityModeComplete                             uint8 = 94
-	MsgTypeSecurityModeReject                               uint8 = 95
+	MsgTypeSecurityModeComplete                             uint8 = 94 //0x56
+	MsgTypeSecurityModeReject                               uint8 = 95 //0x57
 	MsgTypeStatus5GMM                                       uint8 = 100
 	MsgTypeNotification                                     uint8 = 101
-	MsgTypeNotificationResponse                             uint8 = 102
+	MsgTypeNotificationResponse                             uint8 = 102 //0x5a
 	MsgTypeULNASTransport                                   uint8 = 103
-	MsgTypeDLNASTransport                                   uint8 = 104
+	MsgTypeDLNASTransport                                   uint8 = 104 //0x5c
+    //0x5d
 )
 
 func (a *Message) PlainNasDecode(byteArray *[]byte) error {
 	epd := GetEPD(*byteArray)
+
 	switch epd {
 	case nasMessage.Epd5GSMobilityManagementMessage:
 		return a.GmmMessageDecode(byteArray)
