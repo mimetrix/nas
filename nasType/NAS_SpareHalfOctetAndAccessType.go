@@ -4,6 +4,11 @@ package nasType
 // AccessType Row, sBit, len = [0, 0], 2 , 2
 type SpareHalfOctetAndAccessType struct {
 	Octet uint8 `json:"Octet,omitempty"`
+    AccessType uint8
+}
+
+func (a *SpareHalfOctetAndAccessType) DecodeNASType() {
+    a.AccessType = a.GetAccessType()
 }
 
 func NewSpareHalfOctetAndAccessType() (spareHalfOctetAndAccessType *SpareHalfOctetAndAccessType) {

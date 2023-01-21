@@ -7,6 +7,7 @@ type SpareHalfOctetAndSecurityHeaderType struct {
 	Octet uint8 `json:"Octet,omitempty"`
 }
 
+
 func NewSpareHalfOctetAndSecurityHeaderType() (spareHalfOctetAndSecurityHeaderType *SpareHalfOctetAndSecurityHeaderType) {
 	spareHalfOctetAndSecurityHeaderType = &SpareHalfOctetAndSecurityHeaderType{}
 	return spareHalfOctetAndSecurityHeaderType

@@ -4,6 +4,7 @@ import (
 	"encoding/hex"
 	"errors"
 	"fmt"
+	//"github.com/davecgh/go-spew/spew"
 	"math/bits"
 	"strconv"
 	"strings"
@@ -13,8 +14,45 @@ import (
 // MobileIdentity5GSContents Row, sBit, len = [0, 0], 8 , INF
 type MobileIdentity5GS struct {
 	Iei    uint8   `json:"Iei,omitempty"`
-	Len    uint16  `json:"Len,omitempty"`
-	Buffer []uint8 `json:"Bufferx,omitempty"`
+	Len    uint16  `json:"-,omitempty"`
+	Buffer []uint8 `json:"-,omitempty"`
+    IdentityType string `json:",omitempty"`
+    SUCI string         `json:",omitempty"`
+    FiveGTMSI string    `json:",omitempty"`
+    FiveGGUTI string    `json:",omitempty"`
+    IMEI string       `json:",omitempty"`
+    IMEISV string       `json:",omitempty"`
+}
+
+func (m *MobileIdentity5GS) DecodeNASType() error {
+	idType := m.Buffer[0] & high5BitMask
+	switch idType {
+	case noIdentity:
+        m.IdentityType="noIdentity"        
+	case suci:
+        m.IdentityType="SUCI"        
+        m.SUCI = m.GetSUCI()
+	case fiveGGUTI:
+        m.IdentityType="5G-GUTI"        
+		m.FiveGGUTI = m.Get5GGUTI()
+	case imei:
+        m.IdentityType="IMEI"
+		m.IMEI = m.GetIMEI()
+	case fiveGSTMSI:
+        m.IdentityType="5G-S-TMSI"        
+		m.FiveGTMSI = m.Get5GTMSI()
+	case imeisv:
+        m.IdentityType="IMEISV"        
+        m.IMEISV = m.GetIMEISV()
+    case macAddress:
+        m.IdentityType="MACAddress"        
+    case EUI64:
+        m.IdentityType="EUI64"        
+    default:
+        m.IdentityType = "unknown"
+		
+	}
+    return nil
 }
 
 // const
@@ -25,6 +63,8 @@ const (
 	imei
 	fiveGSTMSI
 	imeisv
+    macAddress
+    EUI64
 )
 
 // const
@@ -98,6 +138,10 @@ func (a *MobileIdentity5GS) GetTypeOfIdentity() (string, error) {
 		return "5G-S-TMSI", nil
 	case imeisv:
 		return "IMEISV", nil
+    case macAddress:
+        return "macAddress", nil
+    case EUI64:
+        return "EUI64", nil
 	default:
 		return "SUCI", nil
 	}

@@ -169,12 +169,20 @@ func (a *RegistrationRequest) DecodeRegistrationRequest(byteArray *[]byte) {
 	buffer := bytes.NewBuffer(*byteArray)
 	binary.Read(buffer, binary.BigEndian, &a.ExtendedProtocolDiscriminator.Octet)
 	binary.Read(buffer, binary.BigEndian, &a.SpareHalfOctetAndSecurityHeaderType.Octet)
+
 	binary.Read(buffer, binary.BigEndian, &a.RegistrationRequestMessageIdentity.Octet)
-	binary.Read(buffer, binary.BigEndian, &a.NgksiAndRegistrationType5GS.Octet)
-    a.DecodeNASType()
-	binary.Read(buffer, binary.BigEndian, &a.MobileIdentity5GS.Len)
+    a.RegistrationRequestMessageIdentity.DecodeNASType()
+	
+    binary.Read(buffer, binary.BigEndian, &a.NgksiAndRegistrationType5GS.Octet)
+    a.NgksiAndRegistrationType5GS.DecodeNASType()
+	
+    binary.Read(buffer, binary.BigEndian, &a.MobileIdentity5GS.Len)
 	a.MobileIdentity5GS.SetLen(a.MobileIdentity5GS.GetLen())
+    
+
 	binary.Read(buffer, binary.BigEndian, &a.MobileIdentity5GS.Buffer)
+    a.MobileIdentity5GS.DecodeNASType()
+
 	for buffer.Len() > 0 {
 		var ieiN uint8
 		var tmpIeiN uint8
