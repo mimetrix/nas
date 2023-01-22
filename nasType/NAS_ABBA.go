@@ -3,9 +3,15 @@ package nasType
 // ABBA 9.11.3.10
 // ABBAContents Row, sBit, len = [0, 0], 8 , INF
 type ABBA struct {
-	Iei    uint8   `json:"Iei,omitempty"`
-	Len    uint8   `json:"Len,omitempty"`
-	Buffer []uint8 `json:"Buffer,omitempty"`
+	Iei    uint8   `json:"-,omitempty"`
+	Len    uint8   `json:"-,omitempty"`
+	Buffer []uint8 `json:"-,omitempty"`
+    ABBAValue   string   `json:,"omitempty"`
+}
+
+func (a *ABBA) DecodeNASType() error {
+    a.ABBAValue =  GetHexString(a.Buffer[:], ":")
+    return nil
 }
 
 func NewABBA(iei uint8) (aBBA *ABBA) {

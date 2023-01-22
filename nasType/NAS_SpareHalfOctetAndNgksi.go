@@ -1,12 +1,24 @@
 package nasType
 
+import(
+)
+
 // SpareHalfOctetAndNgksi 9.11.3.32 9.5
 // SpareHalfOctet Row, sBit, len = [0, 0], 8 , 4
 // TSC Row, sBit, len = [0, 0], 4 , 1
 // NasKeySetIdentifiler Row, sBit, len = [0, 0], 3 , 3
 type SpareHalfOctetAndNgksi struct {
-	Octet uint8 `json:"Octet,omitempty"`
+	Octet uint8 `json:"-"`
+    TSC uint8   `json:",omitempty"`
+    KeySetID uint8 `json:",omitempty"`
 }
+
+func (s *SpareHalfOctetAndNgksi) DecodeNASType() error{
+    s.TSC = s.GetTSC()
+    s.KeySetID = s.GetNasKeySetIdentifier()
+    return nil
+}
+
 
 func NewSpareHalfOctetAndNgksi() (spareHalfOctetAndNgksi *SpareHalfOctetAndNgksi) {
 	spareHalfOctetAndNgksi = &SpareHalfOctetAndNgksi{}
@@ -39,7 +51,7 @@ func (a *SpareHalfOctetAndNgksi) SetTSC(tSC uint8) {
 
 // SpareHalfOctetAndNgksi 9.11.3.32 9.5
 // NasKeySetIdentifiler Row, sBit, len = [0, 0], 3 , 3
-func (a *SpareHalfOctetAndNgksi) GetNasKeySetIdentifiler() (nasKeySetIdentifiler uint8) {
+func (a *SpareHalfOctetAndNgksi) GetNasKeySetIdentifier() (nasKeySetIdentifiler uint8) {
 	return a.Octet & GetBitMask(3, 0)
 }
 

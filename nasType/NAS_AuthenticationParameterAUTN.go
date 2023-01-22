@@ -1,11 +1,19 @@
 package nasType
 
+//import "github.com/davecgh/go-spew/spew"
 // AuthenticationParameterAUTN 9.11.3.15
 // AUTN Row, sBit, len = [0, 15], 8 , 128
 type AuthenticationParameterAUTN struct {
-	Iei   uint8     `json:"Iei,omitempty"`
-	Len   uint8     `json:"Len,omitempty"`
-	Octet [16]uint8 `json:"Octet,omitempty"`
+	Iei   uint8     `json:"-,omitempty"`
+	Len   uint8     `json:"-,omitempty"`
+	Octet [16]uint8 `json:"-,omitempty"`
+    Autn  string
+}
+
+func (a *AuthenticationParameterAUTN ) DecodeNASType() error{
+
+    a.Autn = GetHexString(a.Octet[:], ":")
+    return nil
 }
 
 func NewAuthenticationParameterAUTN(iei uint8) (authenticationParameterAUTN *AuthenticationParameterAUTN) {
@@ -37,6 +45,7 @@ func (a *AuthenticationParameterAUTN) GetLen() (len uint8) {
 func (a *AuthenticationParameterAUTN) SetLen(len uint8) {
 	a.Len = len
 }
+
 
 // AuthenticationParameterAUTN 9.11.3.15
 // AUTN Row, sBit, len = [0, 15], 8 , 128
