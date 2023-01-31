@@ -35,9 +35,93 @@ package nasType
 // EIA7 Row, sBit, len = [3, 3], 1 , 1
 // Spare Row, sBit, len = [4, 7], 8 , 32
 type UESecurityCapability struct {
-	Iei    uint8   `json:"Iei,omitempty"`
-	Len    uint8   `json:"Len,omitempty"`
-	Buffer []uint8 `json:"Buffer,omitempty"`
+	Iei    uint8   `json:"-"`
+	Len    uint8   `json:"-"`
+	Buffer []uint8 `json:"-"`
+
+    EA0_5G	bool
+    EA1_128_5G	bool
+    EA2_128_5G	bool
+    EA3_128_5G	bool
+    EA4_5G	bool
+    EA5_5G	bool
+    EA6_5G	bool
+    EA7_5G	bool
+
+    IA0_5G	bool
+    IA1_128_5G	bool
+    IA2_128_5G	bool
+    IA3_128_5G	bool
+    IA4_5G	bool
+    IA5_5G	bool
+    IA6_5G	bool
+    IA7_5G	bool
+
+    EEA0	bool
+    EEA1_128	bool
+    EEA2_128	bool
+    EEA3_128	bool
+    EEA4	bool
+    EEA5	bool
+    EEA6	bool
+    EEA7	bool
+    
+    EIA0	bool
+    EIA1_128	bool
+    EIA2_128	bool
+    EIA3_128	bool
+    EIA4	bool
+    EIA5	bool
+    EIA6	bool
+    EIA7	bool
+}
+
+func (u *UESecurityCapability) DecodeNASType() error{
+
+    if(u.Len >= 1){
+        u.EA0_5G = u.GetEA0_5G()==1
+        u.EA1_128_5G = u.GetEA1_128_5G()==1
+        u.EA2_128_5G = u.GetEA2_128_5G()==1
+        u.EA3_128_5G = u.GetEA3_128_5G()==1
+        u.EA4_5G = u.GetEA4_5G()==1
+        u.EA5_5G = u.GetEA5_5G()==1
+        u.EA6_5G = u.GetEA6_5G()==1
+        u.EA7_5G = u.GetEA7_5G()==1
+    }
+    if(u.Len >= 2){
+        u.IA0_5G = u.GetIA0_5G()==1
+        u.IA1_128_5G = u.GetIA1_128_5G()==1
+        u.IA2_128_5G = u.GetIA2_128_5G()==1
+        u.IA3_128_5G = u.GetIA3_128_5G()==1
+        u.IA4_5G = u.GetIA4_5G()==1
+        u.IA5_5G = u.GetIA5_5G()==1
+        u.IA6_5G = u.GetIA6_5G()==1
+        u.IA7_5G = u.GetIA7_5G()==1
+    }
+
+    if(u.Len >= 3){
+        u.EEA0 = u.GetEEA0()==1
+        u.EEA1_128 = u.GetEEA1_128()==1
+        u.EEA2_128 = u.GetEEA2_128()==1
+        u.EEA3_128 = u.GetEEA3_128()==1
+        u.EEA4 = u.GetEEA4()==1
+        u.EEA5 = u.GetEEA5()==1
+        u.EEA6 = u.GetEEA6()==1
+        u.EEA7 = u.GetEEA7()==1
+    }
+
+    if(u.Len >= 4){
+        u.EIA0 = u.GetEIA0()==1
+        u.EIA1_128 = u.GetEIA1_128()==1
+        u.EIA2_128 = u.GetEIA2_128()==1
+        u.EIA3_128 = u.GetEIA3_128()==1
+        u.EIA4 = u.GetEIA4()==1
+        u.EIA5 = u.GetEIA5()==1
+        u.EIA6 = u.GetEIA6()==1
+        u.EIA7 = u.GetEIA7()==1
+    }
+        
+    return nil
 }
 
 func NewUESecurityCapability(iei uint8) (uESecurityCapability *UESecurityCapability) {

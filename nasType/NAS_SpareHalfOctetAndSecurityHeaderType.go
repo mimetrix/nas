@@ -4,10 +4,10 @@ package nasType
 // SpareHalfOctet Row, sBit, len = [0, 0], 8 , 4
 // SecurityHeaderType Row, sBit, len = [0, 0], 4 , 4
 type SpareHalfOctetAndSecurityHeaderType struct {
-	Octet uint8 `json:"-,omitempty"`
-    SpareOctet uint8 `json:"-"`
-    SecurityHeaderID uint8 `json:"-"`
-    SecurityHeaderType string `json:",omitempty"`
+	Octet uint8 `json:"Octet,omitempty"`
+    SpareOctet uint8 `json:"SpareOctet"`
+    SecurityHeaderID uint8 `json:"SecurityHeaderID"`
+    SecurityHeaderType string `json:"SecurityHeaderType,omitempty"`
 }
 
 var secHeaderTypes = map[uint8]string {

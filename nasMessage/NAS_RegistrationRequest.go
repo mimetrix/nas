@@ -168,7 +168,10 @@ func (a *RegistrationRequest) EncodeRegistrationRequest(buffer *bytes.Buffer) {
 func (a *RegistrationRequest) DecodeRegistrationRequest(byteArray *[]byte) {
 	buffer := bytes.NewBuffer(*byteArray)
 	binary.Read(buffer, binary.BigEndian, &a.ExtendedProtocolDiscriminator.Octet)
+    a.ExtendedProtocolDiscriminator.DecodeNASType()
+
 	binary.Read(buffer, binary.BigEndian, &a.SpareHalfOctetAndSecurityHeaderType.Octet)
+    a.SpareHalfOctetAndSecurityHeaderType.DecodeNASType()
 
 	binary.Read(buffer, binary.BigEndian, &a.RegistrationRequestMessageIdentity.Octet)
     a.RegistrationRequestMessageIdentity.DecodeNASType()
@@ -208,6 +211,7 @@ func (a *RegistrationRequest) DecodeRegistrationRequest(byteArray *[]byte) {
 			binary.Read(buffer, binary.BigEndian, &a.UESecurityCapability.Len)
 			a.UESecurityCapability.SetLen(a.UESecurityCapability.GetLen())
 			binary.Read(buffer, binary.BigEndian, a.UESecurityCapability.Buffer[:a.UESecurityCapability.GetLen()])
+            a.UESecurityCapability.DecodeNASType()
 		case RegistrationRequestRequestedNSSAIType:
 			a.RequestedNSSAI = nasType.NewRequestedNSSAI(ieiN)
 			binary.Read(buffer, binary.BigEndian, &a.RequestedNSSAI.Len)

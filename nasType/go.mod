@@ -1,4 +1,4 @@
-module github.com/mimetrix/nas
+module github.com/mimetrix/nas/nasType
 
 go 1.19
 

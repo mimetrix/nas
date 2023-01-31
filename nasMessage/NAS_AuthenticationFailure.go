@@ -3,7 +3,6 @@ package nasMessage
 import (
 	"bytes"
 	"encoding/binary"
-
 	"github.com/mimetrix/nas/nasType"
 )
 

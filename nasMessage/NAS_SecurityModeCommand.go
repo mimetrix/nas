@@ -76,6 +76,7 @@ func (a *SecurityModeCommand) EncodeSecurityModeCommand(buffer *bytes.Buffer) {
 func (a *SecurityModeCommand) DecodeSecurityModeCommand(byteArray *[]byte) {
 	buffer := bytes.NewBuffer(*byteArray)
 	binary.Read(buffer, binary.BigEndian, &a.ExtendedProtocolDiscriminator.Octet)
+    a.ExtendedProtocolDiscriminator.DecodeNASType()
 	binary.Read(buffer, binary.BigEndian, &a.SpareHalfOctetAndSecurityHeaderType.Octet)
 	binary.Read(buffer, binary.BigEndian, &a.SecurityModeCommandMessageIdentity.Octet)
 	binary.Read(buffer, binary.BigEndian, &a.SelectedNASSecurityAlgorithms.Octet)

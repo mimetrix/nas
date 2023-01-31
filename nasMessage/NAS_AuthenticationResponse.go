@@ -29,6 +29,7 @@ func (a *AuthenticationResponse) EncodeAuthenticationResponse(buffer *bytes.Buff
 	binary.Write(buffer, binary.BigEndian, &a.ExtendedProtocolDiscriminator.Octet)
 	binary.Write(buffer, binary.BigEndian, &a.SpareHalfOctetAndSecurityHeaderType.Octet)
 	binary.Write(buffer, binary.BigEndian, &a.AuthenticationResponseMessageIdentity.Octet)
+
 	if a.AuthenticationResponseParameter != nil {
 		binary.Write(buffer, binary.BigEndian, a.AuthenticationResponseParameter.GetIei())
 		binary.Write(buffer, binary.BigEndian, a.AuthenticationResponseParameter.GetLen())
@@ -43,9 +44,16 @@ func (a *AuthenticationResponse) EncodeAuthenticationResponse(buffer *bytes.Buff
 
 func (a *AuthenticationResponse) DecodeAuthenticationResponse(byteArray *[]byte) {
 	buffer := bytes.NewBuffer(*byteArray)
+
 	binary.Read(buffer, binary.BigEndian, &a.ExtendedProtocolDiscriminator.Octet)
+    a.ExtendedProtocolDiscriminator.DecodeNASType()
+
 	binary.Read(buffer, binary.BigEndian, &a.SpareHalfOctetAndSecurityHeaderType.Octet)
+    a.SpareHalfOctetAndSecurityHeaderType.DecodeNASType()
+
 	binary.Read(buffer, binary.BigEndian, &a.AuthenticationResponseMessageIdentity.Octet)
+    a.AuthenticationResponseMessageIdentity.DecodeNASType()
+    
 	for buffer.Len() > 0 {
 		var ieiN uint8
 		var tmpIeiN uint8
@@ -63,11 +71,13 @@ func (a *AuthenticationResponse) DecodeAuthenticationResponse(byteArray *[]byte)
 			binary.Read(buffer, binary.BigEndian, &a.AuthenticationResponseParameter.Len)
 			a.AuthenticationResponseParameter.SetLen(a.AuthenticationResponseParameter.GetLen())
 			binary.Read(buffer, binary.BigEndian, a.AuthenticationResponseParameter.Octet[:a.AuthenticationResponseParameter.GetLen()])
+            a.AuthenticationResponseParameter.DecodeNASType()
 		case AuthenticationResponseEAPMessageType:
 			a.EAPMessage = nasType.NewEAPMessage(ieiN)
 			binary.Read(buffer, binary.BigEndian, &a.EAPMessage.Len)
 			a.EAPMessage.SetLen(a.EAPMessage.GetLen())
 			binary.Read(buffer, binary.BigEndian, a.EAPMessage.Buffer[:a.EAPMessage.GetLen()])
+            a.EAPMessage.DecodeNASType()
 		default:
 		}
 	}

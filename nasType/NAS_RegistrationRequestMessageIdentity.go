@@ -4,11 +4,13 @@ package nasType
 // MessageType Row, sBit, len = [0, 0], 8 , 8
 type RegistrationRequestMessageIdentity struct {
 	Octet uint8 `json:"Octet,omitempty"`
-    MessageType uint8
+    MessageType string 
+
+
 }
 
 func (a *RegistrationRequestMessageIdentity ) DecodeNASType() {
-    a.MessageType = a.GetMessageType()
+    a.MessageType = MessageTypes[a.Octet] 
 }
 
 func NewRegistrationRequestMessageIdentity() (registrationRequestMessageIdentity *RegistrationRequestMessageIdentity) {

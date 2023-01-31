@@ -9,8 +9,8 @@ import(
 // NasKeySetIdentifiler Row, sBit, len = [0, 0], 3 , 3
 type SpareHalfOctetAndNgksi struct {
 	Octet uint8 `json:"-"`
-    TSC uint8   `json:",omitempty"`
-    KeySetID uint8 `json:",omitempty"`
+    TSC uint8   
+    KeySetID uint8 
 }
 
 func (s *SpareHalfOctetAndNgksi) DecodeNASType() error{

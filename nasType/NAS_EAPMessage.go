@@ -6,6 +6,12 @@ type EAPMessage struct {
 	Iei    uint8   `json:"Iei,omitempty"`
 	Len    uint16  `json:"Len,omitempty"`
 	Buffer []uint8 `json:"Buffer,omitempty"`
+    Message string
+}
+
+func (e *EAPMessage) DecodeNASType() error{
+    e.Message = GetHexString(e.GetEAPMessage(), ":")
+    return nil
 }
 
 func NewEAPMessage(iei uint8) (eAPMessage *EAPMessage) {
