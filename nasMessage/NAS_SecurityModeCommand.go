@@ -77,13 +77,24 @@ func (a *SecurityModeCommand) DecodeSecurityModeCommand(byteArray *[]byte) {
 	buffer := bytes.NewBuffer(*byteArray)
 	binary.Read(buffer, binary.BigEndian, &a.ExtendedProtocolDiscriminator.Octet)
     a.ExtendedProtocolDiscriminator.DecodeNASType()
+
 	binary.Read(buffer, binary.BigEndian, &a.SpareHalfOctetAndSecurityHeaderType.Octet)
+    a.SpareHalfOctetAndSecurityHeaderType.DecodeNASType()
+
 	binary.Read(buffer, binary.BigEndian, &a.SecurityModeCommandMessageIdentity.Octet)
+    a.SecurityModeCommandMessageIdentity.DecodeNASType()
+
 	binary.Read(buffer, binary.BigEndian, &a.SelectedNASSecurityAlgorithms.Octet)
+    a.SelectedNASSecurityAlgorithms.DecodeNASType()
+
 	binary.Read(buffer, binary.BigEndian, &a.SpareHalfOctetAndNgksi.Octet)
+    a.SpareHalfOctetAndNgksi.DecodeNASType()
+
 	binary.Read(buffer, binary.BigEndian, &a.ReplayedUESecurityCapabilities.Len)
 	a.ReplayedUESecurityCapabilities.SetLen(a.ReplayedUESecurityCapabilities.GetLen())
 	binary.Read(buffer, binary.BigEndian, &a.ReplayedUESecurityCapabilities.Buffer)
+    a.ReplayedUESecurityCapabilities.DecodeNASType()
+
 	for buffer.Len() > 0 {
 		var ieiN uint8
 		var tmpIeiN uint8

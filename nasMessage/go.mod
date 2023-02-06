@@ -1,4 +1,4 @@
-module github.com/mimetrix/nasMessage
+module github.com/mimetrix/nas/nasMessage
 
 go 1.19
 

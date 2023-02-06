@@ -1,0 +1,165 @@
+F1AP
+
+-- Frame 10 UE to AMF -->>
+RegistrationRequest 
+    ExtendedProtocolDiscriminator
+    SpareHalfOctetAndSecurityHeaderType
+    RegistrationRequestMessageIdentity
+    NgksiAndRegistrationType5GS
+    MobileIdentity5GS
+    Capability5GMM
+    UESecurityCapability
+          
+
+<<-- Frame 31 AMF to UE --
+AuthenticationRequest 
+    ExtendedProtocolDiscriminator 
+    SpareHalfOctetAndSecurityHeaderType 
+    AuthenticationRequestMessageIdentity 
+    SpareHalfOctetAndNgksi 
+    ABBA 
+    AuthenticationParameterRAND 
+    AuthenticationParameterAUTN 
+                             
+
+
+<<-- Frame 34 UE to AMF --
+AuthenticationResponse 
+    ExtendedProtocolDiscriminator 
+    SpareHalfOctetAndSecurityHeaderType 
+    AuthenticationResponseMessageIdentity 
+    AuthenticationResponseParameter 
+
+
+-- Frame 43 AMF to UE-->>
+SecurityProtected5GSNASMessage 
+ExtendedProtocolDiscriminator 
+SpareHalfOctetAndSecurityHeaderType 
+MessageAuthenticationCode 
+SequenceNumber 
+PlainNASMessage 
+    GmmMessage 
+        SecurityModeCommand 
+            ExtendedProtocolDiscriminator 
+            SpareHalfOctetAndSecurityHeaderType 
+            SecurityModeCommandMessageIdentity 
+            SelectedNASSecurityAlgorithms 
+            SpareHalfOctetAndNgksi 
+            ReplayedUESecurityCapabilities 
+            IMEISVRequest 
+            Additional5GSecurityInformation 
+                                             
+<<-- Frame 46 UE to AMF --
+SecurityProtected5GSNASMessage 
+    ExtendedProtocolDiscriminator 
+    SpareHalfOctetAndSecurityHeaderType 
+    MessageAuthenticationCode 
+    SequenceNumber 
+    PlainNASMessage 
+        GmmMessage 
+            SecurityModeComplete 
+                ExtendedProtocolDiscriminator 
+                SpareHalfOctetAndSecurityHeaderType 
+                SecurityModeCompleteMessageIdentity 
+                IMEISV 
+                NASMessageContainer 
+
+
+
+-- Frame 47 AMF to UE -->>
+SecurityProtected5GSNASMessage 
+    ExtendedProtocolDiscriminator 
+    SpareHalfOctetAndSecurityHeaderType 
+    MessageAuthenticationCode 
+    SequenceNumber 
+    PlainNASMessage 
+        SecurityHeader 
+        GmmMessage 
+            RegistrationAccept 
+                ExtendedProtocolDiscriminator 
+                SpareHalfOctetAndSecurityHeaderType 
+                RegistrationAcceptMessageIdentity 
+                RegistrationResult5GS 
+                GUTI5G 
+                TAIList 
+                AllowedNSSAI 
+                NetworkFeatureSupport5GS 
+                T3512Value 
+                             
+
+-- Frame 57 UE to AMF -->>
+SecurityProtected5GSNASMessage 
+    ExtendedProtocolDiscriminator 
+    SpareHalfOctetAndSecurityHeaderType 
+    MessageAuthenticationCode 
+    SequenceNumber 
+    PlainNASMessage 
+        SecurityHeader 
+        GmmMessage 
+            RegistrationComplete 
+                ExtendedProtocolDiscriminator 
+                SpareHalfOctetAndSecurityHeaderType 
+                RegistrationCompleteMessageIdentity 
+                             
+
+
+-- Frame 58 AMF to UE-->>
+SecurityProtected5GSNASMessage 
+    ExtendedProtocolDiscriminator 
+    SpareHalfOctetAndSecurityHeaderType 
+    MessageAuthenticationCode 
+    SequenceNumber 
+    PlainNASMessage 
+        SecurityHeader 
+        GmmMessage 
+            ConfigurationUpdateCommand 
+                ExtendedProtocolDiscriminator 
+                SpareHalfOctetAndSecurityHeaderType 
+                ConfigurationUpdateCommandMessageIdentity 
+                FullNameForNetwork 
+                ShortNameForNetwork 
+                LocalTimeZone 
+                UniversalTimeAndLocalTimeZone 
+                NetworkDaylightSavingTime 
+                             
+
+
+
+
+
+-- Frame 61 UE to AMF -->>
+SecurityProtected5GSNASMessage 
+    ExtendedProtocolDiscriminator 
+    SpareHalfOctetAndSecurityHeaderType 
+    MessageAuthenticationCode 
+    SequenceNumber 
+    PlainNASMessage 
+        GmmMessage 
+            ULNASTransport 
+                ExtendedProtocolDiscriminator 
+                SpareHalfOctetAndSecurityHeaderType 
+                ULNASTRANSPORTMessageIdentity 
+                SpareHalfOctetAndPayloadContainerType 
+                PayloadContainer 
+                PduSessionID2Value 
+                RequestType 
+                SNSSAI 
+                    SD 
+                    MappedHPLMNSD 
+                DNN 
+
+-- Frame 63 AMF to UE -->>
+SecurityProtected5GSNASMessage 
+    ExtendedProtocolDiscriminator 
+    SpareHalfOctetAndSecurityHeaderType 
+    MessageAuthenticationCode 
+    SequenceNumber 
+    PlainNASMessage 
+        GmmMessage 
+            DLNASTransport 
+                ExtendedProtocolDiscriminator 
+                SpareHalfOctetAndSecurityHeaderType 
+                DLNASTRANSPORTMessageIdentity 
+                SpareHalfOctetAndPayloadContainerType 
+                PayloadContainer 
+                PduSessionID2Value 
