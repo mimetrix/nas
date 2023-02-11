@@ -3,7 +3,14 @@ package nasType
 // ConfigurationUpdateCommandMessageIdentity 9.7
 // MessageType Row, sBit, len = [0, 0], 8 , 8
 type ConfigurationUpdateCommandMessageIdentity struct {
-	Octet uint8 `json:"Octet,omitempty"`
+	Octet uint8 `json:"-"`
+    MessageType string
+}
+
+
+func (c *ConfigurationUpdateCommandMessageIdentity ) DecodeNASType() error {
+    c.MessageType = MessageTypes[c.Octet]
+    return nil
 }
 
 func NewConfigurationUpdateCommandMessageIdentity() (configurationUpdateCommandMessageIdentity *ConfigurationUpdateCommandMessageIdentity) {

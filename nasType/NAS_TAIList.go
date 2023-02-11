@@ -1,7 +1,9 @@
 package nasType
 
 import(
-    //"bytes"
+    "bytes"
+    "fmt"
+	"github.com/davecgh/go-spew/spew"
 	//"encoding/binary"
 )
 
@@ -21,12 +23,14 @@ type TAIType00 struct  {
     //LIst of TACs
 }
 
+
+
 type TAIType01 struct  {
     Type uint8
     NumElements uint8
     MCC string
     MNC string
-    //TAC
+    TAC [3]uint8
 }
 
 type TAIType10 struct  {
@@ -40,7 +44,40 @@ type TAIType interface{
     GetNumberOfTAIElems()
 }
 
-func (t *TAIList) DecodeNASType() {
+func (t *TAIList) DecodeNASType() error {
+
+    fmt.Println("TAIList")
+    payload := bytes.NewBuffer(t.Buffer)
+    for payload.Len() > 1 {
+        headerByte, err := payload.ReadByte()
+        if err!= nil {
+            fmt.Println(err)
+            return err
+        }
+        TAIType := (headerByte & 0x60) >> 5
+        numElements := (headerByte & 0x1F)
+        fmt.Printf("hdr:0x%x    type:0x%x    elems:0x%x\n",headerByte, TAIType, numElements)
+
+        if TAIType == 0x01 {
+            TAI01 := & TAIType01{}
+            type01Buf := make([]byte,6)
+            _, err := payload.Read(type01Buf)
+            if err != nil {
+                fmt.Println(err)
+                return(err)
+            }
+            MCC := fmt.Sprintf("%d%d%d", 
+                type01Buf[0] & 0xf, (type01Buf[0] &0xf0)>>4, type01Buf[1] &0xf)
+            MNC := fmt.Sprintf("%d%d",
+                type01Buf[2] &0xf, (type01Buf[2]&0xf0)>>4, (type01Buf[1]&0xf0) > 4 )
+            TAI01.MCC = MCC
+            TAI01.MNC = MNC
+            spew.Dump(TAI01)
+
+        }
+
+    }
+    //get type of 
     /*
     TODO:
     create slice of PartialTAIs 
@@ -48,6 +85,7 @@ func (t *TAIList) DecodeNASType() {
     TAIType01
     TAIType02
     */
+    return nil
 
 }
 

@@ -90,6 +90,7 @@ func (a *RegistrationAccept) EncodeRegistrationAccept(buffer *bytes.Buffer) {
 		binary.Write(buffer, binary.BigEndian, a.TAIList.GetIei())
 		binary.Write(buffer, binary.BigEndian, a.TAIList.GetLen())
 		binary.Write(buffer, binary.BigEndian, &a.TAIList.Buffer)
+
 	}
 	if a.AllowedNSSAI != nil {
 		binary.Write(buffer, binary.BigEndian, a.AllowedNSSAI.GetIei())
@@ -236,7 +237,7 @@ func (a *RegistrationAccept) DecodeRegistrationAccept(byteArray *[]byte) {
 			binary.Read(buffer, binary.BigEndian, &a.TAIList.Len)
 			a.TAIList.SetLen(a.TAIList.GetLen())
 			binary.Read(buffer, binary.BigEndian, a.TAIList.Buffer[:a.TAIList.GetLen()])
-            //a.TAIList.DecodeNASType()
+            a.TAIList.DecodeNASType()
 		case RegistrationAcceptAllowedNSSAIType:
 			a.AllowedNSSAI = nasType.NewAllowedNSSAI(ieiN)
 			binary.Read(buffer, binary.BigEndian, &a.AllowedNSSAI.Len)
