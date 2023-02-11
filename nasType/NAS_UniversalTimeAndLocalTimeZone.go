@@ -11,6 +11,26 @@ package nasType
 type UniversalTimeAndLocalTimeZone struct {
 	Iei   uint8    `json:"Iei,omitempty"`
 	Octet [7]uint8 `json:"Octet,omitempty"`
+    Year uint8 `json:"-"`
+    Month uint8 `json:"-"`
+    Day uint8 `json:"-"`
+    Hour uint8 `json:"-"`
+    Minute uint8 `json:"-"`
+    Second uint8 `json:"-"`
+    TimeZone uint8 `json:"-"`
+}
+
+func (u *UniversalTimeAndLocalTimeZone ) DecodeNASType() error {
+
+    u.Year = u.GetYear()
+    u.Month = u.GetMonth()
+    u.Day = u.GetDay()
+    u.Hour=u.GetHour()
+    u.Minute = u.GetMinute()
+    u.Second = u.GetSecond()
+    u.TimeZone = u.GetTimeZone()
+    return nil
+    
 }
 
 func NewUniversalTimeAndLocalTimeZone(iei uint8) (universalTimeAndLocalTimeZone *UniversalTimeAndLocalTimeZone) {

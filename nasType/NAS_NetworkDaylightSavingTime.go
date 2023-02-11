@@ -3,9 +3,24 @@ package nasType
 // NetworkDaylightSavingTime 9.11.3.19
 // value Row, sBit, len = [0, 0], 2 , 2
 type NetworkDaylightSavingTime struct {
-	Iei   uint8 `json:"Iei,omitempty"`
-	Len   uint8 `json:"Len,omitempty"`
-	Octet uint8 `json:"Octet,omitempty"`
+	Iei   uint8 `json:"-"`
+	Len   uint8 `json:"-"`
+	Octet uint8 `json:"-"`
+    DaylightSavingStatus string
+}
+
+func (n *NetworkDaylightSavingTime) DecodeNASType() error{
+    switch n.Getvalue(){
+        case 0:
+            n.DaylightSavingStatus = "No adjustment for Daylight Saving Time"
+        case 1:
+            n.DaylightSavingStatus = "+1 hour adjustment for Daylight Saving Time"
+        case 2:
+            n.DaylightSavingStatus = "+2 hours adjustment for Daylight Saving Time"
+        case 3:
+            n.DaylightSavingStatus = ""
+    }
+    return nil
 }
 
 func NewNetworkDaylightSavingTime(iei uint8) (networkDaylightSavingTime *NetworkDaylightSavingTime) {

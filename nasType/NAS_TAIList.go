@@ -3,7 +3,7 @@ package nasType
 import(
     "bytes"
     "fmt"
-	"github.com/davecgh/go-spew/spew"
+	//"github.com/davecgh/go-spew/spew"
 	//"encoding/binary"
 )
 
@@ -46,7 +46,6 @@ type TAIType interface{
 
 func (t *TAIList) DecodeNASType() error {
 
-    fmt.Println("TAIList")
     payload := bytes.NewBuffer(t.Buffer)
     for payload.Len() > 1 {
         headerByte, err := payload.ReadByte()
@@ -55,8 +54,7 @@ func (t *TAIList) DecodeNASType() error {
             return err
         }
         TAIType := (headerByte & 0x60) >> 5
-        numElements := (headerByte & 0x1F)
-        fmt.Printf("hdr:0x%x    type:0x%x    elems:0x%x\n",headerByte, TAIType, numElements)
+        //numElements := (headerByte & 0x1F)
 
         if TAIType == 0x01 {
             TAI01 := & TAIType01{}
@@ -72,7 +70,7 @@ func (t *TAIList) DecodeNASType() error {
                 type01Buf[2] &0xf, (type01Buf[2]&0xf0)>>4, (type01Buf[1]&0xf0) > 4 )
             TAI01.MCC = MCC
             TAI01.MNC = MNC
-            spew.Dump(TAI01)
+            //spew.Dump(TAI01)
 
         }
 

@@ -4,7 +4,7 @@ package nasType
 // ExtendedProtocolDiscriminator Row, sBit, len = [0, 0], 8 , 8
 type ExtendedProtocolDiscriminator struct {
 	Octet uint8 `json:"-"`
-    EPD string  `json:"EPD,omitempty"`
+    EPD string  `json:"EPD"`
 }
 
 /*From 3GPP 24.007 11.2.3.1.1A ver 17.5*/

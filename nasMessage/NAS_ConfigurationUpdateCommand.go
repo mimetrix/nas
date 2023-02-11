@@ -139,7 +139,10 @@ func (a *ConfigurationUpdateCommand) EncodeConfigurationUpdateCommand(buffer *by
 func (a *ConfigurationUpdateCommand) DecodeConfigurationUpdateCommand(byteArray *[]byte) {
 	buffer := bytes.NewBuffer(*byteArray)
 	binary.Read(buffer, binary.BigEndian, &a.ExtendedProtocolDiscriminator.Octet)
+    a.ExtendedProtocolDiscriminator.DecodeNASType()
+
 	binary.Read(buffer, binary.BigEndian, &a.SpareHalfOctetAndSecurityHeaderType.Octet)
+    a.SpareHalfOctetAndSecurityHeaderType.DecodeNASType()
 	binary.Read(buffer, binary.BigEndian, &a.ConfigurationUpdateCommandMessageIdentity.Octet)
     a.ConfigurationUpdateCommandMessageIdentity.DecodeNASType()
 	for buffer.Len() > 0 {
@@ -182,22 +185,27 @@ func (a *ConfigurationUpdateCommand) DecodeConfigurationUpdateCommand(byteArray 
 			binary.Read(buffer, binary.BigEndian, &a.FullNameForNetwork.Len)
 			a.FullNameForNetwork.SetLen(a.FullNameForNetwork.GetLen())
 			binary.Read(buffer, binary.BigEndian, a.FullNameForNetwork.Buffer[:a.FullNameForNetwork.GetLen()])
+            a.FullNameForNetwork.DecodeNASType()
 		case ConfigurationUpdateCommandShortNameForNetworkType:
 			a.ShortNameForNetwork = nasType.NewShortNameForNetwork(ieiN)
 			binary.Read(buffer, binary.BigEndian, &a.ShortNameForNetwork.Len)
 			a.ShortNameForNetwork.SetLen(a.ShortNameForNetwork.GetLen())
 			binary.Read(buffer, binary.BigEndian, a.ShortNameForNetwork.Buffer[:a.ShortNameForNetwork.GetLen()])
+            a.ShortNameForNetwork.DecodeNASType()
 		case ConfigurationUpdateCommandLocalTimeZoneType:
 			a.LocalTimeZone = nasType.NewLocalTimeZone(ieiN)
 			binary.Read(buffer, binary.BigEndian, &a.LocalTimeZone.Octet)
+            //a.LocalTimeZone.DecodeNASType()
 		case ConfigurationUpdateCommandUniversalTimeAndLocalTimeZoneType:
 			a.UniversalTimeAndLocalTimeZone = nasType.NewUniversalTimeAndLocalTimeZone(ieiN)
 			binary.Read(buffer, binary.BigEndian, &a.UniversalTimeAndLocalTimeZone.Octet)
+            a.UniversalTimeAndLocalTimeZone.DecodeNASType()
 		case ConfigurationUpdateCommandNetworkDaylightSavingTimeType:
 			a.NetworkDaylightSavingTime = nasType.NewNetworkDaylightSavingTime(ieiN)
 			binary.Read(buffer, binary.BigEndian, &a.NetworkDaylightSavingTime.Len)
 			a.NetworkDaylightSavingTime.SetLen(a.NetworkDaylightSavingTime.GetLen())
 			binary.Read(buffer, binary.BigEndian, &a.NetworkDaylightSavingTime.Octet)
+            a.NetworkDaylightSavingTime.DecodeNASType()
 		case ConfigurationUpdateCommandLADNInformationType:
 			a.LADNInformation = nasType.NewLADNInformation(ieiN)
 			binary.Read(buffer, binary.BigEndian, &a.LADNInformation.Len)
