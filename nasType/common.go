@@ -21,6 +21,16 @@ func GetHexString(bytes []uint8, sep string) string {
 	return ""
 }
 
+var FiveGSTypes = map[uint8]string {
+    0x1: "SUCI",
+    0x2: "5G-GUTI",
+    0x3: "IMEI",
+    0x4: "5G-S-TMSI",
+    0x5: "IMEISV",
+    0x6: "MAC address",
+    0x7: "EUI-64",
+}
+
 var MessageTypes = map[uint8]string {
     0x41: "Registration request",
     0x42: "Registration accept",

@@ -3,9 +3,15 @@ package nasType
 // AllowedNSSAI 9.11.3.37
 // SNSSAIValue Row, sBit, len = [0, 0], 0 , INF
 type AllowedNSSAI struct {
-	Iei    uint8   `json:"Iei,omitempty"`
-	Len    uint8   `json:"Len,omitempty"`
-	Buffer []uint8 `json:"Buffer,omitempty"`
+	Iei    uint8   `json:"-"`
+	Len    uint8   `json:"-"`
+	Buffer []uint8 `json:"-"`
+    SNSSAI string
+}
+
+func (a *AllowedNSSAI) DecodeNASType() error{
+    a.SNSSAI = GetHexString(a.GetSNSSAIValue(),"") 
+    return nil
 }
 
 func NewAllowedNSSAI(iei uint8) (allowedNSSAI *AllowedNSSAI) {

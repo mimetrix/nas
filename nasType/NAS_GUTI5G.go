@@ -1,5 +1,6 @@
 package nasType
 
+import "fmt"
 // GUTI5G 9.11.3.4
 // Spare2 Row, sBit, len = [0, 0], 8 , 4
 // Spare Row, sBit, len = [0, 0], 4 , 1
@@ -17,8 +18,40 @@ package nasType
 type GUTI5G struct {
 	Iei   uint8     `json:"Iei,omitempty"`
 	Len   uint16    `json:"Len,omitempty"`
-	Octet [11]uint8 `json:"Octet,omitempty"`
+	Octet [11]uint8 `json:"-"`
+    FiveGSID uint8
+    FiveGSType string
+    MCC string
+    MNC string
+    AMFRegionID uint8
+    AMFSetID uint16
+    AMFPointer uint8 
+    TMSI string
 }
+
+func (g *GUTI5G) DecodeNASType() error {
+
+    
+    g.FiveGSID = g.GetTypeOfIdentity() 
+    g.FiveGSType = FiveGSTypes[g.FiveGSID]
+    g.MCC = fmt.Sprintf("%d%d%d",g.GetMCCDigit1(),g.GetMCCDigit2(),g.GetMCCDigit3())
+    g.MNC = fmt.Sprintf("%d%d",g.GetMNCDigit1(),g.GetMNCDigit2())
+
+    g.AMFRegionID = g.GetAMFRegionID()
+    g.AMFSetID = g.GetAMFSetID()
+    g.AMFPointer = g.GetAMFPointer()
+    tmsi := g.GetTMSI5G()
+    g.TMSI = GetHexString(tmsi[:], "")
+    
+/*
+    GetAMFRegionID
+    GetAMFSetID
+    GetAMFPointer
+    GetTMSI
+*/
+    return nil
+}
+
 
 func NewGUTI5G(iei uint8) (gUTI5G *GUTI5G) {
 	gUTI5G = &GUTI5G{}

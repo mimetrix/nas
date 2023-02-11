@@ -33,6 +33,7 @@ const (
 
 // NewMessage TODO:desc
 func NewMessage() *Message {
+    //fmt.Println("\nNewMessage\n")
 	Message := &Message{}
 	return Message
 }

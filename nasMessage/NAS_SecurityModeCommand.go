@@ -3,7 +3,6 @@ package nasMessage
 import (
 	"bytes"
 	"encoding/binary"
-
 	"github.com/mimetrix/nas/nasType"
 )
 
@@ -74,6 +73,8 @@ func (a *SecurityModeCommand) EncodeSecurityModeCommand(buffer *bytes.Buffer) {
 }
 
 func (a *SecurityModeCommand) DecodeSecurityModeCommand(byteArray *[]byte) {
+
+    //fmt.Println("\nDecodeSecurityModeCommand\n")
 	buffer := bytes.NewBuffer(*byteArray)
 	binary.Read(buffer, binary.BigEndian, &a.ExtendedProtocolDiscriminator.Octet)
     a.ExtendedProtocolDiscriminator.DecodeNASType()
@@ -118,6 +119,7 @@ func (a *SecurityModeCommand) DecodeSecurityModeCommand(byteArray *[]byte) {
 			binary.Read(buffer, binary.BigEndian, &a.Additional5GSecurityInformation.Len)
 			a.Additional5GSecurityInformation.SetLen(a.Additional5GSecurityInformation.GetLen())
 			binary.Read(buffer, binary.BigEndian, &a.Additional5GSecurityInformation.Octet)
+            a.Additional5GSecurityInformation.DecodeNASType()
 		case SecurityModeCommandEAPMessageType:
 			a.EAPMessage = nasType.NewEAPMessage(ieiN)
 			binary.Read(buffer, binary.BigEndian, &a.EAPMessage.Len)

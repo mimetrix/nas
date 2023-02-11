@@ -195,11 +195,19 @@ func (a *RegistrationAccept) EncodeRegistrationAccept(buffer *bytes.Buffer) {
 func (a *RegistrationAccept) DecodeRegistrationAccept(byteArray *[]byte) {
 	buffer := bytes.NewBuffer(*byteArray)
 	binary.Read(buffer, binary.BigEndian, &a.ExtendedProtocolDiscriminator.Octet)
+    a.ExtendedProtocolDiscriminator.DecodeNASType()
+
 	binary.Read(buffer, binary.BigEndian, &a.SpareHalfOctetAndSecurityHeaderType.Octet)
+    a.SpareHalfOctetAndSecurityHeaderType.DecodeNASType()
+
 	binary.Read(buffer, binary.BigEndian, &a.RegistrationAcceptMessageIdentity.Octet)
+    a.RegistrationAcceptMessageIdentity.DecodeNASType()
+
 	binary.Read(buffer, binary.BigEndian, &a.RegistrationResult5GS.Len)
 	a.RegistrationResult5GS.SetLen(a.RegistrationResult5GS.GetLen())
 	binary.Read(buffer, binary.BigEndian, &a.RegistrationResult5GS.Octet)
+    a.RegistrationResult5GS.DecodeNASType()
+
 	for buffer.Len() > 0 {
 		var ieiN uint8
 		var tmpIeiN uint8
@@ -217,6 +225,7 @@ func (a *RegistrationAccept) DecodeRegistrationAccept(byteArray *[]byte) {
 			binary.Read(buffer, binary.BigEndian, &a.GUTI5G.Len)
 			a.GUTI5G.SetLen(a.GUTI5G.GetLen())
 			binary.Read(buffer, binary.BigEndian, a.GUTI5G.Octet[:a.GUTI5G.GetLen()])
+            a.GUTI5G.DecodeNASType()
 		case RegistrationAcceptEquivalentPlmnsType:
 			a.EquivalentPlmns = nasType.NewEquivalentPlmns(ieiN)
 			binary.Read(buffer, binary.BigEndian, &a.EquivalentPlmns.Len)
@@ -227,11 +236,13 @@ func (a *RegistrationAccept) DecodeRegistrationAccept(byteArray *[]byte) {
 			binary.Read(buffer, binary.BigEndian, &a.TAIList.Len)
 			a.TAIList.SetLen(a.TAIList.GetLen())
 			binary.Read(buffer, binary.BigEndian, a.TAIList.Buffer[:a.TAIList.GetLen()])
+            //a.TAIList.DecodeNASType()
 		case RegistrationAcceptAllowedNSSAIType:
 			a.AllowedNSSAI = nasType.NewAllowedNSSAI(ieiN)
 			binary.Read(buffer, binary.BigEndian, &a.AllowedNSSAI.Len)
 			a.AllowedNSSAI.SetLen(a.AllowedNSSAI.GetLen())
 			binary.Read(buffer, binary.BigEndian, a.AllowedNSSAI.Buffer[:a.AllowedNSSAI.GetLen()])
+            a.AllowedNSSAI.DecodeNASType()
 		case RegistrationAcceptRejectedNSSAIType:
 			a.RejectedNSSAI = nasType.NewRejectedNSSAI(ieiN)
 			binary.Read(buffer, binary.BigEndian, &a.RejectedNSSAI.Len)

@@ -4,9 +4,18 @@ package nasType
 // RINMR Row, sBit, len = [0, 0], 2 , 1
 // HDP Row, sBit, len = [0, 0], 1 , 1
 type Additional5GSecurityInformation struct {
-	Iei   uint8 `json:"Iei,omitempty"`
-	Len   uint8 `json:"Len,omitempty"`
-	Octet uint8 `json:"Octet,omitempty"`
+	Iei   uint8 `json:"-"`
+	Len   uint8 `json:"-"`
+	Octet uint8 `json:"-"`
+    RINMR bool 
+    HDP bool 
+}
+
+func (a *Additional5GSecurityInformation ) DecodeNASType() error {
+    
+    a.RINMR = a.GetRINMR() == 1
+    a.HDP = a.GetHDP() == 1
+    return nil
 }
 
 func NewAdditional5GSecurityInformation(iei uint8) (additional5GSecurityInformation *Additional5GSecurityInformation) {
