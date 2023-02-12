@@ -1,5 +1,6 @@
 package nasType
 
+import "fmt"
 // IMEISV 9.11.3.4
 // IdentityDigit1 Row, sBit, len = [0, 0], 8 , 4
 // OddEvenIdic Row, sBit, len = [0, 0], 4 , 1
@@ -24,6 +25,48 @@ type IMEISV struct {
 	Iei   uint8    `json:"Iei,omitempty"`
 	Len   uint16   `json:"Len,omitempty"`
 	Octet [9]uint8 `json:"Octet,omitempty"`
+    
+    TypeAllocationCode string
+    SerialNumber string
+    SoftwareVersion string 
+    IMEISV string
+
+
+}
+
+func (i *IMEISV) DecodeNASType() error{
+    return nil
+    i.TypeAllocationCode = fmt.Sprintf("%d%d%d%d%d%d%d%d",
+        i.GetIdentityDigit1(),
+        i.GetIdentityDigitP_1(),
+        i.GetIdentityDigitP_2(),
+        i.GetIdentityDigitP_3(),
+        i.GetIdentityDigitP_4(),
+        i.GetIdentityDigitP_5(),
+        i.GetIdentityDigitP_6(),
+        i.GetIdentityDigitP_7(),
+    )
+
+    i.SerialNumber = fmt.Sprintf("%d%d%d%d%d%d",
+        i.GetIdentityDigitP_8(),
+        i.GetIdentityDigitP_9(),
+        i.GetIdentityDigitP_10(),
+        i.GetIdentityDigitP_11(),
+        i.GetIdentityDigitP_12(),
+        i.GetIdentityDigitP_13(),
+    )
+
+    i.SoftwareVersion = fmt.Sprintf("%d%d",
+        i.GetIdentityDigitP_14(),
+        i.GetIdentityDigitP_15(),
+    )
+
+    i.IMEISV = fmt.Sprintf("%s%s%s",
+        i.TypeAllocationCode,
+        i.SerialNumber,
+        i.SoftwareVersion,
+    )
+    return nil
 }
 
 func NewIMEISV(iei uint8) (iMEISV *IMEISV) {

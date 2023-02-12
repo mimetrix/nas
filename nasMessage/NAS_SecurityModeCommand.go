@@ -111,6 +111,7 @@ func (a *SecurityModeCommand) DecodeSecurityModeCommand(byteArray *[]byte) {
 		case SecurityModeCommandIMEISVRequestType:
 			a.IMEISVRequest = nasType.NewIMEISVRequest(ieiN)
 			a.IMEISVRequest.Octet = ieiN
+			a.IMEISVRequest.DecodeNASType()
 		case SecurityModeCommandSelectedEPSNASSecurityAlgorithmsType:
 			a.SelectedEPSNASSecurityAlgorithms = nasType.NewSelectedEPSNASSecurityAlgorithms(ieiN)
 			binary.Read(buffer, binary.BigEndian, &a.SelectedEPSNASSecurityAlgorithms.Octet)

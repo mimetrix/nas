@@ -4,7 +4,17 @@ package nasType
 // Iei Row, sBit, len = [0, 0], 8 , 4
 // IMEISVRequestValue Row, sBit, len = [0, 0], 3 , 3
 type IMEISVRequest struct {
-	Octet uint8 `json:"Octet,omitempty"`
+	Octet uint8 `json:"-"`
+    RequestValue string
+}
+
+func (i *IMEISVRequest) DecodeNASType() error {
+    if i.GetIMEISVRequestValue() == 1 {
+        i.RequestValue = "IMEISV requested"
+    } else {
+        i.RequestValue = "IMEISV not requested"
+    }
+    return nil
 }
 
 func NewIMEISVRequest(iei uint8) (iMEISVRequest *IMEISVRequest) {

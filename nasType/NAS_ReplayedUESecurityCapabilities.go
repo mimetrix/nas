@@ -35,9 +35,9 @@ package nasType
 // EIA7 Row, sBit, len = [3, 3], 1 , 1
 // Spare Row, sBit, len = [4, 7], 8 , 32
 type ReplayedUESecurityCapabilities struct {
-	Iei    uint8   `json:"Iei,omitempty"`
-	Len    uint8   `json:"Len,omitempty"`
-	Buffer []uint8 `json:"Buffer,omitempty"`
+	Iei    uint8   `json:"-"`
+	Len    uint8   `json:"-"`
+	Buffer []uint8 `json:"-"`
 
     EA0_5G	bool
     EA1_128_5G	bool
