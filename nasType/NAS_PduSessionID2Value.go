@@ -3,8 +3,8 @@ package nasType
 // PduSessionID2Value 9.11.3.41
 // PduSessionID2Value Row, sBit, len = [0, 0], 8 , 8
 type PduSessionID2Value struct {
-	Iei   uint8 `json:"Iei,omitempty"`
-	Octet uint8 `json:"Octet,omitempty"`
+	Iei   uint8 `json:"-"`
+	Octet uint8 `json:"IDValue,omitempty"`
 }
 
 func NewPduSessionID2Value(iei uint8) (pduSessionID2Value *PduSessionID2Value) {

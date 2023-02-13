@@ -3,7 +3,15 @@ package nasType
 // DLNASTRANSPORTMessageIdentity 9.7
 // MessageType Row, sBit, len = [0, 0], 8 , 8
 type DLNASTRANSPORTMessageIdentity struct {
-	Octet uint8 `json:"Octet,omitempty"`
+	Octet uint8 `json:"-"`
+    MessageType string
+
+}
+
+func (d *DLNASTRANSPORTMessageIdentity) DecodeNASType() error{
+    d.MessageType = MessageTypes[d.Octet]
+    return nil
+
 }
 
 func NewDLNASTRANSPORTMessageIdentity() (dLNASTRANSPORTMessageIdentity *DLNASTRANSPORTMessageIdentity) {

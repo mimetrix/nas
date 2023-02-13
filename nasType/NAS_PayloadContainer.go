@@ -3,7 +3,7 @@ package nasType
 // PayloadContainer 9.11.3.39
 // PayloadContainerContents Row, sBit, len = [0, 0], 8 , INF
 type PayloadContainer struct {
-	Iei    uint8   `json:"Iei,omitempty"`
+	Iei    uint8   `json:"Iei"`
 	Len    uint16  `json:"Len,omitempty"`
 	Buffer []uint8 `json:"Buffer,omitempty"`
 }

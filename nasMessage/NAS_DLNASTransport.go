@@ -61,12 +61,23 @@ func (a *DLNASTransport) EncodeDLNASTransport(buffer *bytes.Buffer) {
 func (a *DLNASTransport) DecodeDLNASTransport(byteArray *[]byte) {
 	buffer := bytes.NewBuffer(*byteArray)
 	binary.Read(buffer, binary.BigEndian, &a.ExtendedProtocolDiscriminator.Octet)
+
+    a.ExtendedProtocolDiscriminator.DecodeNASType()
+
 	binary.Read(buffer, binary.BigEndian, &a.SpareHalfOctetAndSecurityHeaderType.Octet)
+    a.SpareHalfOctetAndSecurityHeaderType.DecodeNASType()
+
 	binary.Read(buffer, binary.BigEndian, &a.DLNASTRANSPORTMessageIdentity.Octet)
+    a.DLNASTRANSPORTMessageIdentity.DecodeNASType()
+
 	binary.Read(buffer, binary.BigEndian, &a.SpareHalfOctetAndPayloadContainerType.Octet)
+    a.SpareHalfOctetAndPayloadContainerType.DecodeNASType()
+
 	binary.Read(buffer, binary.BigEndian, &a.PayloadContainer.Len)
 	a.PayloadContainer.SetLen(a.PayloadContainer.GetLen())
 	binary.Read(buffer, binary.BigEndian, &a.PayloadContainer.Buffer)
+    //a.PayloadContainer.DecodeNASType()
+
 	for buffer.Len() > 0 {
 		var ieiN uint8
 		var tmpIeiN uint8
