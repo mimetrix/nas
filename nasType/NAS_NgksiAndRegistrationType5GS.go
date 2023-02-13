@@ -6,7 +6,7 @@ package nasType
 // FOR  Row, sBit, len = [0, 0], 4 , 1
 // RegistrationType5GS Row, sBit, len = [0, 0], 3 , 3
 type NgksiAndRegistrationType5GS struct {
-	Octet uint8 `json:"Octet,omitempty"`
+	Octet uint8 `json:"-"`
     NASKeySetIdentifiler uint8
     RegistrationType uint8 
     TSC uint8
