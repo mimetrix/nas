@@ -3,7 +3,6 @@ package nasMessage
 import (
 	"bytes"
 	"encoding/binary"
-
 	"github.com/mimetrix/nas/nasType"
 )
 
@@ -73,7 +72,10 @@ func (a *ULNASTransport) EncodeULNASTransport(buffer *bytes.Buffer) {
 func (a *ULNASTransport) DecodeULNASTransport(byteArray *[]byte) {
 	buffer := bytes.NewBuffer(*byteArray)
 	binary.Read(buffer, binary.BigEndian, &a.ExtendedProtocolDiscriminator.Octet)
+    a.ExtendedProtocolDiscriminator.DecodeNASType()
+
 	binary.Read(buffer, binary.BigEndian, &a.SpareHalfOctetAndSecurityHeaderType.Octet)
+    a.SpareHalfOctetAndSecurityHeaderType.DecodeNASType()
 	binary.Read(buffer, binary.BigEndian, &a.ULNASTRANSPORTMessageIdentity.Octet)
 	binary.Read(buffer, binary.BigEndian, &a.SpareHalfOctetAndPayloadContainerType.Octet)
 	binary.Read(buffer, binary.BigEndian, &a.PayloadContainer.Len)
@@ -100,6 +102,7 @@ func (a *ULNASTransport) DecodeULNASTransport(byteArray *[]byte) {
 		case ULNASTransportRequestTypeType:
 			a.RequestType = nasType.NewRequestType(ieiN)
 			a.RequestType.Octet = ieiN
+            a.RequestType.DecodeNASType()
 		case ULNASTransportSNSSAIType:
 			a.SNSSAI = nasType.NewSNSSAI(ieiN)
 			binary.Read(buffer, binary.BigEndian, &a.SNSSAI.Len)
