@@ -10,9 +10,10 @@ import (
 
 // Message TODO：description
 type Message struct {
-	SecurityHeader `json:"SecurityHeader,omitempty"`
+	SecurityHeader `json:"-"`
 	*GmmMessage    `json:"GmmMessage,omitempty"`
 	*GsmMessage    `json:"GsmMessage,omitempty"`
+    Bytes          []byte `json:"EncryptedBytes,omitempty"`
 }
 
 // SecurityHeader TODO：description
@@ -196,6 +197,8 @@ func (a *Message) PlainNasDecode(byteArray *[]byte) error {
 		return a.GmmMessageDecode(byteArray)
 	case Epd5GSSessionManagementMessage:
 		return a.GsmMessageDecode(byteArray)
+    default:
+        a.Bytes = *byteArray
 	}
 	return fmt.Errorf("Extended Protocol Discriminator[%d] is not allowed in Nas Message Deocde", epd)
 }
