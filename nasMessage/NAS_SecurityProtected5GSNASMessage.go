@@ -3,8 +3,6 @@ package nasMessage
 import (
 	"bytes"
 	"encoding/binary"
-
-	//"github.com/davecgh/go-spew/spew"
 	"github.com/mimetrix/nas/nasType"
 )
 
