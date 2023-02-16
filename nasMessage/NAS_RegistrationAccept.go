@@ -259,6 +259,7 @@ func (a *RegistrationAccept) DecodeRegistrationAccept(byteArray *[]byte) {
 			binary.Read(buffer, binary.BigEndian, &a.NetworkFeatureSupport5GS.Len)
 			a.NetworkFeatureSupport5GS.SetLen(a.NetworkFeatureSupport5GS.GetLen())
 			binary.Read(buffer, binary.BigEndian, a.NetworkFeatureSupport5GS.Octet[:a.NetworkFeatureSupport5GS.GetLen()])
+            a.NetworkFeatureSupport5GS.DecodeNASType()
 		case RegistrationAcceptPDUSessionStatusType:
 			a.PDUSessionStatus = nasType.NewPDUSessionStatus(ieiN)
 			binary.Read(buffer, binary.BigEndian, &a.PDUSessionStatus.Len)
@@ -295,6 +296,7 @@ func (a *RegistrationAccept) DecodeRegistrationAccept(byteArray *[]byte) {
 			binary.Read(buffer, binary.BigEndian, &a.T3512Value.Len)
 			a.T3512Value.SetLen(a.T3512Value.GetLen())
 			binary.Read(buffer, binary.BigEndian, &a.T3512Value.Octet)
+            a.T3512Value.DecodeNASType()
 		case RegistrationAcceptNon3GppDeregistrationTimerValueType:
 			a.Non3GppDeregistrationTimerValue = nasType.NewNon3GppDeregistrationTimerValue(ieiN)
 			binary.Read(buffer, binary.BigEndian, &a.Non3GppDeregistrationTimerValue.Len)

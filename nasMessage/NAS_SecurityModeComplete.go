@@ -44,8 +44,13 @@ func (a *SecurityModeComplete) EncodeSecurityModeComplete(buffer *bytes.Buffer) 
 func (a *SecurityModeComplete) DecodeSecurityModeComplete(byteArray *[]byte) {
 	buffer := bytes.NewBuffer(*byteArray)
 	binary.Read(buffer, binary.BigEndian, &a.ExtendedProtocolDiscriminator.Octet)
-	binary.Read(buffer, binary.BigEndian, &a.SpareHalfOctetAndSecurityHeaderType.Octet)
+    a.ExtendedProtocolDiscriminator.DecodeNASType()
+	
+    binary.Read(buffer, binary.BigEndian, &a.SpareHalfOctetAndSecurityHeaderType.Octet)
+    a.SpareHalfOctetAndSecurityHeaderType.DecodeNASType()
+
 	binary.Read(buffer, binary.BigEndian, &a.SecurityModeCompleteMessageIdentity.Octet)
+    a.SecurityModeCompleteMessageIdentity.DecodeNASType()
 	for buffer.Len() > 0 {
 		var ieiN uint8
 		var tmpIeiN uint8
@@ -63,6 +68,7 @@ func (a *SecurityModeComplete) DecodeSecurityModeComplete(byteArray *[]byte) {
 			binary.Read(buffer, binary.BigEndian, &a.IMEISV.Len)
 			a.IMEISV.SetLen(a.IMEISV.GetLen())
 			binary.Read(buffer, binary.BigEndian, a.IMEISV.Octet[:a.IMEISV.GetLen()])
+            a.IMEISV.DecodeNASType()
 		case SecurityModeCompleteNASMessageContainerType:
 			a.NASMessageContainer = nasType.NewNASMessageContainer(ieiN)
 			binary.Read(buffer, binary.BigEndian, &a.NASMessageContainer.Len)

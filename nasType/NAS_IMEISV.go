@@ -22,43 +22,40 @@ import "fmt"
 // IdentityDigitP_15 Row, sBit, len = [8, 8], 8 , 4
 // IdentityDigitP_14 Row, sBit, len = [8, 8], 4 , 4
 type IMEISV struct {
-	Iei   uint8    `json:"Iei,omitempty"`
-	Len   uint16   `json:"Len,omitempty"`
-	Octet [9]uint8 `json:"Octet,omitempty"`
-    
+	Iei   uint8    `json:"-"`
+	Len   uint16   `json:"-"`
+	Octet [9]uint8 `json:"-"`
+    IMEISV string
     TypeAllocationCode string
     SerialNumber string
     SoftwareVersion string 
-    IMEISV string
-
-
 }
 
 func (i *IMEISV) DecodeNASType() error{
-    return nil
+    //TODO: Figure out why there's an extra digit - there are 17 when we only need 16
     i.TypeAllocationCode = fmt.Sprintf("%d%d%d%d%d%d%d%d",
         i.GetIdentityDigit1(),
+        i.GetIdentityDigitP(),
         i.GetIdentityDigitP_1(),
         i.GetIdentityDigitP_2(),
         i.GetIdentityDigitP_3(),
         i.GetIdentityDigitP_4(),
         i.GetIdentityDigitP_5(),
         i.GetIdentityDigitP_6(),
-        i.GetIdentityDigitP_7(),
     )
 
     i.SerialNumber = fmt.Sprintf("%d%d%d%d%d%d",
+        i.GetIdentityDigitP_7(),
         i.GetIdentityDigitP_8(),
         i.GetIdentityDigitP_9(),
         i.GetIdentityDigitP_10(),
         i.GetIdentityDigitP_11(),
         i.GetIdentityDigitP_12(),
-        i.GetIdentityDigitP_13(),
     )
 
     i.SoftwareVersion = fmt.Sprintf("%d%d",
+        i.GetIdentityDigitP_13(),
         i.GetIdentityDigitP_14(),
-        i.GetIdentityDigitP_15(),
     )
 
     i.IMEISV = fmt.Sprintf("%s%s%s",

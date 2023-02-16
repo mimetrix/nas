@@ -12,9 +12,11 @@ type SNSSAI struct {
 	Len            uint8    `json:"-"`
 	Octet          [8]uint8 `json:"-"`
 	SST            uint8    `json:"SST,omitempty"`
-	SD             [3]uint8 `json:"SD,omitempty"`
+	SD             [3]uint8 `json:"-"`
+    SDBytes        string
 	MappedHPLMNSST uint8    `json:"MappedHPLMSST,omitempty"`
-	MappedHPLMNSD  [3]uint8 `json:"MappedHPLMNSD,omitempty"`
+	MappedHPLMNSD  [3]uint8 `json:"-"`
+    HPLMNSDBytes   string
 }
 
 const (
@@ -24,6 +26,12 @@ const (
 	SNSSAILenghContentSSTAndSDAndHPLMNSST           = 5
 	SNSSAILenghContentSSTAndSDAndHPLMNSSTAndHPLMNSD = 8
 )
+
+func (a *SNSSAI) DecodeNASType() error {
+    a.SDBytes = GetHexString(a.SD[:],"")
+    a.HPLMNSDBytes = GetHexString(a.MappedHPLMNSD[:],"")
+    return nil 
+}
 
 func (a *SNSSAI) Parse() error {
 	switch a.Len {

@@ -35,9 +35,20 @@ func TestMain(m *testing.M){
 */
 
 func TestRegistrationRequest(t *testing.T){
-    decodedJSON, _:= decodeNASMsg(t, RegistrationRequest)
+    decodedJSON, nasMsg:= decodeNASMsg(t, RegistrationRequest)
     outputJSON(t, "RegistrationRequest.json", decodedJSON) 
-    //spew.Dump(nasMsg)
+
+    EPD := nasMsg.GmmMessage.RegistrationRequest.ExtendedProtocolDiscriminator.EPD
+    var gotExpList = map[string]string {
+        EPD:"5GS mobility management messages",
+    }
+
+    for got := range gotExpList {
+        if got != gotExpList[got] {
+            t.Errorf("Expected: %s, got: %s", gotExpList[got], got)
+        }
+    }
+
 }
 
 func TestAuthenticationRequest(t *testing.T){

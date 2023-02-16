@@ -11,9 +11,32 @@ package nasType
 // EMCN Row, sBit, len = [1, 1], 1 , 1
 // Spare Row, sBit, len = [2, 2], 8 , 8
 type NetworkFeatureSupport5GS struct {
-	Iei   uint8    `json:"Iei,omitempty"`
-	Len   uint8    `json:"Len,omitempty"`
-	Octet [3]uint8 `json:"Octet,omitempty"`
+	Iei     uint8    `json:"-"`
+	Len     uint8    `json:"-"`
+	Octet   [3]uint8 `json:"-"`
+    MPSI    bool
+    IWKN26  bool
+    EMF     uint8
+    EMC     uint8
+    IMSVoPSN3GPP    bool
+    IMSVoPS3GPP     bool
+    MCSI            bool
+    EMCN            bool
+}
+
+func (n *NetworkFeatureSupport5GS) DecodeNASType() error{
+    
+    n.MPSI = n.GetMPSI() == 1
+    n.IWKN26 = n.GetIWKN26() == 1
+    n.EMF = n.GetEMF() 
+    n.EMC = n.GetEMC()
+    n.IMSVoPSN3GPP = n.GetIMSVoPSN3GPP() == 1
+
+    n.IMSVoPS3GPP = n.GetIMSVoPS3GPP() == 1
+    n.MCSI = n.GetMCSI() == 1
+    n.EMCN = n.GetEMCN() == 1
+    
+    return nil
 }
 
 func NewNetworkFeatureSupport5GS(iei uint8) (networkFeatureSupport5GS *NetworkFeatureSupport5GS) {

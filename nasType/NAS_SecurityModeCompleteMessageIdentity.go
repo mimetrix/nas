@@ -3,7 +3,13 @@ package nasType
 // SecurityModeCompleteMessageIdentity 9.6
 // MessageType Row, sBit, len = [0, 0], 8 , 8
 type SecurityModeCompleteMessageIdentity struct {
-	Octet uint8 `json:"Octet,omitempty"`
+	Octet uint8 `json:"-"`
+    MessageType string
+}
+
+func (s *SecurityModeCompleteMessageIdentity ) DecodeNASType() error {
+    s.MessageType = MessageTypes[s.Octet]
+    return nil
 }
 
 func NewSecurityModeCompleteMessageIdentity() (securityModeCompleteMessageIdentity *SecurityModeCompleteMessageIdentity) {

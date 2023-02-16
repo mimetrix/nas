@@ -113,6 +113,7 @@ func (a *ULNASTransport) DecodeULNASTransport(byteArray *[]byte) {
 			binary.Read(buffer, binary.BigEndian, &a.SNSSAI.Len)
 			a.SNSSAI.SetLen(a.SNSSAI.GetLen())
 			binary.Read(buffer, binary.BigEndian, a.SNSSAI.Octet[:a.SNSSAI.GetLen()])
+            a.SNSSAI.DecodeNASType()
 		case ULNASTransportDNNType:
 			a.DNN = nasType.NewDNN(ieiN)
 			binary.Read(buffer, binary.BigEndian, &a.DNN.Len)

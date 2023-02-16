@@ -4,9 +4,29 @@ package nasType
 // Unit Row, sBit, len = [0, 0], 8 , 3
 // TimerValue Row, sBit, len = [0, 0], 5 , 5
 type T3512Value struct {
-	Iei   uint8 `json:"Iei,omitempty"`
-	Len   uint8 `json:"Len,omitempty"`
-	Octet uint8 `json:"Octet,omitempty"`
+	Iei   uint8 `json:"-"`
+	Len   uint8 `json:"-"`
+	Octet uint8 `json:"-"`
+    IncrementedEvery string
+    TimerValue uint8
+}
+
+var IncrementUnits = map[uint8]string{
+    0:"10 minutes",
+    1:"1 hour",
+    2:"10 hours",
+    3:"2 seconds",
+    4:"30 seconds",
+    5:"1 minute",
+    6:"320 hours",
+    7:"timer is deactivated",
+
+}
+
+func (t *T3512Value) DecodeNASType() error {
+    t.IncrementedEvery = IncrementUnits[t.GetUnit()]
+    t.TimerValue = t.GetTimerValue()
+    return nil
 }
 
 func NewT3512Value(iei uint8) (t3512Value *T3512Value) {

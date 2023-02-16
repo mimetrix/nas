@@ -37,8 +37,14 @@ func (a *RegistrationComplete) EncodeRegistrationComplete(buffer *bytes.Buffer) 
 func (a *RegistrationComplete) DecodeRegistrationComplete(byteArray *[]byte) {
 	buffer := bytes.NewBuffer(*byteArray)
 	binary.Read(buffer, binary.BigEndian, &a.ExtendedProtocolDiscriminator.Octet)
+    a.ExtendedProtocolDiscriminator.DecodeNASType()
+
 	binary.Read(buffer, binary.BigEndian, &a.SpareHalfOctetAndSecurityHeaderType.Octet)
+    a.SpareHalfOctetAndSecurityHeaderType.DecodeNASType()
+
 	binary.Read(buffer, binary.BigEndian, &a.RegistrationCompleteMessageIdentity.Octet)
+    a.RegistrationCompleteMessageIdentity.DecodeNASType()
+
 	for buffer.Len() > 0 {
 		var ieiN uint8
 		var tmpIeiN uint8
