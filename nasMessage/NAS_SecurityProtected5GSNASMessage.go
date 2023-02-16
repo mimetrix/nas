@@ -40,6 +40,7 @@ func (a *SecurityProtected5GSNASMessage) DecodeSecurityProtected5GSNASMessage(by
     a.SpareHalfOctetAndSecurityHeaderType.DecodeNASType()
 
 	binary.Read(buffer, binary.BigEndian, &a.MessageAuthenticationCode.Octet)
+    a.MessageAuthenticationCode.DecodeNASType()
 	binary.Read(buffer, binary.BigEndian, &a.SequenceNumber.Octet)
     
     //spew.Dump(buffer.Bytes())

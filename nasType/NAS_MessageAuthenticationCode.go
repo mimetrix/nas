@@ -3,7 +3,13 @@ package nasType
 // MessageAuthenticationCode MAC 9.8
 // MAC Row, sBit, len = [0, 3], 8 , 32
 type MessageAuthenticationCode struct {
-	Octet [4]uint8 `json:"Octet,omitempty"`
+	Octet [4]uint8 `json:"-"`
+    MAC string `json:,omitempty`
+}
+
+func (m *MessageAuthenticationCode) DecodeNASType() error {
+    m.MAC = GetHexString(m.Octet[:],"")
+    return nil
 }
 
 func NewMessageAuthenticationCode() (messageAuthenticationCode *MessageAuthenticationCode) {

@@ -76,8 +76,13 @@ func (a *ULNASTransport) DecodeULNASTransport(byteArray *[]byte) {
 
 	binary.Read(buffer, binary.BigEndian, &a.SpareHalfOctetAndSecurityHeaderType.Octet)
     a.SpareHalfOctetAndSecurityHeaderType.DecodeNASType()
+
 	binary.Read(buffer, binary.BigEndian, &a.ULNASTRANSPORTMessageIdentity.Octet)
+    a.ULNASTRANSPORTMessageIdentity.DecodeNASType()
+
 	binary.Read(buffer, binary.BigEndian, &a.SpareHalfOctetAndPayloadContainerType.Octet)
+    a.SpareHalfOctetAndPayloadContainerType.DecodeNASType()
+
 	binary.Read(buffer, binary.BigEndian, &a.PayloadContainer.Len)
 	a.PayloadContainer.SetLen(a.PayloadContainer.GetLen())
 	binary.Read(buffer, binary.BigEndian, &a.PayloadContainer.Buffer)
@@ -113,6 +118,7 @@ func (a *ULNASTransport) DecodeULNASTransport(byteArray *[]byte) {
 			binary.Read(buffer, binary.BigEndian, &a.DNN.Len)
 			a.DNN.SetLen(a.DNN.GetLen())
 			binary.Read(buffer, binary.BigEndian, a.DNN.Buffer[:a.DNN.GetLen()])
+            a.DNN.DecodeNASType()
 		case ULNASTransportAdditionalInformationType:
 			a.AdditionalInformation = nasType.NewAdditionalInformation(ieiN)
 			binary.Read(buffer, binary.BigEndian, &a.AdditionalInformation.Len)
