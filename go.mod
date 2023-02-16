@@ -1,8 +1,5 @@
 module github.com/mimetrix/nas
 
-replace github.com/mimetrix/nasMessage => /home/luay/projects/mantisnet/nasMessage
-
-replace github.com/mimetrix/nasType => /home/luay/projects/mantisnet/nasType
 
 go 1.19
 
