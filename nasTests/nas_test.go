@@ -2,7 +2,7 @@ package nasTests
 
 import (
     "os"
-    "fmt"
+    //"fmt"
 	"flag"
     "github.com/davecgh/go-spew/spew"
 	"github.com/mimetrix/nas/nasMessage"
@@ -36,9 +36,9 @@ func TestMain(m *testing.M){
 */
 
 func TestRegistrationRequest(t *testing.T){
-    decodedJSON, nasMsg := decodeNASMsg(t, RegistrationRequest)
+    decodedJSON, _:= decodeNASMsg(t, RegistrationRequest)
     outputJSON(t, "RegistrationRequest.json", decodedJSON) 
-    spew.Dump(nasMsg)
+    //spew.Dump(nasMsg)
 }
 
 func TestAuthenticationRequest(t *testing.T){
@@ -115,14 +115,14 @@ func outputJSON(t *testing.T, fname string, jsonString string){
 
 
 
-func decodeNASMsg(t *testing.T, bytes []byte) (jsonStr string, pdu *nasMessage.Message) { 
-    fmt.Println("\ndecodeNASMsg")
+func decodeNASMsg(t *testing.T, bytes []byte) (jsonStr string, nasMsg *nasMessage.Message) { 
 	nasMsg, err := nas.NASDecode(&bytes)
 	if err != nil {
 		t.Log(err)
 		t.Error("Failed to Marshal aper")
 		t.FailNow()
 	} else {
+        //spew.Dump(nasMsg)
 		imJSON, err := json.MarshalIndent(nasMsg, "", "    ")
         jsonStr = string(imJSON)
 		if err != nil {

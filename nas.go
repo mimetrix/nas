@@ -11,7 +11,6 @@ import (
 
 
 func NASDecode(byteArray *[]byte) (*nasMessage.Message, error){
-    //fmt.Println("\nNASDecode\n")
 
     nasMsg := nasMessage.NewMessage()
     securityHdrType := (*byteArray)[1] 
