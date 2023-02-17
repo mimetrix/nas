@@ -66,8 +66,8 @@ func TestAuthenticationRequest(t *testing.T){
     
     var expectedList = map[string]string {
         MessageType: "Authentication request",
-        RAND : "d0:04:08:bc:73:9d:f5:11:3e:9d:4a:6e:89:c1:be:31",
-        AUTN : "34:52:63:2d:e0:a8:80:00:f0:5f:40:41:f9:8d:5a:5d",
+        RAND :  "d00408bc739df5113e9d4a6e89c1be31",
+        AUTN : "3452632de0a88000f05f4041f98d5a5d",
     } 
     compareResults(t, expectedList)
 }
@@ -83,7 +83,7 @@ func TestAuthenticationResponse(t *testing.T){
 
     var expectedList= map[string]string {
         MessageType: "Authentication response",
-        RES : "92:0c:41:82:8f:ef:d1:20:8e:4d:06:d1:17:94:9b:17",
+        RES : "920c41828fefd1208e4d06d117949b17",
     }
     compareResults(t, expectedList)
 }

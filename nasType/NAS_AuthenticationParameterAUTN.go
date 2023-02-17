@@ -11,8 +11,7 @@ type AuthenticationParameterAUTN struct {
 }
 
 func (a *AuthenticationParameterAUTN ) DecodeNASType() error{
-
-    a.Autn = GetHexString(a.Octet[:], ":")
+    a.Autn = GetHexString(a.Octet[:], "")
     return nil
 }
 

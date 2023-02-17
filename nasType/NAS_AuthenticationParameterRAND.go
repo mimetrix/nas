@@ -9,7 +9,7 @@ type AuthenticationParameterRAND struct {
 }
 
 func (a *AuthenticationParameterRAND ) DecodeNASType() error{
-    a.Rand = GetHexString(a.Octet[:], ":")
+    a.Rand = GetHexString(a.Octet[:], "")
     return nil
 }
 

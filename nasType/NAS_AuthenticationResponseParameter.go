@@ -10,7 +10,7 @@ type AuthenticationResponseParameter struct {
 }
 
 func (a *AuthenticationResponseParameter) DecodeNASType() error{
-    a.RES = GetHexString(a.Octet[0:16], ":")
+    a.RES = GetHexString(a.Octet[0:16], "")
     return nil
 
 }
