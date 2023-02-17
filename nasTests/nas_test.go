@@ -2,9 +2,9 @@ package nasTests
 
 import (
     "os"
-    //"fmt"
+    "fmt"
 	"flag"
-    "github.com/davecgh/go-spew/spew"
+    //"github.com/davecgh/go-spew/spew"
 	"github.com/mimetrix/nas/nasMessage"
 	"github.com/mimetrix/nas"
     "path/filepath"
@@ -34,75 +34,180 @@ func TestMain(m *testing.M){
 ================================================
 */
 
+
 func TestRegistrationRequest(t *testing.T){
     decodedJSON, nasMsg:= decodeNASMsg(t, RegistrationRequest)
     outputJSON(t, "RegistrationRequest.json", decodedJSON) 
 
-    EPD := nasMsg.GmmMessage.RegistrationRequest.ExtendedProtocolDiscriminator.EPD
-    var gotExpList = map[string]string {
-        EPD:"5GS mobility management messages",
-    }
+    RegistrationRequest := nasMsg.GmmMessage.RegistrationRequest
+    EPD := RegistrationRequest.ExtendedProtocolDiscriminator.EPD
+    SUCI := RegistrationRequest.MobileIdentity5GS.SUCI
+    S1Mode := fmt.Sprintf("%t", RegistrationRequest.Capability5GMM.S1Mode)
+    HOAttach := fmt.Sprintf("%t", RegistrationRequest.Capability5GMM.HOAttach)
 
-    for got := range gotExpList {
-        if got != gotExpList[got] {
-            t.Errorf("Expected: %s, got: %s", gotExpList[got], got)
-        }
+    var expectedList = map[string]string {
+        EPD:"5GS mobility management messages",
+        SUCI: "suci-0-001-01-0000-0-0-0123456780",
+        S1Mode: "true",
+        HOAttach: "true",
     }
+    compareResults(t, expectedList)
 
 }
 
 func TestAuthenticationRequest(t *testing.T){
     decodedJSON, nasMsg := decodeNASMsg(t, AuthenticationRequest)
     outputJSON(t, "AuthenticationRequest.json", decodedJSON) 
-    spew.Dump(nasMsg)
+    
+    AuthenticationRequest := nasMsg.GmmMessage.AuthenticationRequest
+    MessageType := AuthenticationRequest.AuthenticationRequestMessageIdentity.MessageType
+    RAND := AuthenticationRequest.AuthenticationParameterRAND.Rand
+    AUTN := AuthenticationRequest.AuthenticationParameterAUTN.Autn
+    
+    var expectedList = map[string]string {
+        MessageType: "Authentication request",
+        RAND : "d0:04:08:bc:73:9d:f5:11:3e:9d:4a:6e:89:c1:be:31",
+        AUTN : "34:52:63:2d:e0:a8:80:00:f0:5f:40:41:f9:8d:5a:5d",
+    } 
+    compareResults(t, expectedList)
 }
 
 func TestAuthenticationResponse(t *testing.T){
     decodedJSON, nasMsg := decodeNASMsg(t, AuthenticationResponse)
     outputJSON(t, "AuthenticationResponse.json", decodedJSON) 
-    spew.Dump(nasMsg)
+
+
+    AuthenticationResponse := nasMsg.GmmMessage.AuthenticationResponse
+    MessageType := AuthenticationResponse.AuthenticationResponseMessageIdentity.MessageType
+    RES := AuthenticationResponse.AuthenticationResponseParameter.RES
+
+    var expectedList= map[string]string {
+        MessageType: "Authentication response",
+        RES : "92:0c:41:82:8f:ef:d1:20:8e:4d:06:d1:17:94:9b:17",
+    }
+    compareResults(t, expectedList)
 }
 
 func TestSecProtectedSecurityModeCommand(t *testing.T){
     decodedJSON, nasMsg := decodeNASMsg(t, SecProtectedSecurityModeCommand)
     outputJSON(t, "SecProtectedSecurityModeCommand.json", decodedJSON) 
-    spew.Dump(nasMsg)
+
+    secModeCommand := nasMsg.GmmMessage.PlainNASMessage.GmmMessage.SecurityModeCommand
+    MessageType := secModeCommand.SecurityModeCommandMessageIdentity.MessageType
+    integrityAlgorithm := secModeCommand.SelectedNASSecurityAlgorithms.IntegrityAlgorithm
+    IMEISVReq := secModeCommand.IMEISVRequest.RequestValue
+
+    
+    var expectedList= map[string]string {
+        MessageType: "Security mode command",
+        integrityAlgorithm : "5G integrity algorithm 128-5G-IA2",
+        IMEISVReq : "IMEISV requested",
+    }
+    compareResults(t, expectedList)
 }
 
 func TestSecProtectedSecurityModeComplete(t *testing.T){
     decodedJSON, nasMsg := decodeNASMsg(t, SecProtectedSecurityModeComplete)
     outputJSON(t, "SecProtectedSecurityModeComplete.json", decodedJSON) 
-    spew.Dump(nasMsg)
+
+    secModeComplete := nasMsg.GmmMessage.PlainNASMessage.GmmMessage.SecurityModeComplete
+    MAC := nasMsg.GmmMessage.MessageAuthenticationCode.MAC
+    MessageType := secModeComplete.SecurityModeCompleteMessageIdentity.MessageType
+    var expectedList= map[string]string {
+        MessageType: "Security mode complete",
+        MAC : "f5f20c34",
+    }
+    compareResults(t, expectedList)
 }
 
 func TestSecProtectedRegistrationAccept(t *testing.T){
     decodedJSON, nasMsg := decodeNASMsg(t, SecProtectedRegistrationAccept)
     outputJSON(t, "SecProtectedRegistrationAccept.json", decodedJSON) 
-    spew.Dump(nasMsg)
+    
+    regAccept := nasMsg.GmmMessage.PlainNASMessage.GmmMessage.RegistrationAccept
+    MessageType := regAccept.RegistrationAcceptMessageIdentity.MessageType
+    MAC := nasMsg.GmmMessage.MessageAuthenticationCode.MAC
+    TMSI := regAccept.GUTI5G.TMSI
+
+    var expectedList= map[string]string {
+        MessageType: "Registration accept",
+        MAC : "bf53cc9a",
+        TMSI : "f70006fb",
+    }
+    compareResults(t, expectedList)
 }
 
 func TestSecProtectedRegistrationComplete(t *testing.T){
     decodedJSON, nasMsg := decodeNASMsg(t, SecProtectedRegistrationComplete)
     outputJSON(t, "SecProtectedRegistrationComplete.json", decodedJSON) 
-    spew.Dump(nasMsg)
+
+    regComplete := nasMsg.GmmMessage.PlainNASMessage.GmmMessage.RegistrationComplete
+    MAC := nasMsg.GmmMessage.MessageAuthenticationCode.MAC
+    MessageType := regComplete.RegistrationCompleteMessageIdentity.MessageType
+
+    var expectedList= map[string]string {
+        MessageType: "Registration complete",
+        MAC : "ce215fba",
+    }
+    compareResults(t, expectedList)
 }
 
 func TestSecProtectedConfigurationUpdateCommand(t *testing.T){
     decodedJSON, nasMsg := decodeNASMsg(t, SecProtectedConfigurationUpdateCommand)
     outputJSON(t, "SecProtectedConfigurationUpdateCommand.json", decodedJSON) 
-    spew.Dump(nasMsg)
+
+    updateCmd := nasMsg.GmmMessage.PlainNASMessage.GmmMessage.ConfigurationUpdateCommand
+    MAC := nasMsg.GmmMessage.MessageAuthenticationCode.MAC
+    networkFullName := updateCmd.FullNameForNetwork.NetworkName
+    networkShortName := updateCmd.ShortNameForNetwork.NetworkName 
+    MessageType := updateCmd.ConfigurationUpdateCommandMessageIdentity.MessageType
+    var expectedList= map[string]string {
+        MessageType: "Configuration update command",
+        MAC : "af2e0089",
+        networkFullName : "DougCo 5G Network Emulation",
+        networkShortName : "Open5GS",
+        MAC : "af2e0089",
+    }
+    compareResults(t, expectedList)
 }
 
 func TestSecProtectedULNASTransport(t *testing.T){
     decodedJSON, nasMsg := decodeNASMsg(t, SecProtectedULNASTransport)
     outputJSON(t, "SecProtectedULNASTransport.json", decodedJSON) 
-    spew.Dump(nasMsg)
+
+    ULNASTrans := nasMsg.GmmMessage.PlainNASMessage.GmmMessage.ULNASTransport
+    MessageType := ULNASTrans.ULNASTRANSPORTMessageIdentity.MessageType
+    MAC := nasMsg.GmmMessage.MessageAuthenticationCode.MAC
+    SDBytes := ULNASTrans.SNSSAI.SDBytes
+    FQDN := ULNASTrans.DNN.FQDN
+
+    var expectedList= map[string]string {
+        MessageType: "UL NAS transport",
+        MAC : "fa507e7e",
+        SDBytes : "000000",
+        FQDN : "internet",
+
+    }
+    compareResults(t, expectedList)
 }
 
 func TestSecProtectedDLNASTransport(t *testing.T){
     decodedJSON, nasMsg := decodeNASMsg(t, SecProtectedDLNASTransport  )
     outputJSON(t, "SecProtectedDLNASTransport.json", decodedJSON) 
-    spew.Dump(nasMsg)
+
+    DLNASTrans := nasMsg.GmmMessage.SecurityProtected5GSNASMessage.PlainNASMessage.GmmMessage.DLNASTransport
+    
+
+    MessageType := DLNASTrans.DLNASTRANSPORTMessageIdentity.MessageType
+    MAC := nasMsg.GmmMessage.MessageAuthenticationCode.MAC
+    payloadContainer := DLNASTrans.SpareHalfOctetAndPayloadContainerType.PayloadContainerType
+    var expectedList= map[string]string {
+        MessageType: "DL NAS transport",
+        MAC : "86ee320d",
+        payloadContainer  : "N1 SM information",
+    }
+    compareResults(t, expectedList)
+    //spew.Dump(nasMsg)
 }
 
 
@@ -111,6 +216,17 @@ func TestSecProtectedDLNASTransport(t *testing.T){
         AUXILIARY METHODS 
 ================================================
 */
+
+
+
+func compareResults(t *testing.T, results map[string]string) {
+    for got := range results{
+        if got != results[got] {
+            t.Errorf("Expected: %s, got: %s", results[got], got)
+        }
+    }
+}
+
 func outputJSON(t *testing.T, fname string, jsonString string){
 	if *printJSON {
 		t.Log(jsonString)
@@ -132,7 +248,6 @@ func decodeNASMsg(t *testing.T, bytes []byte) (jsonStr string, nasMsg *nasMessag
 		t.Error("Failed to Marshal aper")
 		t.FailNow()
 	} else {
-        //spew.Dump(nasMsg)
 		imJSON, err := json.MarshalIndent(nasMsg, "", "    ")
         jsonStr = string(imJSON)
 		if err != nil {
