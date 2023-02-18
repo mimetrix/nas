@@ -18,23 +18,28 @@ type PDUAddress struct {
 	Iei            uint8     `json:"-"`
 	Len            uint8     `json:"-"`
 	Octet          [13]uint8 `json:"-"`
-	PDUSessionType uint8     `json:"PDUSessionType,omitempty"`
+	PDUSessionTypeID uint8     `json:"-"`
+	PDUSessionType string `json:",omitempty"`
 	IPv4Address    string    `json:"IPv4Address,omitempty"`
 	IPv6Address    string    `json:"IPv6Address,omitempty"`
 }
 
 func (a *PDUAddress) DecodeNASType() error {
-	a.PDUSessionType = a.GetPDUSessionTypeValue()
+	a.PDUSessionTypeID = a.GetPDUSessionTypeValue()
 	pduAddressInformation := a.GetPDUAddressInformation()
 	var ipv4, ipv6 net.IP
-	switch a.PDUSessionType {
+	switch a.PDUSessionTypeID {
 	case PDUSessionTypeIPv4:
+        a.PDUSessionType = "IPV4"
 		ipv4 = pduAddressInformation[0:4]
 		a.IPv4Address = ipv4.String()
 	case PDUSessionTypeIPv6:
+        a.PDUSessionType = "IPV6"
 		ipv6 = pduAddressInformation[0:8]
 		a.IPv6Address = ipv6.String()
 	case PDUSessionTypeIPv4v6:
+        a.PDUSessionType = "IPV4V6"
+		ipv6 = pduAddressInformation[0:8]
 		ipv6 = pduAddressInformation[0:8]
 		ipv4 = pduAddressInformation[8:12]
 		a.IPv6Address = ipv6.String()
