@@ -110,7 +110,10 @@ func (a *PDUSessionEstablishmentAccept) DecodePDUSessionEstablishmentAccept(byte
 
 	binary.Read(buffer, binary.BigEndian, &a.PDUSessionID.Octet)
 	binary.Read(buffer, binary.BigEndian, &a.PTI.Octet)
+
 	binary.Read(buffer, binary.BigEndian, &a.PDUSESSIONESTABLISHMENTACCEPTMessageIdentity.Octet)
+    a.PDUSESSIONESTABLISHMENTACCEPTMessageIdentity.DecodeNASType()
+
 	binary.Read(buffer, binary.BigEndian, &a.SelectedSSCModeAndSelectedPDUSessionType.Octet)
 	binary.Read(buffer, binary.BigEndian, &a.AuthorizedQosRules.Len)
 	a.AuthorizedQosRules.SetLen(a.AuthorizedQosRules.GetLen())
