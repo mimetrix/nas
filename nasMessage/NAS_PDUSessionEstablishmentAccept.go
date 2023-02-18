@@ -106,6 +106,8 @@ func (a *PDUSessionEstablishmentAccept) EncodePDUSessionEstablishmentAccept(buff
 func (a *PDUSessionEstablishmentAccept) DecodePDUSessionEstablishmentAccept(byteArray *[]byte) {
 	buffer := bytes.NewBuffer(*byteArray)
 	binary.Read(buffer, binary.BigEndian, &a.ExtendedProtocolDiscriminator.Octet)
+    a.ExtendedProtocolDiscriminator.DecodeNASType()
+
 	binary.Read(buffer, binary.BigEndian, &a.PDUSessionID.Octet)
 	binary.Read(buffer, binary.BigEndian, &a.PTI.Octet)
 	binary.Read(buffer, binary.BigEndian, &a.PDUSESSIONESTABLISHMENTACCEPTMessageIdentity.Octet)
@@ -113,6 +115,7 @@ func (a *PDUSessionEstablishmentAccept) DecodePDUSessionEstablishmentAccept(byte
 	binary.Read(buffer, binary.BigEndian, &a.AuthorizedQosRules.Len)
 	a.AuthorizedQosRules.SetLen(a.AuthorizedQosRules.GetLen())
 	binary.Read(buffer, binary.BigEndian, &a.AuthorizedQosRules.Buffer)
+
 	binary.Read(buffer, binary.BigEndian, &a.SessionAMBR.Len)
 	a.SessionAMBR.SetLen(a.SessionAMBR.GetLen())
 	binary.Read(buffer, binary.BigEndian, &a.SessionAMBR.Octet)
@@ -137,7 +140,7 @@ func (a *PDUSessionEstablishmentAccept) DecodePDUSessionEstablishmentAccept(byte
 			binary.Read(buffer, binary.BigEndian, &a.PDUAddress.Len)
 			a.PDUAddress.SetLen(a.PDUAddress.GetLen())
 			binary.Read(buffer, binary.BigEndian, a.PDUAddress.Octet[:a.PDUAddress.GetLen()])
-			a.PDUAddress.Parse()
+			a.PDUAddress.DecodeNASType()
 		case PDUSessionEstablishmentAcceptRQTimerValueType:
 			a.RQTimerValue = nasType.NewRQTimerValue(ieiN)
 			binary.Read(buffer, binary.BigEndian, &a.RQTimerValue.Octet)
@@ -146,7 +149,7 @@ func (a *PDUSessionEstablishmentAccept) DecodePDUSessionEstablishmentAccept(byte
 			binary.Read(buffer, binary.BigEndian, &a.SNSSAI.Len)
 			a.SNSSAI.SetLen(a.SNSSAI.GetLen())
 			binary.Read(buffer, binary.BigEndian, a.SNSSAI.Octet[:a.SNSSAI.GetLen()])
-			a.SNSSAI.Parse()
+			a.SNSSAI.DecodeNASType()
 		case PDUSessionEstablishmentAcceptAlwaysonPDUSessionIndicationType:
 			a.AlwaysonPDUSessionIndication = nasType.NewAlwaysonPDUSessionIndication(ieiN)
 			a.AlwaysonPDUSessionIndication.Octet = ieiN
@@ -175,6 +178,7 @@ func (a *PDUSessionEstablishmentAccept) DecodePDUSessionEstablishmentAccept(byte
 			binary.Read(buffer, binary.BigEndian, &a.DNN.Len)
 			a.DNN.SetLen(a.DNN.GetLen())
 			binary.Read(buffer, binary.BigEndian, a.DNN.Buffer[:a.DNN.GetLen()])
+            a.DNN.DecodeNASType()
 		default:
 		}
 	}

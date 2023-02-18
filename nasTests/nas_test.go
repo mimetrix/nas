@@ -184,7 +184,7 @@ func TestSecProtectedULNASTransport(t *testing.T){
     var expectedList= map[string]string {
         MessageType: "UL NAS transport",
         MAC : "fa507e7e",
-        SDBytes : "000000",
+        SDBytes : "ffffff",
         FQDN : "internet",
 
     }

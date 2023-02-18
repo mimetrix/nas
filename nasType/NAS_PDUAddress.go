@@ -23,7 +23,7 @@ type PDUAddress struct {
 	IPv6Address    string    `json:"IPv6Address,omitempty"`
 }
 
-func (a *PDUAddress) Parse() error {
+func (a *PDUAddress) DecodeNASType() error {
 	a.PDUSessionType = a.GetPDUSessionTypeValue()
 	pduAddressInformation := a.GetPDUAddressInformation()
 	var ipv4, ipv6 net.IP

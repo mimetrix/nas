@@ -28,12 +28,6 @@ const (
 )
 
 func (a *SNSSAI) DecodeNASType() error {
-    a.SDBytes = GetHexString(a.SD[:],"")
-    a.HPLMNSDBytes = GetHexString(a.MappedHPLMNSD[:],"")
-    return nil 
-}
-
-func (a *SNSSAI) Parse() error {
 	switch a.Len {
 	case SNSSAILenghContentSST:
 		a.SST = a.GetSST()
@@ -52,6 +46,8 @@ func (a *SNSSAI) Parse() error {
 	default:
 		return errors.New("snssai lenght is invalid")
 	}
+    a.SDBytes = GetHexString(a.SD[:],"")
+    a.HPLMNSDBytes = GetHexString(a.MappedHPLMNSD[:],"")
 	return nil
 }
 
