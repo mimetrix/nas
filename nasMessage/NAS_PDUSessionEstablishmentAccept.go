@@ -116,6 +116,7 @@ func (a *PDUSessionEstablishmentAccept) DecodePDUSessionEstablishmentAccept(byte
 	binary.Read(buffer, binary.BigEndian, &a.SessionAMBR.Len)
 	a.SessionAMBR.SetLen(a.SessionAMBR.GetLen())
 	binary.Read(buffer, binary.BigEndian, &a.SessionAMBR.Octet)
+    a.SessionAMBR.DecodeNASType()
 	for buffer.Len() > 0 {
 		var ieiN uint8
 		var tmpIeiN uint8

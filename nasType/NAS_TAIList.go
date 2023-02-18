@@ -11,8 +11,8 @@ import(
 // TAIList 9.11.3.9
 // PartialTrackingAreaIdentityList Row, sBit, len = [0, 0], 8 , INF
 type TAIList struct {
-	Iei    uint8   `json:"Iei,omitempty"`
-	Len    uint8   `json:"Len,omitempty"`
+	Iei    uint8   `json:"-"`
+	Len    uint8   `json:"-"`
 	Buffer []uint8 `json:"Buffer,omitempty"`
     TAIs   []TAIType
 }

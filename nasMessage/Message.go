@@ -394,7 +394,7 @@ func (a *Message) GmmMessageEncode(buffer *bytes.Buffer) error {
 }
 
 type GsmMessage struct {
-	GsmHeader                                       `json:"GsmHeader,omitempty"`
+	GsmHeader                                       `json:"-"`
 	*PDUSessionEstablishmentRequest      `json:"PDUSessionEstablishmentRequest,omitempty"`
 	*PDUSessionEstablishmentAccept       `json:"PDUSessionEstablishmentAccept,omitempty"`
 	*PDUSessionEstablishmentReject       `json:"PDUSessionEstablishmentReject,omitempty"`
