@@ -11,7 +11,7 @@ type ULNASTransport struct {
 	nasType.SpareHalfOctetAndSecurityHeaderType   `json:"SpareHalfOctetAndSecurityHeaderType,omitempty"`
 	nasType.ULNASTRANSPORTMessageIdentity         `json:"ULNASTRANSPORTMessageIdentity,omitempty"`
 	nasType.SpareHalfOctetAndPayloadContainerType `json:"SpareHalfOctetAndPayloadContainerType,omitempty"`
-	nasType.PayloadContainer                      `json:"PayloadContainer,omitempty"`
+	PayloadContainer                      `json:"PayloadContainer,omitempty"`
 	*nasType.PduSessionID2Value                   `json:"PduSessionID2Value,omitempty"`
 	*nasType.OldPDUSessionID                      `json:"OldPDUSessionID,omitempty"`
 	*nasType.RequestType                          `json:"RequestType,omitempty"`

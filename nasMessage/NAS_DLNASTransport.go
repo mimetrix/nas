@@ -12,7 +12,7 @@ type DLNASTransport struct {
 	nasType.SpareHalfOctetAndSecurityHeaderType   `json:"SpareHalfOctetAndSecurityHeaderType,omitempty"`
 	nasType.DLNASTRANSPORTMessageIdentity         `json:"DLNASTRANSPORTMessageIdentity,omitempty"`
 	nasType.SpareHalfOctetAndPayloadContainerType `json:"SpareHalfOctetAndPayloadContainerType,omitempty"`
-	nasType.PayloadContainer                      `json:"PayloadContainer,omitempty"`
+	PayloadContainer                      `json:"PayloadContainer,omitempty"`
 	*nasType.PduSessionID2Value                   `json:"PduSessionID2Value,omitempty"`
 	*nasType.AdditionalInformation                `json:"AdditionalInformation,omitempty"`
 	*nasType.Cause5GMM                            `json:"Cause5GMM,omitempty"`
@@ -37,6 +37,7 @@ func (a *DLNASTransport) EncodeDLNASTransport(buffer *bytes.Buffer) {
 	binary.Write(buffer, binary.BigEndian, &a.DLNASTRANSPORTMessageIdentity.Octet)
 	binary.Write(buffer, binary.BigEndian, &a.SpareHalfOctetAndPayloadContainerType.Octet)
 	binary.Write(buffer, binary.BigEndian, a.PayloadContainer.GetLen())
+
 	binary.Write(buffer, binary.BigEndian, &a.PayloadContainer.Buffer)
 	if a.PduSessionID2Value != nil {
 		binary.Write(buffer, binary.BigEndian, a.PduSessionID2Value.GetIei())
@@ -75,8 +76,9 @@ func (a *DLNASTransport) DecodeDLNASTransport(byteArray *[]byte) {
 
 	binary.Read(buffer, binary.BigEndian, &a.PayloadContainer.Len)
 	a.PayloadContainer.SetLen(a.PayloadContainer.GetLen())
+
 	binary.Read(buffer, binary.BigEndian, &a.PayloadContainer.Buffer)
-    //a.PayloadContainer.DecodeNASType()
+    a.PayloadContainer.DecodeNASType()
 
 	for buffer.Len() > 0 {
 		var ieiN uint8
