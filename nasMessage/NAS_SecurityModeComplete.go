@@ -12,7 +12,7 @@ type SecurityModeComplete struct {
 	nasType.SpareHalfOctetAndSecurityHeaderType `json:"SpareHalfOctetAndSecurityHeaderType,omitempty"`
 	nasType.SecurityModeCompleteMessageIdentity `json:"SecurityModeCompleteMessageIdentity,omitempty"`
 	*nasType.IMEISV                             `json:"IMEISV,omitempty"`
-	*nasType.NASMessageContainer                `json:"NASMessageContainer,omitempty"`
+	*NASMessageContainer                `json:"NASMessageContainer,omitempty"`
 }
 
 func NewSecurityModeComplete(iei uint8) (securityModeComplete *SecurityModeComplete) {
@@ -70,10 +70,12 @@ func (a *SecurityModeComplete) DecodeSecurityModeComplete(byteArray *[]byte) {
 			binary.Read(buffer, binary.BigEndian, a.IMEISV.Octet[:a.IMEISV.GetLen()])
             a.IMEISV.DecodeNASType()
 		case SecurityModeCompleteNASMessageContainerType:
-			a.NASMessageContainer = nasType.NewNASMessageContainer(ieiN)
+			a.NASMessageContainer = NewNASMessageContainer(ieiN)
 			binary.Read(buffer, binary.BigEndian, &a.NASMessageContainer.Len)
 			a.NASMessageContainer.SetLen(a.NASMessageContainer.GetLen())
 			binary.Read(buffer, binary.BigEndian, a.NASMessageContainer.Buffer[:a.NASMessageContainer.GetLen()])
+
+            a.NASMessageContainer.DecodeNASType()
 		default:
 		}
 	}

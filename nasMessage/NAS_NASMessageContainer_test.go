@@ -1,11 +1,8 @@
-package nasType_test
+package nasMessage_test
 
 import (
 	"testing"
-
 	"github.com/stretchr/testify/assert"
-
-	"github.com/mimetrix/nas/nasMessage"
 	"github.com/mimetrix/nas/nasType"
 )
 

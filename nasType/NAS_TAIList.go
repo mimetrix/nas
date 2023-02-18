@@ -99,8 +99,6 @@ func (t *TAIList) DecodeNASType() error {
         TAIType := (headerByte & 0x60) >> 5
         
         numElements := (headerByte & 0x1F) + 1
-        fmt.Printf("\nTAIType: 0x%x\n",TAIType)
-        fmt.Printf("NumElements: 0x%x\n",numElements)
 
         if TAIType == 0x01 {
 

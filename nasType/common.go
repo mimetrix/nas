@@ -31,6 +31,7 @@ var FiveGSTypes = map[uint8]string {
     0x7: "EUI-64",
 }
 
+/*From section 9.7 3gpp 24.501*/
 var MessageTypes = map[uint8]string {
     0x41: "Registration request",
     0x42: "Registration accept",
@@ -40,7 +41,7 @@ var MessageTypes = map[uint8]string {
     0x46: "Deregistration accept (UE originating)",
     0x47: "Deregistration request (UE terminated)",
     0x48: "Deregistration accept (UE terminated)",
-    0x4c: "1Service request",
+    0x4c: "Service request",
     0x4d: "Service reject",
     0x4e: "Service accept",
     0x4f: "Control plane service request",

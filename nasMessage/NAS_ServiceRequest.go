@@ -16,7 +16,7 @@ type ServiceRequest struct {
 	*nasType.UplinkDataStatus                   `json:"UplinkDataStatus,omitempty"`
 	*nasType.PDUSessionStatus                   `json:"PDUSessionStatus,omitempty"`
 	*nasType.AllowedPDUSessionStatus            `json:"AllowedPDUSessionStatus,omitempty"`
-	*nasType.NASMessageContainer                `json:"NASMessageContainer,omitempty"`
+	*NASMessageContainer                `json:"NASMessageContainer,omitempty"`
 }
 
 func NewServiceRequest(iei uint8) (serviceRequest *ServiceRequest) {
@@ -97,7 +97,7 @@ func (a *ServiceRequest) DecodeServiceRequest(byteArray *[]byte) {
 			a.AllowedPDUSessionStatus.SetLen(a.AllowedPDUSessionStatus.GetLen())
 			binary.Read(buffer, binary.BigEndian, a.AllowedPDUSessionStatus.Buffer[:a.AllowedPDUSessionStatus.GetLen()])
 		case ServiceRequestNASMessageContainerType:
-			a.NASMessageContainer = nasType.NewNASMessageContainer(ieiN)
+			a.NASMessageContainer = NewNASMessageContainer(ieiN)
 			binary.Read(buffer, binary.BigEndian, &a.NASMessageContainer.Len)
 			a.NASMessageContainer.SetLen(a.NASMessageContainer.GetLen())
 			binary.Read(buffer, binary.BigEndian, a.NASMessageContainer.Buffer[:a.NASMessageContainer.GetLen()])

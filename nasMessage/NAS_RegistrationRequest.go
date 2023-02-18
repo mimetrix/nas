@@ -32,7 +32,7 @@ type RegistrationRequest struct {
 	*nasType.PayloadContainer                    `json:"PayloadContainer,omitempty"`
 	*nasType.NetworkSlicingIndication            `json:"NetworkSlicingIndication,omitempty"`
 	*nasType.UpdateType5GS                       `json:"UpdateType5GS,omitempty"`
-	*nasType.NASMessageContainer                 `json:"NASMessageContainer,omitempty"`
+	*NASMessageContainer                 `json:"NASMessageContainer,omitempty"`
 }
 
 func NewRegistrationRequest(iei uint8) (registrationRequest *RegistrationRequest) {
@@ -288,7 +288,7 @@ func (a *RegistrationRequest) DecodeRegistrationRequest(byteArray *[]byte) {
 			a.UpdateType5GS.SetLen(a.UpdateType5GS.GetLen())
 			binary.Read(buffer, binary.BigEndian, &a.UpdateType5GS.Octet)
 		case RegistrationRequestNASMessageContainerType:
-			a.NASMessageContainer = nasType.NewNASMessageContainer(ieiN)
+			a.NASMessageContainer = NewNASMessageContainer(ieiN)
 			binary.Read(buffer, binary.BigEndian, &a.NASMessageContainer.Len)
 			a.NASMessageContainer.SetLen(a.NASMessageContainer.GetLen())
 			binary.Read(buffer, binary.BigEndian, a.NASMessageContainer.Buffer[:a.NASMessageContainer.GetLen()])
