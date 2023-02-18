@@ -3,6 +3,7 @@ package nasMessage
 import (
 	"bytes"
 	"encoding/binary"
+    "fmt"
 
 	"github.com/mimetrix/nas/nasType"
 )
@@ -237,6 +238,8 @@ func (a *RegistrationAccept) DecodeRegistrationAccept(byteArray *[]byte) {
 			binary.Read(buffer, binary.BigEndian, &a.TAIList.Len)
 			a.TAIList.SetLen(a.TAIList.GetLen())
 			binary.Read(buffer, binary.BigEndian, a.TAIList.Buffer[:a.TAIList.GetLen()])
+            fmt.Println("TAILISTTYPE")
+
             a.TAIList.DecodeNASType()
 		case RegistrationAcceptAllowedNSSAIType:
 			a.AllowedNSSAI = nasType.NewAllowedNSSAI(ieiN)
