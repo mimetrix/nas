@@ -3,7 +3,7 @@ package nasType
 // PDUSessionID 9.4
 // PDUSessionID Row, sBit, len = [0, 0], 8 , 8
 type PDUSessionID struct {
-	Octet uint8 `json:"Octet,omitempty"`
+	Octet uint8 `json:"ID,omitempty"`
 }
 
 func NewPDUSessionID() (pDUSessionID *PDUSessionID) {
