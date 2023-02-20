@@ -3,7 +3,14 @@ package nasType
 // PDUSESSIONESTABLISHMENTREQUESTMessageIdentity 9.7
 // MessageType Row, sBit, len = [0, 0], 8 , 8
 type PDUSESSIONESTABLISHMENTREQUESTMessageIdentity struct {
-	Octet uint8 `json:"Octet,omitempty"`
+	Octet uint8 `json:"-"`
+    MessageType string
+}
+
+
+func (p *PDUSESSIONESTABLISHMENTREQUESTMessageIdentity ) DecodeNASType() error{
+    p.MessageType = MessageTypes[p.GetMessageType()]
+    return nil
 }
 
 func NewPDUSESSIONESTABLISHMENTREQUESTMessageIdentity() (pDUSESSIONESTABLISHMENTREQUESTMessageIdentity *PDUSESSIONESTABLISHMENTREQUESTMessageIdentity) {

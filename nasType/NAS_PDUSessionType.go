@@ -5,7 +5,22 @@ package nasType
 // Spare Row, sBit, len = [0, 0], 4 , 1
 // PDUSessionTypeValue Row, sBit, len = [0, 0], 3 , 3
 type PDUSessionType struct {
-	Octet uint8 `json:"Octet,omitempty"`
+	Octet uint8 `json:"-"`
+    SessionType string 
+}
+
+var SessionTypes = map[uint8]string {
+    1:"IPv4",
+    2:"IPv6",
+    3:"IPv4v6",
+    4:"Unstructured",
+    5:"Ethernet",
+    7:"reserved",
+}
+
+func (p *PDUSessionType) DecodeNASType() error {
+    p.SessionType = SessionTypes[p.GetPDUSessionTypeValue()]
+    return nil
 }
 
 func NewPDUSessionType(iei uint8) (pDUSessionType *PDUSessionType) {

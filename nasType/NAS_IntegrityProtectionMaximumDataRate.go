@@ -5,7 +5,32 @@ package nasType
 // MaximumDataRatePerUEForUserPlaneIntegrityProtectionForDownLink Row, sBit, len = [1, 1], 8 , 8
 type IntegrityProtectionMaximumDataRate struct {
 	Iei   uint8    `json:"Iei,omitempty"`
-	Octet [2]uint8 `json:"Octet,omitempty"`
+	Octet [2]uint8 `json:"-"`
+    UplinkDataRate string
+    DownlinkDataRate string
+}
+
+func (i *IntegrityProtectionMaximumDataRate ) DecodeNASType() error {
+
+    switch i.GetMaximumDataRatePerUEForUserPlaneIntegrityProtectionForUpLink() {
+        case 0x00:
+            i.UplinkDataRate = "64 kbps"
+        case 0x01:
+            i.UplinkDataRate = "NULL"
+        case 0xff:
+            i.UplinkDataRate = "Full data rate"
+    }
+
+    switch i.GetMaximumDataRatePerUEForUserPlaneIntegrityProtectionForDownLink () {
+        case 0x00:
+            i.DownlinkDataRate = "64 kbps"
+        case 0x01:
+            i.DownlinkDataRate = "NULL"
+        case 0xff:
+            i.DownlinkDataRate = "Full data rate"
+    }
+
+    return nil
 }
 
 func NewIntegrityProtectionMaximumDataRate(iei uint8) (integrityProtectionMaximumDataRate *IntegrityProtectionMaximumDataRate) {

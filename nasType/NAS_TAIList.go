@@ -13,7 +13,7 @@ import(
 type TAIList struct {
 	Iei    uint8   `json:"-"`
 	Len    uint8   `json:"-"`
-	Buffer []uint8 `json:"Buffer,omitempty"`
+	Buffer []uint8 `json:"-"`
     TAIs   []TAIType
 }
 

@@ -86,6 +86,7 @@ func (a *ULNASTransport) DecodeULNASTransport(byteArray *[]byte) {
 	binary.Read(buffer, binary.BigEndian, &a.PayloadContainer.Len)
 	a.PayloadContainer.SetLen(a.PayloadContainer.GetLen())
 	binary.Read(buffer, binary.BigEndian, &a.PayloadContainer.Buffer)
+    a.PayloadContainer.DecodeNASType()
 	for buffer.Len() > 0 {
 		var ieiN uint8
 		var tmpIeiN uint8

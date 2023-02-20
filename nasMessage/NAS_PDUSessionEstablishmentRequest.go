@@ -78,10 +78,14 @@ func (a *PDUSessionEstablishmentRequest) EncodePDUSessionEstablishmentRequest(bu
 func (a *PDUSessionEstablishmentRequest) DecodePDUSessionEstablishmentRequest(byteArray *[]byte) {
 	buffer := bytes.NewBuffer(*byteArray)
 	binary.Read(buffer, binary.BigEndian, &a.ExtendedProtocolDiscriminator.Octet)
+    a.ExtendedProtocolDiscriminator.DecodeNASType()
 	binary.Read(buffer, binary.BigEndian, &a.PDUSessionID.Octet)
 	binary.Read(buffer, binary.BigEndian, &a.PTI.Octet)
 	binary.Read(buffer, binary.BigEndian, &a.PDUSESSIONESTABLISHMENTREQUESTMessageIdentity.Octet)
+
+    a.PDUSESSIONESTABLISHMENTREQUESTMessageIdentity.DecodeNASType()
 	binary.Read(buffer, binary.BigEndian, &a.IntegrityProtectionMaximumDataRate.Octet)
+    a.IntegrityProtectionMaximumDataRate.DecodeNASType()
 	for buffer.Len() > 0 {
 		var ieiN uint8
 		var tmpIeiN uint8
@@ -97,6 +101,7 @@ func (a *PDUSessionEstablishmentRequest) DecodePDUSessionEstablishmentRequest(by
 		case PDUSessionEstablishmentRequestPDUSessionTypeType:
 			a.PDUSessionType = nasType.NewPDUSessionType(ieiN)
 			a.PDUSessionType.Octet = ieiN
+            a.PDUSessionType.DecodeNASType()
 		case PDUSessionEstablishmentRequestSSCModeType:
 			a.SSCMode = nasType.NewSSCMode(ieiN)
 			a.SSCMode.Octet = ieiN
