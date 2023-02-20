@@ -24,7 +24,9 @@ type QoSRules []QoSRule
 
 type QoSRule struct {
 	Identifier       uint8                `json:"Identifier,omitempty"`
+    IdentifierName   string   
 	Operation        QoSRuleOperationCode `json:"Operation,omitempty"`
+    OperationName    string
 	DQR              bool                 `json:"DQR,omitempty"`
 	PacketFilterList PacketFilterList     `json:"PacketFilterList,omitempty"`
 	Precedence       uint8                `json:"Precedence,omitempty"`
@@ -105,6 +107,15 @@ func (q *QoSRules) MarshalBinary() ([]byte, error) {
 	return buf.Bytes(), nil
 }
 
+var OperationNames = map[QoSRuleOperationCode]string {
+    1:"Create new QoS rule",
+    2:"Delete existing QoS rule",
+    3:"Modify existing QoS rule and add packet filters",
+    4:"Modify existing QoS rule and replace all packet filters",
+    5:"Modify existing QoS rule and delete packet filters",
+    6:"Modify existing QoS rule without modifying packet filters",
+}
+
 func (q *QoSRules) UnmarshalBinary(b []byte) error {
 	*q = make(QoSRules, 0)
 
@@ -114,10 +125,13 @@ func (q *QoSRules) UnmarshalBinary(b []byte) error {
 		rule := QoSRule{}
 		if err := binary.Read(buf, binary.BigEndian, &rule.Identifier); err != nil {
 			if err == io.EOF {
+
 				break
 			}
 			return err
 		}
+
+        rule.IdentifierName = fmt.Sprintf("QRI %d", rule.Identifier)
 
 		var ruleLen uint16
 		if err := binary.Read(buf, binary.BigEndian, &ruleLen); err != nil {
@@ -140,6 +154,8 @@ func (q *QoSRules) UnmarshalBinary(b []byte) error {
 		} else {
 			pfList, pfListError = parsePacketFilterList(buf, pfLen)
 		}
+        
+        rule.OperationName = OperationNames[rule.Operation]
 
 		if pfListError != nil {
 			return pfListError
@@ -196,6 +212,35 @@ const (
 	PacketFilterComponentType8021Q_STAG_PCPOrDEI            PacketFilterComponentType = 0x86
 	PacketFilterComponentTypeEthertype                      PacketFilterComponentType = 0x87
 )
+
+var FilterTypes = map[uint8]string {
+    0x01: "MatchAll",
+    0x10: "IPv4RemoteAddress",
+    0x11: "IPv4LocalAddress",
+    0x21: "IPv6RemoteAddress",
+    0x23: "IPv6LocalAddress",
+    0x30: "ProtocolIdentifierOrNextHeader",
+    0x40: "SingleLocalPort",
+    0x41: "LocalPortRange",
+    0x50: "SingleRemotePort",
+    0x51: "RemotePortRange",
+    0x60: "SecurityParameterIndex",
+    0x70: "TypeOfServiceOrTrafficClass",
+    0x80: "FlowLabel",
+    0x81: "DestinationMACAddress",
+    0x82: "SourceMACAddress",
+    0x83: "8021Q_CTAG_VID",
+    0x84: "8021Q_STAG_VID",
+    0x85: "8021Q_CTAG_PCPOrDEI",
+    0x86: "8021Q_STAG_PCPOrDEI",
+    0x87: "Ethertype",
+}
+
+var DirectionTypes = map[PacketFilterDirection ]string {
+    1:"Downlink Only",
+    2:"Uplink Only",
+    3:"Bidirectional",
+}
 
 type PacketFilterList []PacketFilter
 
@@ -255,7 +300,9 @@ func parsePacketFilterList(buf *bytes.Buffer, n int) (PacketFilterList, error) {
 
 		pf := PacketFilter{
 			Identifier: id,
-			Direction:  dir,
+			FilterType: FilterTypes[id],
+            Direction:  dir,
+            DirectionName: DirectionTypes[dir], 
 		}
 
 		if err := pf.Components.UnmarshalBinary(buf.Next(int(pfLen))); err != nil {
@@ -333,7 +380,9 @@ func newPacketFilterComponent(id PacketFilterComponentType) PacketFilterComponen
 
 type PacketFilter struct {
 	Identifier uint8                     `json:"Identifier,omitempty"`
+    FilterType string
 	Direction  PacketFilterDirection     `json:"Direction,omitempty"`
+    DirectionName string
 	Components PacketFilterComponentList `json:"Components,omitempty"`
 }
 

@@ -39,7 +39,7 @@ var ParameterTYpes = map[uint8]string {
     7:"EPS bearer identity",
 }
 
-var OperationCodes = map[uint8]string {
+var FlowOperationCodes = map[uint8]string {
     1:"Create new QoS flow description",
     2:"Delete existing QoS flow description",
     3:"Modify existing QoS flow description",
@@ -69,7 +69,7 @@ func (a *AuthorizedQosFlowDescriptions) DecodeNASType() error {
             return err
         }
         OpCode = (OpCode & 0xe0) >> 5
-        OpName := OperationCodes[OpCode]
+        OpName := FlowOperationCodes[OpCode]
         
         EAndNumParams, err := QoSBuf.ReadByte()
         if err != nil {

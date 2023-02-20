@@ -3,7 +3,7 @@ package nasMessage
 import (
 	"bytes"
 	"encoding/binary"
-
+    "fmt"
 	"github.com/mimetrix/nas/nasType"
 )
 
@@ -117,11 +117,15 @@ func (a *PDUSessionEstablishmentAccept) DecodePDUSessionEstablishmentAccept(byte
 	binary.Read(buffer, binary.BigEndian, &a.SelectedSSCModeAndSelectedPDUSessionType.Octet)
     a.SelectedSSCModeAndSelectedPDUSessionType.Parse()
 
-
 	binary.Read(buffer, binary.BigEndian, &a.AuthorizedQosRules.Len)
 	a.AuthorizedQosRules.SetLen(a.AuthorizedQosRules.GetLen())
 	binary.Read(buffer, binary.BigEndian, &a.AuthorizedQosRules.Buffer)
 
+    err := a.AuthorizedQosRules.DecodeNASType()
+    if err != nil {
+        fmt.Println(err)
+    } 
+ 
 	binary.Read(buffer, binary.BigEndian, &a.SessionAMBR.Len)
 	a.SessionAMBR.SetLen(a.SessionAMBR.GetLen())
 	binary.Read(buffer, binary.BigEndian, &a.SessionAMBR.Octet)
