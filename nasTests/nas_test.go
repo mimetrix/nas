@@ -171,9 +171,9 @@ func TestSecProtectedConfigurationUpdateCommand(t *testing.T){
     compareResults(t, expectedList)
 }
 
-func TestSecProtectedULNASTransport(t *testing.T){
-    decodedJSON, nasMsg := decodeNASMsg(t, SecProtectedULNASTransport)
-    outputJSON(t, "SecProtectedULNASTransport.json", decodedJSON) 
+func TestSecProtectedULNASTransport1(t *testing.T){
+    decodedJSON, nasMsg := decodeNASMsg(t, SecProtectedULNASTransport1)
+    outputJSON(t, "SecProtectedULNASTransport1.json", decodedJSON) 
 
     ULNASTrans := nasMsg.GmmMessage.PlainNASMessage.GmmMessage.ULNASTransport
     MessageType := ULNASTrans.ULNASTRANSPORTMessageIdentity.MessageType
@@ -189,6 +189,11 @@ func TestSecProtectedULNASTransport(t *testing.T){
 
     }
     compareResults(t, expectedList)
+}
+
+func TestSecProtectedULNASTransport2(t *testing.T){
+    decodedJSON, _:= decodeNASMsg(t, SecProtectedULNASTransport2)
+    outputJSON(t, "SecProtectedULNASTransport2.json", decodedJSON) 
 }
 
 func TestSecProtectedDLNASTransport(t *testing.T){

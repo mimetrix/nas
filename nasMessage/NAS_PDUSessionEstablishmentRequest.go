@@ -110,6 +110,8 @@ func (a *PDUSessionEstablishmentRequest) DecodePDUSessionEstablishmentRequest(by
 			binary.Read(buffer, binary.BigEndian, &a.Capability5GSM.Len)
 			a.Capability5GSM.SetLen(a.Capability5GSM.GetLen())
 			binary.Read(buffer, binary.BigEndian, a.Capability5GSM.Octet[:a.Capability5GSM.GetLen()])
+            a.Capability5GSM.DecodeNASType()
+
 		case PDUSessionEstablishmentRequestMaximumNumberOfSupportedPacketFiltersType:
 			a.MaximumNumberOfSupportedPacketFilters = nasType.NewMaximumNumberOfSupportedPacketFilters(ieiN)
 			binary.Read(buffer, binary.BigEndian, &a.MaximumNumberOfSupportedPacketFilters.Octet)
@@ -126,6 +128,7 @@ func (a *PDUSessionEstablishmentRequest) DecodePDUSessionEstablishmentRequest(by
 			binary.Read(buffer, binary.BigEndian, &a.ExtendedProtocolConfigurationOptions.Len)
 			a.ExtendedProtocolConfigurationOptions.SetLen(a.ExtendedProtocolConfigurationOptions.GetLen())
 			binary.Read(buffer, binary.BigEndian, a.ExtendedProtocolConfigurationOptions.Buffer[:a.ExtendedProtocolConfigurationOptions.GetLen()])
+            a.ExtendedProtocolConfigurationOptions.DecodeNASType()
 		default:
 		}
 	}
