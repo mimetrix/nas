@@ -12,7 +12,7 @@ type DLNASTransport struct {
 	nasType.SpareHalfOctetAndSecurityHeaderType   `json:"SpareHalfOctetAndSecurityHeaderType,omitempty"`
 	nasType.DLNASTRANSPORTMessageIdentity         `json:"DLNASTRANSPORTMessageIdentity,omitempty"`
 	nasType.SpareHalfOctetAndPayloadContainerType `json:"SpareHalfOctetAndPayloadContainerType,omitempty"`
-	PayloadContainer                      `json:"PayloadContainer,omitempty"`
+	PayloadContainer                              `json:"PayloadContainer,omitempty"`
 	*nasType.PduSessionID2Value                   `json:"PduSessionID2Value,omitempty"`
 	*nasType.AdditionalInformation                `json:"AdditionalInformation,omitempty"`
 	*nasType.Cause5GMM                            `json:"Cause5GMM,omitempty"`
@@ -62,23 +62,24 @@ func (a *DLNASTransport) EncodeDLNASTransport(buffer *bytes.Buffer) {
 func (a *DLNASTransport) DecodeDLNASTransport(byteArray *[]byte) {
 	buffer := bytes.NewBuffer(*byteArray)
 	binary.Read(buffer, binary.BigEndian, &a.ExtendedProtocolDiscriminator.Octet)
+	a.ExtendedProtocolDiscriminator.DecodeNASType()
 
-    a.ExtendedProtocolDiscriminator.DecodeNASType()
+	a.ExtendedProtocolDiscriminator.DecodeNASType()
 
 	binary.Read(buffer, binary.BigEndian, &a.SpareHalfOctetAndSecurityHeaderType.Octet)
-    a.SpareHalfOctetAndSecurityHeaderType.DecodeNASType()
+	a.SpareHalfOctetAndSecurityHeaderType.DecodeNASType()
 
 	binary.Read(buffer, binary.BigEndian, &a.DLNASTRANSPORTMessageIdentity.Octet)
-    a.DLNASTRANSPORTMessageIdentity.DecodeNASType()
+	a.DLNASTRANSPORTMessageIdentity.DecodeNASType()
 
 	binary.Read(buffer, binary.BigEndian, &a.SpareHalfOctetAndPayloadContainerType.Octet)
-    a.SpareHalfOctetAndPayloadContainerType.DecodeNASType()
+	a.SpareHalfOctetAndPayloadContainerType.DecodeNASType()
 
 	binary.Read(buffer, binary.BigEndian, &a.PayloadContainer.Len)
 	a.PayloadContainer.SetLen(a.PayloadContainer.GetLen())
 
 	binary.Read(buffer, binary.BigEndian, &a.PayloadContainer.Buffer)
-    a.PayloadContainer.DecodeNASType()
+	a.PayloadContainer.DecodeNASType()
 
 	for buffer.Len() > 0 {
 		var ieiN uint8
@@ -103,6 +104,7 @@ func (a *DLNASTransport) DecodeDLNASTransport(byteArray *[]byte) {
 		case DLNASTransportCause5GMMType:
 			a.Cause5GMM = nasType.NewCause5GMM(ieiN)
 			binary.Read(buffer, binary.BigEndian, &a.Cause5GMM.Octet)
+			a.Cause5GMM.DecodeNASType()
 		case DLNASTransportBackoffTimerValueType:
 			a.BackoffTimerValue = nasType.NewBackoffTimerValue(ieiN)
 			binary.Read(buffer, binary.BigEndian, &a.BackoffTimerValue.Len)

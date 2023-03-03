@@ -55,10 +55,14 @@ func (a *PDUSessionReleaseCommand) EncodePDUSessionReleaseCommand(buffer *bytes.
 func (a *PDUSessionReleaseCommand) DecodePDUSessionReleaseCommand(byteArray *[]byte) {
 	buffer := bytes.NewBuffer(*byteArray)
 	binary.Read(buffer, binary.BigEndian, &a.ExtendedProtocolDiscriminator.Octet)
+	a.ExtendedProtocolDiscriminator.DecodeNASType()
+
 	binary.Read(buffer, binary.BigEndian, &a.PDUSessionID.Octet)
 	binary.Read(buffer, binary.BigEndian, &a.PTI.Octet)
 	binary.Read(buffer, binary.BigEndian, &a.PDUSESSIONRELEASECOMMANDMessageIdentity.Octet)
 	binary.Read(buffer, binary.BigEndian, &a.Cause5GSM.Octet)
+	a.Cause5GSM.DecodeNASType()
+
 	for buffer.Len() > 0 {
 		var ieiN uint8
 		var tmpIeiN uint8
