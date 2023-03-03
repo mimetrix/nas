@@ -3,8 +3,8 @@ package nasType
 // Cause5GSM 9.11.4.2
 // CauseValue Row, sBit, len = [0, 0], 8 , 8
 type Cause5GSM struct {
-	Iei   uint8 `json:"Iei,omitempty"`
-	Octet uint8 `json:"Octet,omitempty"`
+	Iei   uint8 `json:"-"`
+	Octet uint8 `json:"-"`
 	Cause string
 }
 

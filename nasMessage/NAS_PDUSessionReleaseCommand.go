@@ -60,6 +60,8 @@ func (a *PDUSessionReleaseCommand) DecodePDUSessionReleaseCommand(byteArray *[]b
 	binary.Read(buffer, binary.BigEndian, &a.PDUSessionID.Octet)
 	binary.Read(buffer, binary.BigEndian, &a.PTI.Octet)
 	binary.Read(buffer, binary.BigEndian, &a.PDUSESSIONRELEASECOMMANDMessageIdentity.Octet)
+	a.PDUSESSIONRELEASECOMMANDMessageIdentity.DecodeNASType()
+
 	binary.Read(buffer, binary.BigEndian, &a.Cause5GSM.Octet)
 	a.Cause5GSM.DecodeNASType()
 

@@ -3,12 +3,18 @@ package nasType
 // PDUSESSIONRELEASECOMMANDMessageIdentity 9.7
 // MessageType Row, sBit, len = [0, 0], 8 , 8
 type PDUSESSIONRELEASECOMMANDMessageIdentity struct {
-	Octet uint8 `json:"Octet,omitempty"`
+	Octet       uint8 `json:"0"`
+	MessageType string
 }
 
 func NewPDUSESSIONRELEASECOMMANDMessageIdentity() (pDUSESSIONRELEASECOMMANDMessageIdentity *PDUSESSIONRELEASECOMMANDMessageIdentity) {
 	pDUSESSIONRELEASECOMMANDMessageIdentity = &PDUSESSIONRELEASECOMMANDMessageIdentity{}
 	return pDUSESSIONRELEASECOMMANDMessageIdentity
+}
+
+func (n *PDUSESSIONRELEASECOMMANDMessageIdentity) DecodeNASType() error {
+	n.MessageType = MessageTypes[n.Octet]
+	return nil
 }
 
 // PDUSESSIONRELEASECOMMANDMessageIdentity 9.7
