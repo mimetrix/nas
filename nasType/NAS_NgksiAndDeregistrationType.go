@@ -7,7 +7,7 @@ package nasType
 // ReRegistrationRequired Row, sBit, len = [0, 0], 3 , 1
 // AccessType Row, sBit, len = [0, 0], 2 , 2
 type NgksiAndDeregistrationType struct {
-	Octet uint8 `json:"Octet,omitempty"`
+	Octet uint8 `json:"Type,omitempty"`
 }
 
 func NewNgksiAndDeregistrationType() (ngksiAndDeregistrationType *NgksiAndDeregistrationType) {

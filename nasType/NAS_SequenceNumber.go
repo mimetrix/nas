@@ -4,7 +4,6 @@ package nasType
 // SQN Row, sBit, len = [0, 0], 8 , 8
 type SequenceNumber struct {
 	Octet uint8 `json:"Value"`
-
 }
 
 func NewSequenceNumber() (sequenceNumber *SequenceNumber) {
