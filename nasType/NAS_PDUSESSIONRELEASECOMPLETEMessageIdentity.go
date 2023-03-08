@@ -3,7 +3,7 @@ package nasType
 // PDUSESSIONRELEASECOMPLETEMessageIdentity 9.7
 // MessageType Row, sBit, len = [0, 0], 8 , 8
 type PDUSESSIONRELEASECOMPLETEMessageIdentity struct {
-	Octet uint8 `json:"Octet,omitempty"`
+	Octet uint8 `json:"ID,omitempty"`
 }
 
 func NewPDUSESSIONRELEASECOMPLETEMessageIdentity() (pDUSESSIONRELEASECOMPLETEMessageIdentity *PDUSESSIONRELEASECOMPLETEMessageIdentity) {
