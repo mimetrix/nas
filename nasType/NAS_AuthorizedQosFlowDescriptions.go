@@ -16,7 +16,7 @@ type AuthorizedQosFlowDescriptions struct {
 
 type QoSDescription struct {
 	QoSFlowID     string
-	OpID          uint8 `json"-"`
+	OpID          uint8 `json:"-"`
 	Operation     string
 	E             bool
 	NumParameters uint8
@@ -24,10 +24,10 @@ type QoSDescription struct {
 }
 
 type QoSParameter struct {
-	ParameterIdentifier uint8 `json"-"`
-	ParameterLength     uint8 "-"
+	ParameterIdentifier uint8 `json:"-"`
+	ParameterLength     uint8 `json:"-"`
 	ParameterType       string
-	Bytes               []uint8 "-"
+	Bytes               []uint8 `json:"-"`
 }
 
 var ParameterTYpes = map[uint8]string{
