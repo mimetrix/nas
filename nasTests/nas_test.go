@@ -11,6 +11,9 @@ import (
 	"testing"
 
 	"github.com/mimetrix/nas"
+
+	//"nas"
+
 	"github.com/mimetrix/nas/nasMessage"
 )
 
@@ -247,6 +250,79 @@ func TestSecProtectedDLNASTransport3(t *testing.T) {
 		Cause:            "Regular deactivation",
 	}
 	compareResults(t, expectedList)
+}
+
+/*
+================================================
+       MIME MULTIPART TESTS
+================================================
+*/
+
+func TestMIME_N1SMSG(t *testing.T) {
+	nasMsg, err := nas.MultipartDecoder(N1SMMSG, N1SMMSGBytes)
+	if err != nil {
+		t.Log(err)
+		t.Error("Failed to Decode Message")
+	}
+	imJSON, err := json.MarshalIndent(nasMsg, "", "    ")
+	jsonStr := string(imJSON)
+	if err != nil {
+		t.Log(err)
+		t.Error("Failed to Marshal JSON")
+	}
+
+	//spew.Dump(PlainMessage.GsmMessage)
+	pser := nasMsg.GsmMessage.PDUSessionEstablishmentRequest
+
+	EPD := pser.ExtendedProtocolDiscriminator.EPD
+	uplinkRate := pser.IntegrityProtectionMaximumDataRate.UplinkDataRate
+	SessionType := pser.PDUSessionType.SessionType
+
+	var expectedList = map[string]string{
+		EPD:         "5GS session management messages",
+		uplinkRate:  "Full data rate",
+		SessionType: "IPv4",
+	}
+	compareResults(t, expectedList)
+
+	outputJSON(t, "MIME_N1SMSG.json", jsonStr)
+
+}
+
+/*
+TODO: fix SessionAMBR message, values are not correct
+TODO: ExtendedProtocolConfigurationOptions not decoding at all
+TODO: SSCMode not decoding at all
+*/
+func TestMIME_GSMNAS(t *testing.T) {
+	nasMsg, err := nas.MultipartDecoder(GSMNAS, GSMNASBytes)
+	if err != nil {
+		t.Log(err)
+		t.Error("Failed to Decode Message")
+	}
+	imJSON, err := json.MarshalIndent(nasMsg, "", "    ")
+	jsonStr := string(imJSON)
+	if err != nil {
+		t.Log(err)
+		t.Error("Failed to Marshal JSON")
+	}
+
+	gsmMsg := nasMsg.GsmMessage
+
+	EPD := gsmMsg.PDUSessionEstablishmentAccept.ExtendedProtocolDiscriminator.EPD
+	IPv4Address := gsmMsg.PDUAddress.IPv4Address
+	FQDN := gsmMsg.DNN.FQDN
+
+	var expectedList = map[string]string{
+		EPD:         "5GS session management messages",
+		IPv4Address: "10.1.0.5",
+		FQDN:        "internet",
+	}
+
+	compareResults(t, expectedList)
+
+	outputJSON(t, "MIME_GSMNAS.json", jsonStr)
+
 }
 
 /*

@@ -5,7 +5,6 @@ import (
 	"encoding/binary"
 	"fmt"
 	//"github.com/davecgh/go-spew/spew"
-    
 )
 
 // Message TODO：description
@@ -13,7 +12,7 @@ type Message struct {
 	SecurityHeader `json:"-"`
 	*GmmMessage    `json:"GmmMessage,omitempty"`
 	*GsmMessage    `json:"GsmMessage,omitempty"`
-    Bytes          []byte `json:"EncryptedBytes,omitempty"`
+	Bytes          []byte `json:"EncryptedBytes,omitempty"`
 }
 
 // SecurityHeader TODO：description
@@ -34,7 +33,7 @@ const (
 
 // NewMessage TODO:desc
 func NewMessage() *Message {
-    //fmt.Println("\nNewMessage\n")
+	//fmt.Println("\nNewMessage\n")
 	Message := &Message{}
 	return Message
 }
@@ -52,7 +51,8 @@ func NewGsmMessage() *GsmMessage {
 }
 
 // GmmHeader Octet1 protocolDiscriminator securityHeaderType
-//           Octet2 MessageType
+//
+//	Octet2 MessageType
 type GmmHeader struct {
 	Octet [3]uint8 `json:"Octet,omitempty"`
 }
@@ -108,7 +108,7 @@ func GetSecurityHeaderType(byteArray []byte) uint8 {
 }
 
 type GmmMessage struct {
-	GmmHeader                                                    `json:"-"`
+	GmmHeader                                         `json:"-"`
 	*AuthenticationRequest                            `json:"AuthenticationRequest,omitempty"`
 	*AuthenticationResponse                           `json:"AuthenticationResponse,omitempty"`
 	*AuthenticationResult                             `json:"AuthenticationResult,omitempty"`
@@ -141,53 +141,52 @@ type GmmMessage struct {
 }
 
 const (
-	MsgTypeRegistrationRequest                              uint8 = 65 //0x41
-	MsgTypeRegistrationAccept                               uint8 = 66 //0x42
-	MsgTypeRegistrationComplete                             uint8 = 67 //0x43
-	MsgTypeRegistrationReject                               uint8 = 68 //0x44
-	MsgTypeDeregistrationRequestUEOriginatingDeregistration uint8 = 69 //0x45 
-	MsgTypeDeregistrationAcceptUEOriginatingDeregistration  uint8 = 70 //0x46
-	MsgTypeDeregistrationRequestUETerminatedDeregistration  uint8 = 71 //0x47
-	MsgTypeDeregistrationAcceptUETerminatedDeregistration   uint8 = 72 //0x48
-	MsgTypeServiceRequest                                   uint8 = 76 //0x4c
-	MsgTypeServiceReject                                    uint8 = 77 //0x4d
-	MsgTypeServiceAccept                                    uint8 = 78 //0x4e
-	MsgTypeConfigurationUpdateCommand                       uint8 = 84 //0x54
-	MsgTypeConfigurationUpdateComplete                      uint8 = 85 //0x55
-	MsgTypeAuthenticationRequest                            uint8 = 86 //0x56
-	MsgTypeAuthenticationResponse                           uint8 = 87 //0x57
-	MsgTypeAuthenticationReject                             uint8 = 88 //0x58
-	MsgTypeAuthenticationFailure                            uint8 = 89 //0x59
-	MsgTypeAuthenticationResult                             uint8 = 90 //0x5a
-	MsgTypeIdentityRequest                                  uint8 = 91 //0x5b
-	MsgTypeIdentityResponse                                 uint8 = 92 //0x5c
-	MsgTypeSecurityModeCommand                              uint8 = 93 //0x5d
-	MsgTypeSecurityModeComplete                             uint8 = 94 //0x5e
-	MsgTypeSecurityModeReject                               uint8 = 95 //0x5f 
+	MsgTypeRegistrationRequest                              uint8 = 65  //0x41
+	MsgTypeRegistrationAccept                               uint8 = 66  //0x42
+	MsgTypeRegistrationComplete                             uint8 = 67  //0x43
+	MsgTypeRegistrationReject                               uint8 = 68  //0x44
+	MsgTypeDeregistrationRequestUEOriginatingDeregistration uint8 = 69  //0x45
+	MsgTypeDeregistrationAcceptUEOriginatingDeregistration  uint8 = 70  //0x46
+	MsgTypeDeregistrationRequestUETerminatedDeregistration  uint8 = 71  //0x47
+	MsgTypeDeregistrationAcceptUETerminatedDeregistration   uint8 = 72  //0x48
+	MsgTypeServiceRequest                                   uint8 = 76  //0x4c
+	MsgTypeServiceReject                                    uint8 = 77  //0x4d
+	MsgTypeServiceAccept                                    uint8 = 78  //0x4e
+	MsgTypeConfigurationUpdateCommand                       uint8 = 84  //0x54
+	MsgTypeConfigurationUpdateComplete                      uint8 = 85  //0x55
+	MsgTypeAuthenticationRequest                            uint8 = 86  //0x56
+	MsgTypeAuthenticationResponse                           uint8 = 87  //0x57
+	MsgTypeAuthenticationReject                             uint8 = 88  //0x58
+	MsgTypeAuthenticationFailure                            uint8 = 89  //0x59
+	MsgTypeAuthenticationResult                             uint8 = 90  //0x5a
+	MsgTypeIdentityRequest                                  uint8 = 91  //0x5b
+	MsgTypeIdentityResponse                                 uint8 = 92  //0x5c
+	MsgTypeSecurityModeCommand                              uint8 = 93  //0x5d
+	MsgTypeSecurityModeComplete                             uint8 = 94  //0x5e
+	MsgTypeSecurityModeReject                               uint8 = 95  //0x5f
 	MsgTypeStatus5GMM                                       uint8 = 100 //0x64
 	MsgTypeNotification                                     uint8 = 101 //0x65
 	MsgTypeNotificationResponse                             uint8 = 102 //0x66
 	MsgTypeULNASTransport                                   uint8 = 103 //0x67
 	MsgTypeDLNASTransport                                   uint8 = 104 //0x67
-    //0x5d
+	//0x5d
 )
 
-//placeholder
+// placeholder
 const MsgTypeSecurityProtected5GSNASMessage = 0x00
 
-func (a *Message) SecurityProtectedNasDecode(byteArray *[]byte) error{
-    buffer := bytes.NewBuffer(*byteArray)
+func (a *Message) SecurityProtectedNasDecode(byteArray *[]byte) error {
+	buffer := bytes.NewBuffer(*byteArray)
 	a.GmmMessage = NewGmmMessage()
 	if err := binary.Read(buffer, binary.BigEndian, &a.GmmMessage.GmmHeader); err != nil {
 		return fmt.Errorf("GMM NAS decode Fail: read fail - %+v", err)
 	}
-    a.GmmMessage.SecurityProtected5GSNASMessage = NewSecurityProtected5GSNASMessage(MsgTypeSecurityProtected5GSNASMessage)
+	a.GmmMessage.SecurityProtected5GSNASMessage = NewSecurityProtected5GSNASMessage(MsgTypeSecurityProtected5GSNASMessage)
 
 	a.GmmMessage.DecodeSecurityProtected5GSNASMessage(byteArray)
 
-    return nil
+	return nil
 }
-
 
 func (a *Message) PlainNasDecode(byteArray *[]byte) error {
 	epd := GetEPD(*byteArray)
@@ -197,8 +196,8 @@ func (a *Message) PlainNasDecode(byteArray *[]byte) error {
 		return a.GmmMessageDecode(byteArray)
 	case Epd5GSSessionManagementMessage:
 		return a.GsmMessageDecode(byteArray)
-    default:
-        a.Bytes = *byteArray
+	default:
+		a.Bytes = *byteArray
 	}
 	return fmt.Errorf("Extended Protocol Discriminator[%d] is not allowed in Nas Message Deocde", epd)
 }
@@ -226,7 +225,7 @@ func (a *Message) GmmMessageDecode(byteArray *[]byte) error {
 	case MsgTypeRegistrationRequest:
 		a.GmmMessage.RegistrationRequest = NewRegistrationRequest(MsgTypeRegistrationRequest)
 		a.GmmMessage.DecodeRegistrationRequest(byteArray)
-        
+
 	case MsgTypeRegistrationAccept:
 		a.GmmMessage.RegistrationAccept = NewRegistrationAccept(MsgTypeRegistrationAccept)
 		a.GmmMessage.DecodeRegistrationAccept(byteArray)
@@ -318,7 +317,7 @@ func (a *Message) GmmMessageDecode(byteArray *[]byte) error {
 	case MsgTypeDLNASTransport:
 		a.GmmMessage.DLNASTransport = NewDLNASTransport(MsgTypeDLNASTransport)
 		a.GmmMessage.DecodeDLNASTransport(byteArray)
-    case MsgTypeSecurityProtected5GSNASMessage:  
+	case MsgTypeSecurityProtected5GSNASMessage:
 		a.GmmMessage.SecurityProtected5GSNASMessage = NewSecurityProtected5GSNASMessage(MsgTypeSecurityProtected5GSNASMessage)
 		a.GmmMessage.DecodeSecurityProtected5GSNASMessage(byteArray)
 	default:
@@ -394,7 +393,7 @@ func (a *Message) GmmMessageEncode(buffer *bytes.Buffer) error {
 }
 
 type GsmMessage struct {
-	GsmHeader                                       `json:"-"`
+	GsmHeader                            `json:"-"`
 	*PDUSessionEstablishmentRequest      `json:"PDUSessionEstablishmentRequest,omitempty"`
 	*PDUSessionEstablishmentAccept       `json:"PDUSessionEstablishmentAccept,omitempty"`
 	*PDUSessionEstablishmentReject       `json:"PDUSessionEstablishmentReject,omitempty"`
@@ -438,9 +437,6 @@ func (a *Message) GsmMessageDecode(byteArray *[]byte) error {
 	if err := binary.Read(buffer, binary.BigEndian, &a.GsmMessage.GsmHeader); err != nil {
 		return fmt.Errorf("GSM NAS decode Fail: read fail - %+v", err)
 	}
-
-
-
 
 	switch a.GsmMessage.GsmHeader.GetMessageType() {
 	case MsgTypePDUSessionEstablishmentRequest:
@@ -549,4 +545,3 @@ func (a *Message) GsmMessageEncode(buffer *bytes.Buffer) error {
 	}
 	return nil
 }
-
