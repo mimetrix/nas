@@ -1,7 +1,8 @@
 package nasMessage
 
 import (
-    "fmt"
+	"fmt"
+
 	"github.com/mimetrix/nas/nasType"
 )
 
@@ -9,9 +10,9 @@ import (
 // NASMessageContainerContents Row, sBit, len = [0, 0], 8 , INF
 /*
 NAS message container contents (octet 4 to octet n); Max value of 65535 octets
-This IE can contain 
-    a REGISTRATION REQUEST message as defined in subclause 5.5.1 (pg 286), or 
-    a SERVICE REQUEST message as defined in subclause 5.6.1, or 
+This IE can contain
+    a REGISTRATION REQUEST message as defined in subclause 5.5.1 (pg 286), or
+    a SERVICE REQUEST message as defined in subclause 5.6.1, or
     non-cleartext IEs of a CONTROL PLANE SERVICE REQUEST message as defined in subclause 5.6.1.
 
     This structure is technically a NAS "Type", as defined in the specs and therefore
@@ -20,68 +21,67 @@ This IE can contain
     introducing a third package
 */
 type NASMessageContainer struct {
-	Iei    uint8   `json:"-"`
-	Len    uint16  `json:"-"`
-	Buffer []uint8 `json:"-"`
-    MessageID uint8  `json:"-"`
-    MessageType string
-    NASMessage             *Message
+	Iei         uint8   `json:"-"`
+	Len         uint16  `json:"-"`
+	Buffer      []uint8 `json:"-"`
+	MessageID   uint8   `json:"-"`
+	MessageType string
+	NASMessage  *Message
 }
 
-func (n *NASMessageContainer) DecodeNASType() error{
-    messageID, err := n.GetMessageID()
-    if err != nil{
-        return err
-    }
+func (n *NASMessageContainer) DecodeNASType() error {
+	messageID, err := n.GetMessageID()
+	if err != nil {
+		return err
+	}
 
-    messageType, err := n.GetMessageName()
-    if err != nil{
-        return err
-    }
-    
-    n.MessageID = messageID
-    n.MessageType = messageType
+	messageType, err := n.GetMessageName()
+	if err != nil {
+		return err
+	}
 
-    n.NASMessage = NewMessage()
-    err = n.NASMessage.PlainNasDecode(&n.Buffer)
-    if err != nil {
-        return err
-    }
-    
-    return nil    
+	n.MessageID = messageID
+	n.MessageType = messageType
+
+	n.NASMessage = NewMessage()
+	err = n.NASMessage.PlainNasDecode(&n.Buffer)
+	if err != nil {
+		return err
+	}
+
+	return nil
 
 }
 
-func (n *NASMessageContainer) GetMessageID() (uint8,error){
-    
-    if len(n.Buffer) > 3 {
-        return n.Buffer[2], nil
-    } else {
-        return 0, fmt.Errorf("Buffer in NASMessageContainer is too short\n")
-    }
+func (n *NASMessageContainer) GetMessageID() (uint8, error) {
+
+	if len(n.Buffer) > 3 {
+		return n.Buffer[2], nil
+	} else {
+		return 0, fmt.Errorf("Buffer in NASMessageContainer is too short\n")
+	}
 }
 
-func (n *NASMessageContainer) GetMessageName() (string, error){
-    
-    msgID, err := n.GetMessageID()
-    if err != nil  {
-        return "", err
-    }
+func (n *NASMessageContainer) GetMessageName() (string, error) {
 
-    //return message type if valid to be inside NAS Message Container
-    msgName, ok := nasType.MessageTypes[msgID]
-    if ok {
-        switch msgID{
-            case MsgTypeRegistrationRequest, MsgTypeServiceRequest /*, 0x4f*/:
-                return msgName, nil
-            default:
-                return "", fmt.Errorf("NS Message Container can't contain %s.", msgName)
-        }
-    } else{
-        return "", fmt.Errorf("Message type, %d, does not exist", msgID)
-    }
+	msgID, err := n.GetMessageID()
+	if err != nil {
+		return "", err
+	}
 
-    
+	//return message type if valid to be inside NAS Message Container
+	msgName, ok := nasType.MessageTypes[msgID]
+	if ok {
+		switch msgID {
+		case MsgTypeRegistrationRequest, MsgTypeServiceRequest /*, 0x4f*/ :
+			return msgName, nil
+		default:
+			return "", fmt.Errorf("NS Message Container can't contain %s.", msgName)
+		}
+	} else {
+		return "", fmt.Errorf("Message type, %d, does not exist", msgID)
+	}
+
 }
 
 func NewNASMessageContainer(iei uint8) (nASMessageContainer *NASMessageContainer) {

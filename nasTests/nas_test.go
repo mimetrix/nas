@@ -325,6 +325,34 @@ func TestMIME_GSMNAS(t *testing.T) {
 
 }
 
+func TestMobilityMessage(t *testing.T) {
+	nasMsg, err := nas.NASDecode(&MobilityMgmtMsg)
+	if err != nil {
+		t.Log(err)
+		t.Error("Failed to Decode Message")
+	}
+	imJSON, err := json.MarshalIndent(nasMsg, "", "    ")
+	jsonStr := string(imJSON)
+	if err != nil {
+		t.Log(err)
+		t.Error("Failed to Marshal JSON")
+	}
+	MAC := nasMsg.GmmMessage.SecurityProtected5GSNASMessage.MessageAuthenticationCode.MAC
+	extGUTI := nasMsg.GmmMessage.SecurityProtected5GSNASMessage.PlainNASMessage.
+		GmmMessage.RegistrationRequest.MobileIdentity5GS.FiveGGUTI
+	intGUTI := nasMsg.GmmMessage.SecurityProtected5GSNASMessage.PlainNASMessage.
+		GmmMessage.RegistrationRequest.NASMessageContainer.NASMessage.GmmMessage.RegistrationRequest.MobileIdentity5GS.FiveGGUTI
+
+	var expectedList = map[string]string{
+		MAC:     "aaa94d1e",
+		extGUTI: "310012010041c2c00005",
+		intGUTI: "310012010041c2c00005",
+	}
+	compareResults(t, expectedList)
+
+	outputJSON(t, "Mobility_Message.json", jsonStr)
+}
+
 /*
 ================================================
         AUXILIARY METHODS

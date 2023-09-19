@@ -3,6 +3,7 @@ package nasMessage
 import (
 	"bytes"
 	"encoding/binary"
+
 	"github.com/mimetrix/nas/nasType"
 )
 
@@ -12,7 +13,7 @@ type SecurityProtected5GSNASMessage struct {
 	nasType.MessageAuthenticationCode           `json:"MessageAuthenticationCode,omitempty"`
 	nasType.SequenceNumber                      `json:"SequenceNumber"`
 	//nasType.Plain5GSNASMessage                  `json:"Plain5GSNASMessage,omitempty"`
-    PlainNASMessage *Message
+	PlainNASMessage *Message
 }
 
 func NewSecurityProtected5GSNASMessage(iei uint8) (securityProtected5GSNASMessage *SecurityProtected5GSNASMessage) {
@@ -27,26 +28,25 @@ func (a *SecurityProtected5GSNASMessage) EncodeSecurityProtected5GSNASMessage(bu
 	binary.Write(buffer, binary.BigEndian, &a.SequenceNumber.Octet)
 	//binary.Write(buffer, binary.BigEndian, &a.Plain5GSNASMessage)
 	//binary.Write(buffer, binary.BigEndian, &a.PlainNASMessage)
-    
+
 }
 
 func (a *SecurityProtected5GSNASMessage) DecodeSecurityProtected5GSNASMessage(byteArray *[]byte) {
 
 	buffer := bytes.NewBuffer(*byteArray)
 	binary.Read(buffer, binary.BigEndian, &a.ExtendedProtocolDiscriminator.Octet)
-    a.ExtendedProtocolDiscriminator.DecodeNASType()
-    
+	a.ExtendedProtocolDiscriminator.DecodeNASType()
+
 	binary.Read(buffer, binary.BigEndian, &a.SpareHalfOctetAndSecurityHeaderType.Octet)
-    a.SpareHalfOctetAndSecurityHeaderType.DecodeNASType()
+	a.SpareHalfOctetAndSecurityHeaderType.DecodeNASType()
 
 	binary.Read(buffer, binary.BigEndian, &a.MessageAuthenticationCode.Octet)
-    a.MessageAuthenticationCode.DecodeNASType()
+	a.MessageAuthenticationCode.DecodeNASType()
 	binary.Read(buffer, binary.BigEndian, &a.SequenceNumber.Octet)
-    
-    //spew.Dump(buffer.Bytes())
-    b := buffer.Bytes()
-    a.PlainNASMessage = &Message{}
-    a.PlainNASMessage.PlainNasDecode(&b)
+
+	b := buffer.Bytes()
+	a.PlainNASMessage = &Message{}
+	a.PlainNASMessage.PlainNasDecode(&b)
 
 	for buffer.Len() > 0 {
 		var ieiN uint8

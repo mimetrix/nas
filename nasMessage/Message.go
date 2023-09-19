@@ -33,7 +33,6 @@ const (
 
 // NewMessage TODO:desc
 func NewMessage() *Message {
-	//fmt.Println("\nNewMessage\n")
 	Message := &Message{}
 	return Message
 }
@@ -189,6 +188,7 @@ func (a *Message) SecurityProtectedNasDecode(byteArray *[]byte) error {
 }
 
 func (a *Message) PlainNasDecode(byteArray *[]byte) error {
+
 	epd := GetEPD(*byteArray)
 
 	switch epd {

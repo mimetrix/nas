@@ -4,6 +4,8 @@ import (
 	"bytes"
 	"encoding/binary"
 
+	log "github.com/sirupsen/logrus"
+
 	"github.com/mimetrix/nas/nasType"
 )
 
@@ -29,10 +31,10 @@ type RegistrationRequest struct {
 	*nasType.RequestedDRXParameters              `json:"RequestedDRXParameters,omitempty"`
 	*nasType.EPSNASMessageContainer              `json:"EPSNASMessageContainer,omitempty"`
 	*nasType.LADNIndication                      `json:"LADNIndication,omitempty"`
-	*PayloadContainer                    `json:"PayloadContainer,omitempty"`
+	*PayloadContainer                            `json:"PayloadContainer,omitempty"`
 	*nasType.NetworkSlicingIndication            `json:"NetworkSlicingIndication,omitempty"`
 	*nasType.UpdateType5GS                       `json:"UpdateType5GS,omitempty"`
-	*NASMessageContainer                 `json:"NASMessageContainer,omitempty"`
+	*NASMessageContainer                         `json:"NASMessageContainer,omitempty"`
 }
 
 func NewRegistrationRequest(iei uint8) (registrationRequest *RegistrationRequest) {
@@ -168,35 +170,32 @@ func (a *RegistrationRequest) EncodeRegistrationRequest(buffer *bytes.Buffer) {
 func (a *RegistrationRequest) DecodeRegistrationRequest(byteArray *[]byte) {
 	buffer := bytes.NewBuffer(*byteArray)
 	binary.Read(buffer, binary.BigEndian, &a.ExtendedProtocolDiscriminator.Octet)
-    a.ExtendedProtocolDiscriminator.DecodeNASType()
+	a.ExtendedProtocolDiscriminator.DecodeNASType()
 
 	binary.Read(buffer, binary.BigEndian, &a.SpareHalfOctetAndSecurityHeaderType.Octet)
-    a.SpareHalfOctetAndSecurityHeaderType.DecodeNASType()
+	a.SpareHalfOctetAndSecurityHeaderType.DecodeNASType()
 
 	binary.Read(buffer, binary.BigEndian, &a.RegistrationRequestMessageIdentity.Octet)
-    a.RegistrationRequestMessageIdentity.DecodeNASType()
-	
-    binary.Read(buffer, binary.BigEndian, &a.NgksiAndRegistrationType5GS.Octet)
-    a.NgksiAndRegistrationType5GS.DecodeNASType()
-	
-    binary.Read(buffer, binary.BigEndian, &a.MobileIdentity5GS.Len)
+	a.RegistrationRequestMessageIdentity.DecodeNASType()
+
+	binary.Read(buffer, binary.BigEndian, &a.NgksiAndRegistrationType5GS.Octet)
+	a.NgksiAndRegistrationType5GS.DecodeNASType()
+
+	binary.Read(buffer, binary.BigEndian, &a.MobileIdentity5GS.Len)
 	a.MobileIdentity5GS.SetLen(a.MobileIdentity5GS.GetLen())
-    
 
 	binary.Read(buffer, binary.BigEndian, &a.MobileIdentity5GS.Buffer)
-    a.MobileIdentity5GS.DecodeNASType()
+	a.MobileIdentity5GS.DecodeNASType()
 
 	for buffer.Len() > 0 {
 		var ieiN uint8
 		var tmpIeiN uint8
 		binary.Read(buffer, binary.BigEndian, &ieiN)
-		// fmt.Println(ieiN)
 		if ieiN >= 0x80 {
 			tmpIeiN = (ieiN & 0xf0) >> 4
 		} else {
 			tmpIeiN = ieiN
 		}
-		// fmt.Println("type", tmpIeiN)
 		switch tmpIeiN {
 		case RegistrationRequestNoncurrentNativeNASKeySetIdentifierType:
 			a.NoncurrentNativeNASKeySetIdentifier = nasType.NewNoncurrentNativeNASKeySetIdentifier(ieiN)
@@ -206,13 +205,13 @@ func (a *RegistrationRequest) DecodeRegistrationRequest(byteArray *[]byte) {
 			binary.Read(buffer, binary.BigEndian, &a.Capability5GMM.Len)
 			a.Capability5GMM.SetLen(a.Capability5GMM.GetLen())
 			binary.Read(buffer, binary.BigEndian, a.Capability5GMM.Octet[:a.Capability5GMM.GetLen()])
-            a.Capability5GMM.DecodeNASType()
+			a.Capability5GMM.DecodeNASType()
 		case RegistrationRequestUESecurityCapabilityType:
 			a.UESecurityCapability = nasType.NewUESecurityCapability(ieiN)
 			binary.Read(buffer, binary.BigEndian, &a.UESecurityCapability.Len)
 			a.UESecurityCapability.SetLen(a.UESecurityCapability.GetLen())
 			binary.Read(buffer, binary.BigEndian, a.UESecurityCapability.Buffer[:a.UESecurityCapability.GetLen()])
-            a.UESecurityCapability.DecodeNASType()
+			a.UESecurityCapability.DecodeNASType()
 		case RegistrationRequestRequestedNSSAIType:
 			a.RequestedNSSAI = nasType.NewRequestedNSSAI(ieiN)
 			binary.Read(buffer, binary.BigEndian, &a.RequestedNSSAI.Len)
@@ -292,6 +291,12 @@ func (a *RegistrationRequest) DecodeRegistrationRequest(byteArray *[]byte) {
 			binary.Read(buffer, binary.BigEndian, &a.NASMessageContainer.Len)
 			a.NASMessageContainer.SetLen(a.NASMessageContainer.GetLen())
 			binary.Read(buffer, binary.BigEndian, a.NASMessageContainer.Buffer[:a.NASMessageContainer.GetLen()])
+			a.NASMessageContainer.NASMessage = NewMessage()
+			err := a.NASMessageContainer.NASMessage.PlainNasDecode(&a.NASMessageContainer.Buffer)
+			if err != nil {
+				log.Warn("NAS_RegistrationRequest: Couldn't decode internal NAS Message")
+			}
+
 		default:
 		}
 	}

@@ -7,7 +7,6 @@ import (
 	"fmt"
 
 	"github.com/mimetrix/nas/nasMessage"
-	//"nasMessage"
 )
 
 func NASDecode(byteArray *[]byte) (*nasMessage.Message, error) {
