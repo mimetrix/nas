@@ -1,9 +1,9 @@
 package nasConvert
 
 import (
+	"github.com/free5gc/openapi/models"
 	"github.com/mimetrix/nas/nasMessage"
 	"github.com/mimetrix/nas/nasType"
-	"github.com/free5gc/openapi/models"
 )
 
 func SpareHalfOctetAndNgksiToModels(ngKsiNas nasType.SpareHalfOctetAndNgksi) (ngKsiModels models.NgKsi) {
@@ -14,7 +14,7 @@ func SpareHalfOctetAndNgksiToModels(ngKsiNas nasType.SpareHalfOctetAndNgksi) (ng
 		ngKsiModels.Tsc = models.ScType_MAPPED
 	}
 
-	ngKsiModels.Ksi = int32(ngKsiNas.GetNasKeySetIdentifiler())
+	ngKsiModels.Ksi = int32(ngKsiNas.GetNasKeySetIdentifier())
 	return
 }
 
