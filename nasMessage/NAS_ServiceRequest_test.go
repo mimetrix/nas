@@ -22,7 +22,7 @@ type nasMessageServiceRequestData struct {
 	inUplinkDataStatus              nasType.UplinkDataStatus
 	inPDUSessionStatus              nasType.PDUSessionStatus
 	inAllowedPDUSessionStatus       nasType.AllowedPDUSessionStatus
-	inNASMessageContainer           nasType.NASMessageContainer
+	inNASMessageContainer           nasMessage.NASMessageContainer
 }
 
 var nasMessageServiceRequestTable = []nasMessageServiceRequestData{
@@ -50,7 +50,7 @@ var nasMessageServiceRequestTable = []nasMessageServiceRequestData{
 			Len:    2,
 			Buffer: []uint8{0x01, 0x01},
 		},
-		inNASMessageContainer: nasType.NASMessageContainer{
+		inNASMessageContainer: nasMessage.NASMessageContainer{
 			Iei:    nasMessage.ServiceRequestNASMessageContainerType,
 			Len:    2,
 			Buffer: []uint8{0x01, 0x01},
@@ -87,7 +87,7 @@ func TestNasTypeNewServiceRequestMessage(t *testing.T) {
 		a.AllowedPDUSessionStatus = nasType.NewAllowedPDUSessionStatus(nasMessage.ServiceRequestAllowedPDUSessionStatusType)
 		a.AllowedPDUSessionStatus = &table.inAllowedPDUSessionStatus
 
-		a.NASMessageContainer = nasType.NewNASMessageContainer(nasMessage.ServiceRequestNASMessageContainerType)
+		a.NASMessageContainer = NewNASMessageContainer(nasMessage.ServiceRequestNASMessageContainerType)
 		a.NASMessageContainer = &table.inNASMessageContainer
 
 		buff := new(bytes.Buffer)

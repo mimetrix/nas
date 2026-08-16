@@ -13,10 +13,10 @@ type SNSSAI struct {
 	Octet          [8]uint8 `json:"-"`
 	SST            uint8    `json:"SST,omitempty"`
 	SD             [3]uint8 `json:"-"`
-    SDBytes        string
+	SDBytes        string
 	MappedHPLMNSST uint8    `json:"MappedHPLMSST,omitempty"`
 	MappedHPLMNSD  [3]uint8 `json:"-"`
-    HPLMNSDBytes   string
+	HPLMNSDBytes   string
 }
 
 const (
@@ -46,8 +46,8 @@ func (a *SNSSAI) DecodeNASType() error {
 	default:
 		return errors.New("snssai lenght is invalid")
 	}
-    a.SDBytes = GetHexString(a.SD[:],"")
-    a.HPLMNSDBytes = GetHexString(a.MappedHPLMNSD[:],"")
+	a.SDBytes = GetHexString(a.SD[:], "")
+	a.HPLMNSDBytes = GetHexString(a.MappedHPLMNSD[:], "")
 	return nil
 }
 

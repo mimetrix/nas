@@ -19,7 +19,7 @@ type nasMessageULNASTransportData struct {
 	inSpareHalfOctet                        uint8
 	inULNASTRANSPORTMessageIdentity         uint8
 	inSpareHalfOctetAndPayloadContainerType nasType.SpareHalfOctetAndPayloadContainerType
-	inPayloadContainer                      nasType.PayloadContainer
+	inPayloadContainer                      nasMessage.PayloadContainer
 	inPduSessionID2Value                    nasType.PduSessionID2Value
 	inOldPDUSessionID                       nasType.OldPDUSessionID
 	inRequestType                           nasType.RequestType
@@ -37,7 +37,7 @@ var nasMessageULNASTransportTable = []nasMessageULNASTransportData{
 		inSpareHalfOctetAndPayloadContainerType: nasType.SpareHalfOctetAndPayloadContainerType{
 			Octet: 0x01,
 		},
-		inPayloadContainer: nasType.PayloadContainer{
+		inPayloadContainer: nasMessage.PayloadContainer{
 			Len:    2,
 			Buffer: []uint8{0x01, 0x01},
 		},

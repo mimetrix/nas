@@ -5,12 +5,12 @@ package nasType
 type AuthenticationParameterRAND struct {
 	Iei   uint8     `json:"-,omitempty"`
 	Octet [16]uint8 `json:"-,omitempty"`
-    Rand  string    `json:",omitempty"`
+	Rand  string    `json:",omitempty"`
 }
 
-func (a *AuthenticationParameterRAND ) DecodeNASType() error{
-    a.Rand = GetHexString(a.Octet[:], "")
-    return nil
+func (a *AuthenticationParameterRAND) DecodeNASType() error {
+	a.Rand = GetHexString(a.Octet[:], "")
+	return nil
 }
 
 func NewAuthenticationParameterRAND(iei uint8) (authenticationParameterRAND *AuthenticationParameterRAND) {

@@ -6,16 +6,15 @@ package nasType
 import "encoding/hex"
 
 type ExtendedProtocolConfigurationOptions struct {
-	Iei    uint8   `json:"-"`
-	Len    uint16  `json:"-"`
-	Buffer []uint8 `json:"-"`
-    Contents string
+	Iei      uint8   `json:"-"`
+	Len      uint16  `json:"-"`
+	Buffer   []uint8 `json:"-"`
+	Contents string
 }
 
-
-func (e *ExtendedProtocolConfigurationOptions ) DecodeNASType() error{
-    e.Contents = hex.EncodeToString(e.Buffer)
-    return nil
+func (e *ExtendedProtocolConfigurationOptions) DecodeNASType() error {
+	e.Contents = hex.EncodeToString(e.Buffer)
+	return nil
 }
 
 func NewExtendedProtocolConfigurationOptions(iei uint8) (extendedProtocolConfigurationOptions *ExtendedProtocolConfigurationOptions) {

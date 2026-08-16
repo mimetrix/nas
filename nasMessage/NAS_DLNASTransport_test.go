@@ -20,7 +20,7 @@ type nasMessageDLNASTransportData struct {
 	inDLNASTRANSPORTMessageIdentity uint8
 	inPayloadContainerType          uint8
 	inSpareHalfOctet2               uint8
-	inPayloadContainer              nasType.PayloadContainer
+	inPayloadContainer              nasMessage.PayloadContainer
 	inPduSessionID2Value            nasType.PduSessionID2Value
 	inAdditionalInformation         nasType.AdditionalInformation
 	inCause5GMM                     nasType.Cause5GMM
@@ -35,7 +35,7 @@ var nasMessageDLNASTransportTable = []nasMessageDLNASTransportData{
 		inDLNASTRANSPORTMessageIdentity: 0x01,
 		inPayloadContainerType:          0x01,
 		inSpareHalfOctet2:               0x01,
-		inPayloadContainer: nasType.PayloadContainer{
+		inPayloadContainer: nasMessage.PayloadContainer{
 			Iei:    0,
 			Len:    2,
 			Buffer: []uint8{0x01, 0x01},
@@ -55,7 +55,7 @@ var nasMessageDLNASTransportTable = []nasMessageDLNASTransportData{
 		},
 		inBackoffTimerValue: nasType.BackoffTimerValue{
 			Iei:   nasMessage.DLNASTransportBackoffTimerValueType,
-			Len:   2,
+			Len:   1,
 			Octet: 0x01,
 		},
 	},

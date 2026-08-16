@@ -19,7 +19,7 @@ type nasMessageSecurityModeCompleteData struct {
 	inSpareHalfOctet                      uint8
 	inSecurityModeCompleteMessageIdentity uint8
 	inIMEISV                              nasType.IMEISV
-	inNASMessageContainer                 nasType.NASMessageContainer
+	inNASMessageContainer                 nasMessage.NASMessageContainer
 }
 
 var nasMessageSecurityModeCompleteTable = []nasMessageSecurityModeCompleteData{
@@ -33,7 +33,7 @@ var nasMessageSecurityModeCompleteTable = []nasMessageSecurityModeCompleteData{
 			Len:   9,
 			Octet: [9]uint8{0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01},
 		},
-		inNASMessageContainer: nasType.NASMessageContainer{
+		inNASMessageContainer: nasMessage.NASMessageContainer{
 			Iei:    nasMessage.SecurityModeCompleteNASMessageContainerType,
 			Len:    2,
 			Buffer: []uint8{0x01, 0x01},
@@ -62,7 +62,7 @@ func TestNasTypeNewSecurityModeCompleteMessage(t *testing.T) {
 		a.IMEISV = nasType.NewIMEISV(nasMessage.SecurityModeCompleteIMEISVType)
 		a.IMEISV = &table.inIMEISV
 
-		a.NASMessageContainer = nasType.NewNASMessageContainer(nasMessage.SecurityModeCompleteNASMessageContainerType)
+		a.NASMessageContainer = NewNASMessageContainer(nasMessage.SecurityModeCompleteNASMessageContainerType)
 		a.NASMessageContainer = &table.inNASMessageContainer
 
 		buff := new(bytes.Buffer)

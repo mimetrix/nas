@@ -3,16 +3,14 @@ package nasType
 // RegistrationAcceptMessageIdentity 9.7
 // MessageType Row, sBit, len = [0, 0], 8 , 8
 type RegistrationAcceptMessageIdentity struct {
-	Octet uint8 `json:"-"`
-    MessageType string `json:",omitempty"`
+	Octet       uint8  `json:"-"`
+	MessageType string `json:",omitempty"`
 }
 
-func (r *RegistrationAcceptMessageIdentity ) DecodeNASType() error {
-    r.MessageType = MessageTypes[r.Octet]
-    return nil
+func (r *RegistrationAcceptMessageIdentity) DecodeNASType() error {
+	r.MessageType = MessageTypes[r.Octet]
+	return nil
 }
-
-
 
 func NewRegistrationAcceptMessageIdentity() (registrationAcceptMessageIdentity *RegistrationAcceptMessageIdentity) {
 	registrationAcceptMessageIdentity = &RegistrationAcceptMessageIdentity{}

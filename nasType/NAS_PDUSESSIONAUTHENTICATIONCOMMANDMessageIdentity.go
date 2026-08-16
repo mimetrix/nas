@@ -3,13 +3,13 @@ package nasType
 // PDUSESSIONAUTHENTICATIONCOMMANDMessageIdentity 9.7
 // MessageType Row, sBit, len = [0, 0], 8 , 8
 type PDUSESSIONAUTHENTICATIONCOMMANDMessageIdentity struct {
-	Octet uint8 `json:"Octet,omitempty"`
-    MessageType string
+	Octet       uint8 `json:"Octet,omitempty"`
+	MessageType string
 }
 
-func (p *PDUSESSIONAUTHENTICATIONCOMMANDMessageIdentity) DecodeNASType() error{
-    p.MessageType = MessageTypes[p.GetMessageType()]
-    return nil
+func (p *PDUSESSIONAUTHENTICATIONCOMMANDMessageIdentity) DecodeNASType() error {
+	p.MessageType = MessageTypes[p.GetMessageType()]
+	return nil
 }
 
 func NewPDUSESSIONAUTHENTICATIONCOMMANDMessageIdentity() (pDUSESSIONAUTHENTICATIONCOMMANDMessageIdentity *PDUSESSIONAUTHENTICATIONCOMMANDMessageIdentity) {

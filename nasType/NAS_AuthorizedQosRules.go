@@ -3,10 +3,10 @@ package nasType
 // AuthorizedQosRules 9.11.4.13
 // QosRule Row, sBit, len = [0, 0], 3 , INF
 type AuthorizedQosRules struct {
-	Iei    uint8   `json:"-"`
-	Len    uint16  `json:"-"`
-	Buffer []uint8 `json:"-"`
-    QoSRules QoSRules
+	Iei      uint8   `json:"-"`
+	Len      uint16  `json:"-"`
+	Buffer   []uint8 `json:"-"`
+	QoSRules QoSRules
 }
 
 /*
@@ -18,38 +18,33 @@ type NewPktFilters struct{
 }
 */
 
-var RuleOperationCodes = map[uint8]string {
+var RuleOperationCodes = map[uint8]string{
 
-    //0:"Reserved",
-    1:"Create new QoS rule",
-    2:"Delete existing QoS rule",
-    3:"Modify existing QoS rule and add packet filters",
-    4:"Modify existing QoS rule and replace all packet filters",
-    5:"Modify existing QoS rule and delete packet filters",
-    6:"Modify existing QoS rule without modifying packet filters",
-    7:"Reserved",
+	//0:"Reserved",
+	1: "Create new QoS rule",
+	2: "Delete existing QoS rule",
+	3: "Modify existing QoS rule and add packet filters",
+	4: "Modify existing QoS rule and replace all packet filters",
+	5: "Modify existing QoS rule and delete packet filters",
+	6: "Modify existing QoS rule without modifying packet filters",
+	7: "Reserved",
 }
 
+func (n *AuthorizedQosRules) DecodeNASType() error {
 
-func (n *AuthorizedQosRules) DecodeNASType() error{
+	err := n.QoSRules.UnmarshalBinary(n.Buffer)
+	if err != nil {
+		return err
+	}
 
-
-    err := n.QoSRules.UnmarshalBinary(n.Buffer)
-    if err != nil{
-        return err
-    }
-
-    return nil
+	return nil
 }
-
 
 func NewAuthorizedQosRules(iei uint8) (authorizedQosRules *AuthorizedQosRules) {
 	authorizedQosRules = &AuthorizedQosRules{}
 	authorizedQosRules.SetIei(iei)
 	return authorizedQosRules
 }
-
-
 
 // AuthorizedQosRules 9.11.4.13
 // Iei Row, sBit, len = [], 8, 8

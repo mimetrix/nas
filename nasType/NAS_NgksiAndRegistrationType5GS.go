@@ -6,21 +6,20 @@ package nasType
 // FOR  Row, sBit, len = [0, 0], 4 , 1
 // RegistrationType5GS Row, sBit, len = [0, 0], 3 , 3
 type NgksiAndRegistrationType5GS struct {
-	Octet uint8 `json:"-"`
-    NASKeySetIdentifiler uint8
-    RegistrationType uint8 
-    TSC uint8
-    For uint8
-    
+	Octet                uint8 `json:"-"`
+	NASKeySetIdentifiler uint8
+	RegistrationType     uint8
+	TSC                  uint8
+	For                  uint8
 }
 
-func (a *NgksiAndRegistrationType5GS) DecodeNASType() {
-    a.RegistrationType = a.GetRegistrationType5GS()
-    a.NASKeySetIdentifiler = a.GetNasKeySetIdentifiler()
-    a.TSC= a.GetTSC()
-    a.For = a.GetFOR()
+func (a *NgksiAndRegistrationType5GS) DecodeNASType() error {
+	a.RegistrationType = a.GetRegistrationType5GS()
+	a.NASKeySetIdentifiler = a.GetNasKeySetIdentifiler()
+	a.TSC = a.GetTSC()
+	a.For = a.GetFOR()
+	return nil
 }
-
 
 func NewNgksiAndRegistrationType5GS() (ngksiAndRegistrationType5GS *NgksiAndRegistrationType5GS) {
 	ngksiAndRegistrationType5GS = &NgksiAndRegistrationType5GS{}

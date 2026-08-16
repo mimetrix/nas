@@ -1,13 +1,13 @@
 package nasMessage_test
 
 import (
-	"testing"
-	"github.com/stretchr/testify/assert"
 	"github.com/mimetrix/nas/nasType"
+	"github.com/stretchr/testify/assert"
+	"testing"
 )
 
 func TestNasTypeNewNASMessageContainer(t *testing.T) {
-	a := nasType.NewNASMessageContainer(nasMessage.SecurityModeCompleteNASMessageContainerType)
+	a := NewNASMessageContainer(nasMessage.SecurityModeCompleteNASMessageContainerType)
 	assert.NotNil(t, a)
 }
 
@@ -16,7 +16,7 @@ var nasTypeNASMessageContainerRegistrationRequestAdditionalGUTITable = []NasType
 }
 
 func TestNasTypeNASMessageContainerGetSetIei(t *testing.T) {
-	a := nasType.NewNASMessageContainer(nasMessage.SecurityModeCompleteNASMessageContainerType)
+	a := NewNASMessageContainer(nasMessage.SecurityModeCompleteNASMessageContainerType)
 	for _, table := range nasTypeNASMessageContainerRegistrationRequestAdditionalGUTITable {
 		a.SetIei(table.in)
 		assert.Equal(t, table.out, a.GetIei())
@@ -28,7 +28,7 @@ var nasTypeNASMessageContainerLenTable = []NasTypeLenUint16Data{
 }
 
 func TestNasTypeNASMessageContainerGetSetLen(t *testing.T) {
-	a := nasType.NewNASMessageContainer(nasMessage.SecurityModeCompleteNASMessageContainerType)
+	a := NewNASMessageContainer(nasMessage.SecurityModeCompleteNASMessageContainerType)
 	for _, table := range nasTypeNASMessageContainerLenTable {
 		a.SetLen(table.in)
 		assert.Equal(t, table.out, a.GetLen())
@@ -46,7 +46,7 @@ var nasTypeNASMessageContainerNASMessageContainerContentsTable = []nasTypeNASMes
 }
 
 func TestNasTypeNASMessageContainerGetSetNASMessageContainerContents(t *testing.T) {
-	a := nasType.NewNASMessageContainer(nasMessage.SecurityModeCompleteNASMessageContainerType)
+	a := NewNASMessageContainer(nasMessage.SecurityModeCompleteNASMessageContainerType)
 	for _, table := range nasTypeNASMessageContainerNASMessageContainerContentsTable {
 		a.SetLen(table.inLen)
 		a.SetNASMessageContainerContents(table.in)
@@ -75,7 +75,7 @@ var testNASMessageContainerTestTable = []testNASMessageContainerDataTemplate{
 func TestNasTypeNASMessageContainer(t *testing.T) {
 	for i, table := range testNASMessageContainerTestTable {
 		t.Logf("Test Cnt:%d", i)
-		a := nasType.NewNASMessageContainer(nasMessage.SecurityModeCompleteNASMessageContainerType)
+		a := NewNASMessageContainer(nasMessage.SecurityModeCompleteNASMessageContainerType)
 
 		a.SetIei(table.inIei)
 		a.SetLen(table.inLen)

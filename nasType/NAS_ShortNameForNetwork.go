@@ -9,20 +9,18 @@ import "fmt"
 // NumberOfSpareBitsInLastOctet Row, sBit, len = [0, 0], 3 , 3
 // TextString Row, sBit, len = [1, 1], 4 , INF
 type ShortNameForNetwork struct {
-	Iei    uint8   `json:"-"`
-	Len    uint8   `json:"-"`
-	Buffer []uint8 `json:"-"`
-    NetworkName string
+	Iei         uint8   `json:"-"`
+	Len         uint8   `json:"-"`
+	Buffer      []uint8 `json:"-"`
+	NetworkName string
 }
 
+func (s *ShortNameForNetwork) DecodeNASType() error {
 
-func (s *ShortNameForNetwork) DecodeNASType() error{
+	s.NetworkName = fmt.Sprintf("%s", s.GetTextString())
 
-   s.NetworkName = fmt.Sprintf("%s",s.GetTextString())
-    
-    return nil
+	return nil
 }
-
 
 func NewShortNameForNetwork(iei uint8) (shortNameForNetwork *ShortNameForNetwork) {
 	shortNameForNetwork = &ShortNameForNetwork{}
@@ -106,14 +104,14 @@ func (a *ShortNameForNetwork) SetNumberOfSpareBitsInLastOctet(numberOfSpareBitsI
 // ShortNameForNetwork 9.11.3.35
 // TextString Row, sBit, len = [1, 1], 4 , INF
 func (a *ShortNameForNetwork) GetTextString() (textString []uint8) {
-    textLen := len(a.Buffer)
-    for i:=1; i< textLen; i++ {
-        c := a.Buffer[i]
-        if c != 0{
-            textString = append(textString,c) 
-        }
-    }
-    return textString
+	textLen := len(a.Buffer)
+	for i := 1; i < textLen; i++ {
+		c := a.Buffer[i]
+		if c != 0 {
+			textString = append(textString, c)
+		}
+	}
+	return textString
 }
 
 // ShortNameForNetwork 9.11.3.35

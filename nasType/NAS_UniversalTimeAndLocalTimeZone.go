@@ -10,42 +10,41 @@ package nasType
 // TimeZone Row, sBit, len = [6, 6], 8 , 8
 /*
 From 3GPP TS 24.008 Section 10.5.3.9
-    The purpose of the timezone part of this information element is to encode 
+    The purpose of the timezone part of this information element is to encode
     the offset between universal time and local time in steps of 15 minutes.
-    The purpose of the time part of this information element is to encode the 
-    universal time at which this information element may have been sent by the 
-    network. The Time Zone and Time information element is coded as shown in 
-    figure 10.5.84/3GPP TS 24.008 and table 10.5.97/3GPP TS 24.008. The Time 
+    The purpose of the time part of this information element is to encode the
+    universal time at which this information element may have been sent by the
+    network. The Time Zone and Time information element is coded as shown in
+    figure 10.5.84/3GPP TS 24.008 and table 10.5.97/3GPP TS 24.008. The Time
     Zone and Time is a type 3 information element with a length of 8 octets.
 */
 type UniversalTimeAndLocalTimeZone struct {
-	Iei   uint8    `json:"-"`
-	Octet [7]uint8 `json:"-"`
-    Year uint8 
-    Month uint8 
-    Day uint8 
-    Hour uint8 
-    Minute uint8 
-    Second uint8 
-    TimeZone uint8 
+	Iei      uint8    `json:"-"`
+	Octet    [7]uint8 `json:"-"`
+	Year     uint8
+	Month    uint8
+	Day      uint8
+	Hour     uint8
+	Minute   uint8
+	Second   uint8
+	TimeZone uint8
 }
 
+func (u *UniversalTimeAndLocalTimeZone) DecodeNASType() error {
 
-func (u *UniversalTimeAndLocalTimeZone ) DecodeNASType() error {
+	u.Year = extractDecimal(u.GetYear())
+	u.Month = extractDecimal(u.GetMonth())
+	u.Day = extractDecimal(u.GetDay())
+	u.Hour = extractDecimal(u.GetHour())
+	u.Minute = extractDecimal(u.GetMinute())
+	u.Second = extractDecimal(u.GetSecond())
+	u.TimeZone = u.GetTimeZone()
+	return nil
 
-    u.Year = extractDecimal(u.GetYear())
-    u.Month= extractDecimal(u.GetMonth())
-    u.Day= extractDecimal(u.GetDay())
-    u.Hour= extractDecimal(u.GetHour())
-    u.Minute= extractDecimal(u.GetMinute())
-    u.Second= extractDecimal(u.GetSecond())
-    u.TimeZone = u.GetTimeZone()
-    return nil
-    
 }
 
 func extractDecimal(hex uint8) uint8 {
-    return (hex & 0xf0 >> 4)  + (hex &0xf ) * 10
+	return (hex & 0xf0 >> 4) + (hex&0xf)*10
 }
 
 func NewUniversalTimeAndLocalTimeZone(iei uint8) (universalTimeAndLocalTimeZone *UniversalTimeAndLocalTimeZone) {
