@@ -104,7 +104,7 @@ func (t *TAIList) DecodeNASType() error {
 			// rather than guessed at.
 		}
 	}
-	//get type of
+	// get type of
 	/*
 	   TODO:
 	   create slice of PartialTAIs

@@ -50,7 +50,7 @@ func NewGsmMessage() *GsmMessage {
 
 // GmmHeader Octet1 protocolDiscriminator securityHeaderType
 //
-//	Octet2 MessageType
+// Octet2 MessageType
 type GmmHeader struct {
 	Octet [3]uint8 `json:"Octet,omitempty"`
 }
@@ -167,7 +167,7 @@ const (
 	MsgTypeNotificationResponse                             uint8 = 102 //0x66
 	MsgTypeULNASTransport                                   uint8 = 103 //0x67
 	MsgTypeDLNASTransport                                   uint8 = 104 //0x67
-	//0x5d
+	// 0x5d
 )
 
 // placeholder

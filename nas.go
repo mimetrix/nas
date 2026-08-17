@@ -108,7 +108,6 @@ func MultipartDecoder(jsonblob []byte, data []byte) (nasMsg *nasMessage.Message,
 	switch msgType {
 	case "n1SmMsg":
 		nasMsg, err = NASDecode(&data)
-		//nasMsg, err = SecurityProtectedNasDecode(&data)
 	case "GSM_NAS":
 		nasMsg, err = NASDecode(&data)
 	}
