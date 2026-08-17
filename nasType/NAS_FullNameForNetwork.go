@@ -18,7 +18,6 @@ type FullNameForNetwork struct {
 }
 
 func (f *FullNameForNetwork) DecodeNASType() error {
-
 	f.NetworkName = string(f.GetTextString())
 
 	return nil

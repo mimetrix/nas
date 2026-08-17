@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/free5gc/openapi/models"
+
 	"github.com/mimetrix/nas/nasType"
 )
 

@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"github.com/free5gc/openapi/models"
+
 	"github.com/mimetrix/nas/logger"
 	"github.com/mimetrix/nas/nasMessage"
 	"github.com/mimetrix/nas/nasType"

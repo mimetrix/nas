@@ -32,7 +32,6 @@ var SteeringModes = map[uint8]string{
 }
 
 func (c *Capability5GSM) DecodeNASType() error {
-
 	// Bit 8 is mask 0x80, so it shifts right by 7, not 8. Shifting by 8
 	// discarded the bit entirely and made TPMIC permanently false.
 	c.TPMIC = ((c.Octet[2] & 0x80) >> 7) == 1
@@ -42,7 +41,6 @@ func (c *Capability5GSM) DecodeNASType() error {
 	c.ReflectiveQoS = c.GetRqoS() == 1
 	c.APMQF = (c.Octet[3] & 0x01) == 1
 	return nil
-
 }
 
 // Capability5GSM 9.11.4.1

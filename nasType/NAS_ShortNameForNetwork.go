@@ -14,7 +14,6 @@ type ShortNameForNetwork struct {
 }
 
 func (s *ShortNameForNetwork) DecodeNASType() error {
-
 	s.NetworkName = string(s.GetTextString())
 
 	return nil

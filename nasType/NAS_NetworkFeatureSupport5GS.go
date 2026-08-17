@@ -25,7 +25,6 @@ type NetworkFeatureSupport5GS struct {
 }
 
 func (n *NetworkFeatureSupport5GS) DecodeNASType() error {
-
 	n.MPSI = n.GetMPSI() == 1
 	n.IWKN26 = n.GetIWKN26() == 1
 	n.EMF = n.GetEMF()

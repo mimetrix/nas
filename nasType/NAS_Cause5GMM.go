@@ -58,7 +58,6 @@ var GMMCauses = map[uint8]string{
 }
 
 func (c *Cause5GMM) DecodeNASType() error {
-
 	c.Cause = GMMCauses[c.Octet]
 	return nil
 }

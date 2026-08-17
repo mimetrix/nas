@@ -19,7 +19,6 @@ var RequestTypes = map[uint8]string{
 }
 
 func (r *RequestType) DecodeNASType() error {
-
 	r.Type = RequestTypes[r.GetRequestTypeValue()]
 	return nil
 }

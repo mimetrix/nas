@@ -50,7 +50,6 @@ func (t *TAIType01) GetNumberOfTAIElems() uint8 {
 }
 
 func NewTAI01(numElements uint8, buf [6]byte) *TAIType01 {
-
 	MCC1 := buf[0] & 0xf
 	MCC2 := (buf[0] & 0xf0) >> 4
 	MCC3 := buf[1] & 0xf
@@ -72,11 +71,9 @@ func NewTAI01(numElements uint8, buf [6]byte) *TAIType01 {
 	TAC := uint32(buf[3])<<16 | uint32(buf[4])<<8 | uint32(buf[5])
 
 	return &TAIType01{1, numElements, MCC, MNC, TAC}
-
 }
 
 func (t *TAIList) DecodeNASType() error {
-
 	t.TAIs = make([]TAIType, 0)
 
 	payload := bytes.NewBuffer(t.Buffer)
@@ -106,7 +103,6 @@ func (t *TAIList) DecodeNASType() error {
 			// PLMN) is decoded today. Types 00 and 10 are left untouched
 			// rather than guessed at.
 		}
-
 	}
 	//get type of
 	/*
@@ -117,7 +113,6 @@ func (t *TAIList) DecodeNASType() error {
 	   TAIType02
 	*/
 	return nil
-
 }
 
 func NewTAIList(iei uint8) (tAIList *TAIList) {

@@ -77,7 +77,6 @@ type UESecurityCapability struct {
 }
 
 func (u *UESecurityCapability) DecodeNASType() error {
-
 	if u.Len >= 1 {
 		u.EA0_5G = u.GetEA0_5G() == 1
 		u.EA1_128_5G = u.GetEA1_128_5G() == 1

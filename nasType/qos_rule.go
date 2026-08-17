@@ -123,7 +123,6 @@ func (q *QoSRules) UnmarshalBinary(b []byte) error {
 		rule := QoSRule{}
 		if err := binary.Read(buf, binary.BigEndian, &rule.Identifier); err != nil {
 			if err == io.EOF {
-
 				break
 			}
 			return err

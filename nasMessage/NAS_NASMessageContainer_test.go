@@ -1,9 +1,11 @@
 package nasMessage_test
 
 import (
-	"github.com/mimetrix/nas/nasMessage"
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
+
+	"github.com/mimetrix/nas/nasMessage"
 )
 
 func TestNasTypeNewNASMessageContainer(t *testing.T) {

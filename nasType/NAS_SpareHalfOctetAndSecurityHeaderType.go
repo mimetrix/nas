@@ -23,7 +23,6 @@ func (s *SpareHalfOctetAndSecurityHeaderType) DecodeNASType() error {
 	s.SecurityHeaderID = s.GetSecurityHeaderType()
 	s.SecurityHeaderType = secHeaderTypes[s.SecurityHeaderID]
 	return nil
-
 }
 
 func NewSpareHalfOctetAndSecurityHeaderType() (spareHalfOctetAndSecurityHeaderType *SpareHalfOctetAndSecurityHeaderType) {

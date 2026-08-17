@@ -189,7 +189,6 @@ func (a *Message) SecurityProtectedNasDecode(byteArray *[]byte) error {
 }
 
 func (a *Message) PlainNasDecode(byteArray *[]byte) error {
-
 	epd := GetEPD(*byteArray)
 
 	switch epd {

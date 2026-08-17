@@ -2,6 +2,7 @@ package nasConvert
 
 import (
 	"github.com/free5gc/openapi/models"
+
 	"github.com/mimetrix/nas/nasMessage"
 )
 

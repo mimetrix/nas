@@ -31,7 +31,6 @@ type GUTI5G struct {
 }
 
 func (g *GUTI5G) DecodeNASType() error {
-
 	g.FiveGSID = g.GetTypeOfIdentity()
 	g.FiveGSType = FiveGSTypes[g.FiveGSID]
 	g.MCC = fmt.Sprintf("%d%d%d", g.GetMCCDigit1(), g.GetMCCDigit2(), g.GetMCCDigit3())

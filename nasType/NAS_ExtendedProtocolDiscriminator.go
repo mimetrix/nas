@@ -9,7 +9,6 @@ type ExtendedProtocolDiscriminator struct {
 
 /*From 3GPP 24.007 11.2.3.1.1A ver 17.5*/
 var EPDTypes = map[uint8]string{
-
 	0x7:  "reserved",
 	0x1e: "reserved",
 	0x2e: "5GS session management messages",

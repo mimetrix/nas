@@ -10,7 +10,6 @@ type DLNASTRANSPORTMessageIdentity struct {
 func (d *DLNASTRANSPORTMessageIdentity) DecodeNASType() error {
 	d.MessageType = MessageTypes[d.Octet]
 	return nil
-
 }
 
 func NewDLNASTRANSPORTMessageIdentity() (dLNASTRANSPORTMessageIdentity *DLNASTRANSPORTMessageIdentity) {

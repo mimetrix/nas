@@ -10,7 +10,6 @@ import (
 )
 
 func NASDecode(byteArray *[]byte) (*nasMessage.Message, error) {
-
 	nasMsg := nasMessage.NewMessage()
 
 	epd := nasMessage.GetEPD(*byteArray)
@@ -34,9 +33,7 @@ func NASDecode(byteArray *[]byte) (*nasMessage.Message, error) {
 	default:
 		err := fmt.Errorf("Unrecognized Extended Protocol Discriminator: 0x%x", epd)
 		return nasMsg, err
-
 	}
-
 }
 
 type mimeJSONPart struct {
@@ -72,16 +69,19 @@ func SecurityProtectedNasDecode(byteArray *[]byte) error {
 		return fmt.Errorf("GMM NAS decode Fail: read fail - %+v", err)
 	}
 	GmmMsg.SecurityProtected5GSNASMessage = nasMessage.NewSecurityProtected5GSNASMessage(nasMessage.MsgTypeSecurityProtected5GSNASMessage)
-	GmmMsg.DecodeSecurityProtected5GSNASMessage(byteArray)
+	if err := GmmMsg.DecodeSecurityProtected5GSNASMessage(byteArray); err != nil {
+		return fmt.Errorf("security protected NAS decode: %w", err)
+	}
 
 	return nil
 }
 
 func getNASMultipartType(jsonblob []byte) (msgType string, err error) {
-
 	var jp mimeJSONPart
 
-	json.Unmarshal([]byte(jsonblob), &jp)
+	if err := json.Unmarshal(jsonblob, &jp); err != nil {
+		return "", fmt.Errorf("parse MIME multipart JSON: %w", err)
+	}
 
 	switch {
 	case jp.N1MessageContainer != nil:
@@ -97,11 +97,9 @@ func getNASMultipartType(jsonblob []byte) (msgType string, err error) {
 	}
 
 	return
-
 }
 
 func MultipartDecoder(jsonblob []byte, data []byte) (nasMsg *nasMessage.Message, err error) {
-
 	msgType, err := getNASMultipartType(jsonblob)
 	if err != nil {
 		return nil, err
@@ -116,5 +114,4 @@ func MultipartDecoder(jsonblob []byte, data []byte) (nasMsg *nasMessage.Message,
 	}
 
 	return
-
 }

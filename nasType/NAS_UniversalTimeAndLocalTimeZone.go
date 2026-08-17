@@ -31,7 +31,6 @@ type UniversalTimeAndLocalTimeZone struct {
 }
 
 func (u *UniversalTimeAndLocalTimeZone) DecodeNASType() error {
-
 	u.Year = extractDecimal(u.GetYear())
 	u.Month = extractDecimal(u.GetMonth())
 	u.Day = extractDecimal(u.GetDay())
@@ -40,7 +39,6 @@ func (u *UniversalTimeAndLocalTimeZone) DecodeNASType() error {
 	u.Second = extractDecimal(u.GetSecond())
 	u.TimeZone = u.GetTimeZone()
 	return nil
-
 }
 
 func extractDecimal(hex uint8) uint8 {

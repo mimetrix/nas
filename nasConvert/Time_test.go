@@ -4,9 +4,10 @@ import (
 	"testing"
 	"time"
 
+	"github.com/stretchr/testify/require"
+
 	"github.com/mimetrix/nas/nasConvert"
 	"github.com/mimetrix/nas/nasType"
-	"github.com/stretchr/testify/require"
 )
 
 var (

@@ -50,11 +50,9 @@ func (n *NASMessageContainer) DecodeNASType() error {
 	}
 
 	return nil
-
 }
 
 func (n *NASMessageContainer) GetMessageID() (uint8, error) {
-
 	if len(n.Buffer) > 3 {
 		return n.Buffer[2], nil
 	} else {
@@ -63,7 +61,6 @@ func (n *NASMessageContainer) GetMessageID() (uint8, error) {
 }
 
 func (n *NASMessageContainer) GetMessageName() (string, error) {
-
 	msgID, err := n.GetMessageID()
 	if err != nil {
 		return "", err
@@ -81,7 +78,6 @@ func (n *NASMessageContainer) GetMessageName() (string, error) {
 	} else {
 		return "", fmt.Errorf("Message type, %d, does not exist", msgID)
 	}
-
 }
 
 func NewNASMessageContainer(iei uint8) (nASMessageContainer *NASMessageContainer) {

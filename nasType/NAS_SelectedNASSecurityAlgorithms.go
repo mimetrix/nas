@@ -54,7 +54,6 @@ func (s *SelectedNASSecurityAlgorithms) DecodeNASType() error {
 	s.IntegrityAlgorithm = ia
 
 	return nil
-
 }
 
 func NewSelectedNASSecurityAlgorithms(iei uint8) (selectedNASSecurityAlgorithms *SelectedNASSecurityAlgorithms) {

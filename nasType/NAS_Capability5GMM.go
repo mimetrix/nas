@@ -54,7 +54,6 @@ type Capability5GMM struct {
 }
 
 func (c *Capability5GMM) DecodeNASType() error {
-
 	c.S1Mode = c.Octet[0]&0x1 == 1
 	c.HOAttach = (c.Octet[0]&0x2)>>1 == 1
 	c.LTEPositioningProtocol = (c.Octet[0]&0x4)>>2 == 1

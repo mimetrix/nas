@@ -11,7 +11,6 @@ type IntegrityProtectionMaximumDataRate struct {
 }
 
 func (i *IntegrityProtectionMaximumDataRate) DecodeNASType() error {
-
 	switch i.GetMaximumDataRatePerUEForUserPlaneIntegrityProtectionForUpLink() {
 	case 0x00:
 		i.UplinkDataRate = "64 kbps"
