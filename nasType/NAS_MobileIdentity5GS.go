@@ -383,7 +383,7 @@ func (a *MobileIdentity5GS) GetAmfSetID() (string, error) {
 		return "", fmt.Errorf("invalid AmfSetID length")
 	}
 
-	amfSetID := (uint16(a.Buffer[amfSetStartPoint])<<2 + uint16((a.Buffer[amfSetStartPoint+1])&GetBitMask(8, 2))>>6)
+	amfSetID := (uint16(a.Buffer[amfSetStartPoint])<<2 + uint16(a.Buffer[amfSetStartPoint+1]&GetBitMask(8, 2))>>6)
 	amfSetID_string := strconv.FormatUint(uint64(amfSetID), 10)
 	return amfSetID_string, nil
 }
@@ -409,7 +409,7 @@ func (a *MobileIdentity5GS) GetAmfPointer() (string, error) {
 		return "", fmt.Errorf("invalid AmfPointer length")
 	}
 
-	AMFPointer := (a.Buffer[amfPointerStartPoint]) & GetBitMask(6, 0)
+	AMFPointer := a.Buffer[amfPointerStartPoint] & GetBitMask(6, 0)
 	AMFPointer_string := strconv.FormatUint(uint64(AMFPointer), 10)
 	return AMFPointer_string, nil
 }

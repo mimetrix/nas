@@ -244,30 +244,26 @@ func (a *Message) GmmMessageDecode(byteArray *[]byte) error {
 			return err
 		}
 	case MsgTypeDeregistrationRequestUEOriginatingDeregistration:
-		a.GmmMessage.DeregistrationRequestUEOriginatingDeregistration =
-			NewDeregistrationRequestUEOriginatingDeregistration(
-				MsgTypeDeregistrationRequestUEOriginatingDeregistration)
+		a.GmmMessage.DeregistrationRequestUEOriginatingDeregistration = NewDeregistrationRequestUEOriginatingDeregistration(
+			MsgTypeDeregistrationRequestUEOriginatingDeregistration)
 		if err := a.GmmMessage.DecodeDeregistrationRequestUEOriginatingDeregistration(byteArray); err != nil {
 			return err
 		}
 	case MsgTypeDeregistrationAcceptUEOriginatingDeregistration:
-		a.GmmMessage.DeregistrationAcceptUEOriginatingDeregistration =
-			NewDeregistrationAcceptUEOriginatingDeregistration(
-				MsgTypeDeregistrationAcceptUEOriginatingDeregistration)
+		a.GmmMessage.DeregistrationAcceptUEOriginatingDeregistration = NewDeregistrationAcceptUEOriginatingDeregistration(
+			MsgTypeDeregistrationAcceptUEOriginatingDeregistration)
 		if err := a.GmmMessage.DecodeDeregistrationAcceptUEOriginatingDeregistration(byteArray); err != nil {
 			return err
 		}
 	case MsgTypeDeregistrationRequestUETerminatedDeregistration:
-		a.GmmMessage.DeregistrationRequestUETerminatedDeregistration =
-			NewDeregistrationRequestUETerminatedDeregistration(
-				MsgTypeDeregistrationRequestUETerminatedDeregistration)
+		a.GmmMessage.DeregistrationRequestUETerminatedDeregistration = NewDeregistrationRequestUETerminatedDeregistration(
+			MsgTypeDeregistrationRequestUETerminatedDeregistration)
 		if err := a.GmmMessage.DecodeDeregistrationRequestUETerminatedDeregistration(byteArray); err != nil {
 			return err
 		}
 	case MsgTypeDeregistrationAcceptUETerminatedDeregistration:
-		a.GmmMessage.DeregistrationAcceptUETerminatedDeregistration =
-			NewDeregistrationAcceptUETerminatedDeregistration(
-				MsgTypeDeregistrationAcceptUETerminatedDeregistration)
+		a.GmmMessage.DeregistrationAcceptUETerminatedDeregistration = NewDeregistrationAcceptUETerminatedDeregistration(
+			MsgTypeDeregistrationAcceptUETerminatedDeregistration)
 		if err := a.GmmMessage.DecodeDeregistrationAcceptUETerminatedDeregistration(byteArray); err != nil {
 			return err
 		}
@@ -287,14 +283,12 @@ func (a *Message) GmmMessageDecode(byteArray *[]byte) error {
 			return err
 		}
 	case MsgTypeConfigurationUpdateCommand:
-		a.GmmMessage.ConfigurationUpdateCommand =
-			NewConfigurationUpdateCommand(MsgTypeConfigurationUpdateCommand)
+		a.GmmMessage.ConfigurationUpdateCommand = NewConfigurationUpdateCommand(MsgTypeConfigurationUpdateCommand)
 		if err := a.GmmMessage.DecodeConfigurationUpdateCommand(byteArray); err != nil {
 			return err
 		}
 	case MsgTypeConfigurationUpdateComplete:
-		a.GmmMessage.ConfigurationUpdateComplete =
-			NewConfigurationUpdateComplete(MsgTypeConfigurationUpdateComplete)
+		a.GmmMessage.ConfigurationUpdateComplete = NewConfigurationUpdateComplete(MsgTypeConfigurationUpdateComplete)
 		if err := a.GmmMessage.DecodeConfigurationUpdateComplete(byteArray); err != nil {
 			return err
 		}
@@ -554,68 +548,57 @@ func (a *Message) GsmMessageDecode(byteArray *[]byte) error {
 
 	switch a.GsmMessage.GsmHeader.GetMessageType() {
 	case MsgTypePDUSessionEstablishmentRequest:
-		a.GsmMessage.PDUSessionEstablishmentRequest =
-			NewPDUSessionEstablishmentRequest(MsgTypePDUSessionEstablishmentRequest)
+		a.GsmMessage.PDUSessionEstablishmentRequest = NewPDUSessionEstablishmentRequest(MsgTypePDUSessionEstablishmentRequest)
 		if err := a.GsmMessage.DecodePDUSessionEstablishmentRequest(byteArray); err != nil {
 			return err
 		}
 	case MsgTypePDUSessionEstablishmentAccept:
-		a.GsmMessage.PDUSessionEstablishmentAccept =
-			NewPDUSessionEstablishmentAccept(MsgTypePDUSessionEstablishmentAccept)
+		a.GsmMessage.PDUSessionEstablishmentAccept = NewPDUSessionEstablishmentAccept(MsgTypePDUSessionEstablishmentAccept)
 		if err := a.GsmMessage.DecodePDUSessionEstablishmentAccept(byteArray); err != nil {
 			return err
 		}
 	case MsgTypePDUSessionEstablishmentReject:
-		a.GsmMessage.PDUSessionEstablishmentReject =
-			NewPDUSessionEstablishmentReject(MsgTypePDUSessionEstablishmentReject)
+		a.GsmMessage.PDUSessionEstablishmentReject = NewPDUSessionEstablishmentReject(MsgTypePDUSessionEstablishmentReject)
 		if err := a.GsmMessage.DecodePDUSessionEstablishmentReject(byteArray); err != nil {
 			return err
 		}
 	case MsgTypePDUSessionAuthenticationCommand:
-		a.GsmMessage.PDUSessionAuthenticationCommand =
-			NewPDUSessionAuthenticationCommand(MsgTypePDUSessionAuthenticationCommand)
+		a.GsmMessage.PDUSessionAuthenticationCommand = NewPDUSessionAuthenticationCommand(MsgTypePDUSessionAuthenticationCommand)
 		if err := a.GsmMessage.DecodePDUSessionAuthenticationCommand(byteArray); err != nil {
 			return err
 		}
 	case MsgTypePDUSessionAuthenticationComplete:
-		a.GsmMessage.PDUSessionAuthenticationComplete =
-			NewPDUSessionAuthenticationComplete(MsgTypePDUSessionAuthenticationComplete)
+		a.GsmMessage.PDUSessionAuthenticationComplete = NewPDUSessionAuthenticationComplete(MsgTypePDUSessionAuthenticationComplete)
 		if err := a.GsmMessage.DecodePDUSessionAuthenticationComplete(byteArray); err != nil {
 			return err
 		}
 	case MsgTypePDUSessionAuthenticationResult:
-		a.GsmMessage.PDUSessionAuthenticationResult =
-			NewPDUSessionAuthenticationResult(MsgTypePDUSessionAuthenticationResult)
+		a.GsmMessage.PDUSessionAuthenticationResult = NewPDUSessionAuthenticationResult(MsgTypePDUSessionAuthenticationResult)
 		if err := a.GsmMessage.DecodePDUSessionAuthenticationResult(byteArray); err != nil {
 			return err
 		}
 	case MsgTypePDUSessionModificationRequest:
-		a.GsmMessage.PDUSessionModificationRequest =
-			NewPDUSessionModificationRequest(MsgTypePDUSessionModificationRequest)
+		a.GsmMessage.PDUSessionModificationRequest = NewPDUSessionModificationRequest(MsgTypePDUSessionModificationRequest)
 		if err := a.GsmMessage.DecodePDUSessionModificationRequest(byteArray); err != nil {
 			return err
 		}
 	case MsgTypePDUSessionModificationReject:
-		a.GsmMessage.PDUSessionModificationReject =
-			NewPDUSessionModificationReject(MsgTypePDUSessionModificationReject)
+		a.GsmMessage.PDUSessionModificationReject = NewPDUSessionModificationReject(MsgTypePDUSessionModificationReject)
 		if err := a.GsmMessage.DecodePDUSessionModificationReject(byteArray); err != nil {
 			return err
 		}
 	case MsgTypePDUSessionModificationCommand:
-		a.GsmMessage.PDUSessionModificationCommand =
-			NewPDUSessionModificationCommand(MsgTypePDUSessionModificationCommand)
+		a.GsmMessage.PDUSessionModificationCommand = NewPDUSessionModificationCommand(MsgTypePDUSessionModificationCommand)
 		if err := a.GsmMessage.DecodePDUSessionModificationCommand(byteArray); err != nil {
 			return err
 		}
 	case MsgTypePDUSessionModificationComplete:
-		a.GsmMessage.PDUSessionModificationComplete =
-			NewPDUSessionModificationComplete(MsgTypePDUSessionModificationComplete)
+		a.GsmMessage.PDUSessionModificationComplete = NewPDUSessionModificationComplete(MsgTypePDUSessionModificationComplete)
 		if err := a.GsmMessage.DecodePDUSessionModificationComplete(byteArray); err != nil {
 			return err
 		}
 	case MsgTypePDUSessionModificationCommandReject:
-		a.GsmMessage.PDUSessionModificationCommandReject =
-			NewPDUSessionModificationCommandReject(MsgTypePDUSessionModificationCommandReject)
+		a.GsmMessage.PDUSessionModificationCommandReject = NewPDUSessionModificationCommandReject(MsgTypePDUSessionModificationCommandReject)
 		if err := a.GsmMessage.DecodePDUSessionModificationCommandReject(byteArray); err != nil {
 			return err
 		}

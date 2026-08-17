@@ -66,7 +66,7 @@ func (n *NASMessageContainer) GetMessageName() (string, error) {
 		return "", err
 	}
 
-	//return message type if valid to be inside NAS Message Container
+	// return message type if valid to be inside NAS Message Container
 	msgName, ok := nasType.MessageTypes[msgID]
 	if ok {
 		switch msgID {

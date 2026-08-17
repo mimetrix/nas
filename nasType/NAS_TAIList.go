@@ -19,7 +19,7 @@ type TAIType00 struct {
 	NumElements uint8
 	MCC         string
 	MNC         string
-	TACs        []uint32 //LIst of TACs
+	TACs        []uint32 // LIst of TACs
 }
 
 type TAIType01 struct {

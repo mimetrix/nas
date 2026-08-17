@@ -61,7 +61,7 @@ func (a *T3512Value) SetLen(len uint8) {
 // T3512Value 9.11.2.5
 // Unit Row, sBit, len = [0, 0], 8 , 3
 func (a *T3512Value) GetUnit() (unit uint8) {
-	return a.Octet & GetBitMask(8, 5) >> (5)
+	return a.Octet & GetBitMask(8, 5) >> 5
 }
 
 // T3512Value 9.11.2.5

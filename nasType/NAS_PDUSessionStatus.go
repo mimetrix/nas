@@ -58,7 +58,7 @@ func (a *PDUSessionStatus) SetLen(len uint8) {
 // PDUSessionStatus 9.11.3.44
 // PSI7 Row, sBit, len = [0, 0], 8 , 1
 func (a *PDUSessionStatus) GetPSI7() (pSI7 uint8) {
-	return a.Buffer[0] & GetBitMask(8, 7) >> (7)
+	return a.Buffer[0] & GetBitMask(8, 7) >> 7
 }
 
 // PDUSessionStatus 9.11.3.44
@@ -70,7 +70,7 @@ func (a *PDUSessionStatus) SetPSI7(pSI7 uint8) {
 // PDUSessionStatus 9.11.3.44
 // PSI6 Row, sBit, len = [0, 0], 7 , 1
 func (a *PDUSessionStatus) GetPSI6() (pSI6 uint8) {
-	return a.Buffer[0] & GetBitMask(7, 6) >> (6)
+	return a.Buffer[0] & GetBitMask(7, 6) >> 6
 }
 
 // PDUSessionStatus 9.11.3.44
@@ -82,7 +82,7 @@ func (a *PDUSessionStatus) SetPSI6(pSI6 uint8) {
 // PDUSessionStatus 9.11.3.44
 // PSI5 Row, sBit, len = [0, 0], 6 , 1
 func (a *PDUSessionStatus) GetPSI5() (pSI5 uint8) {
-	return a.Buffer[0] & GetBitMask(6, 5) >> (5)
+	return a.Buffer[0] & GetBitMask(6, 5) >> 5
 }
 
 // PDUSessionStatus 9.11.3.44
@@ -94,7 +94,7 @@ func (a *PDUSessionStatus) SetPSI5(pSI5 uint8) {
 // PDUSessionStatus 9.11.3.44
 // PSI4 Row, sBit, len = [0, 0], 5 , 1
 func (a *PDUSessionStatus) GetPSI4() (pSI4 uint8) {
-	return a.Buffer[0] & GetBitMask(5, 4) >> (4)
+	return a.Buffer[0] & GetBitMask(5, 4) >> 4
 }
 
 // PDUSessionStatus 9.11.3.44
@@ -106,7 +106,7 @@ func (a *PDUSessionStatus) SetPSI4(pSI4 uint8) {
 // PDUSessionStatus 9.11.3.44
 // PSI3 Row, sBit, len = [0, 0], 4 , 1
 func (a *PDUSessionStatus) GetPSI3() (pSI3 uint8) {
-	return a.Buffer[0] & GetBitMask(4, 3) >> (3)
+	return a.Buffer[0] & GetBitMask(4, 3) >> 3
 }
 
 // PDUSessionStatus 9.11.3.44
@@ -118,7 +118,7 @@ func (a *PDUSessionStatus) SetPSI3(pSI3 uint8) {
 // PDUSessionStatus 9.11.3.44
 // PSI2 Row, sBit, len = [0, 0], 3 , 1
 func (a *PDUSessionStatus) GetPSI2() (pSI2 uint8) {
-	return a.Buffer[0] & GetBitMask(3, 2) >> (2)
+	return a.Buffer[0] & GetBitMask(3, 2) >> 2
 }
 
 // PDUSessionStatus 9.11.3.44
@@ -130,7 +130,7 @@ func (a *PDUSessionStatus) SetPSI2(pSI2 uint8) {
 // PDUSessionStatus 9.11.3.44
 // PSI1 Row, sBit, len = [0, 0], 2 , 1
 func (a *PDUSessionStatus) GetPSI1() (pSI1 uint8) {
-	return a.Buffer[0] & GetBitMask(2, 1) >> (1)
+	return a.Buffer[0] & GetBitMask(2, 1) >> 1
 }
 
 // PDUSessionStatus 9.11.3.44
@@ -154,7 +154,7 @@ func (a *PDUSessionStatus) SetPSI0(pSI0 uint8) {
 // PDUSessionStatus 9.11.3.44
 // PSI15 Row, sBit, len = [1, 1], 8 , 1
 func (a *PDUSessionStatus) GetPSI15() (pSI15 uint8) {
-	return a.Buffer[1] & GetBitMask(8, 7) >> (7)
+	return a.Buffer[1] & GetBitMask(8, 7) >> 7
 }
 
 // PDUSessionStatus 9.11.3.44
@@ -166,7 +166,7 @@ func (a *PDUSessionStatus) SetPSI15(pSI15 uint8) {
 // PDUSessionStatus 9.11.3.44
 // PSI14 Row, sBit, len = [1, 1], 7 , 1
 func (a *PDUSessionStatus) GetPSI14() (pSI14 uint8) {
-	return a.Buffer[1] & GetBitMask(7, 6) >> (6)
+	return a.Buffer[1] & GetBitMask(7, 6) >> 6
 }
 
 // PDUSessionStatus 9.11.3.44
@@ -178,7 +178,7 @@ func (a *PDUSessionStatus) SetPSI14(pSI14 uint8) {
 // PDUSessionStatus 9.11.3.44
 // PSI13 Row, sBit, len = [1, 1], 6 , 1
 func (a *PDUSessionStatus) GetPSI13() (pSI13 uint8) {
-	return a.Buffer[1] & GetBitMask(6, 5) >> (5)
+	return a.Buffer[1] & GetBitMask(6, 5) >> 5
 }
 
 // PDUSessionStatus 9.11.3.44
@@ -190,7 +190,7 @@ func (a *PDUSessionStatus) SetPSI13(pSI13 uint8) {
 // PDUSessionStatus 9.11.3.44
 // PSI12 Row, sBit, len = [1, 1], 5 , 1
 func (a *PDUSessionStatus) GetPSI12() (pSI12 uint8) {
-	return a.Buffer[1] & GetBitMask(5, 4) >> (4)
+	return a.Buffer[1] & GetBitMask(5, 4) >> 4
 }
 
 // PDUSessionStatus 9.11.3.44
@@ -202,7 +202,7 @@ func (a *PDUSessionStatus) SetPSI12(pSI12 uint8) {
 // PDUSessionStatus 9.11.3.44
 // PSI11 Row, sBit, len = [1, 1], 4 , 1
 func (a *PDUSessionStatus) GetPSI11() (pSI11 uint8) {
-	return a.Buffer[1] & GetBitMask(4, 3) >> (3)
+	return a.Buffer[1] & GetBitMask(4, 3) >> 3
 }
 
 // PDUSessionStatus 9.11.3.44
@@ -214,7 +214,7 @@ func (a *PDUSessionStatus) SetPSI11(pSI11 uint8) {
 // PDUSessionStatus 9.11.3.44
 // PSI10 Row, sBit, len = [1, 1], 3 , 1
 func (a *PDUSessionStatus) GetPSI10() (pSI10 uint8) {
-	return a.Buffer[1] & GetBitMask(3, 2) >> (2)
+	return a.Buffer[1] & GetBitMask(3, 2) >> 2
 }
 
 // PDUSessionStatus 9.11.3.44
@@ -226,7 +226,7 @@ func (a *PDUSessionStatus) SetPSI10(pSI10 uint8) {
 // PDUSessionStatus 9.11.3.44
 // PSI9 Row, sBit, len = [1, 1], 2 , 1
 func (a *PDUSessionStatus) GetPSI9() (pSI9 uint8) {
-	return a.Buffer[1] & GetBitMask(2, 1) >> (1)
+	return a.Buffer[1] & GetBitMask(2, 1) >> 1
 }
 
 // PDUSessionStatus 9.11.3.44

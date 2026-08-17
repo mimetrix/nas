@@ -53,7 +53,7 @@ func (a *ShortNameForNetwork) SetLen(len uint8) {
 // ShortNameForNetwork 9.11.3.35
 // Ext Row, sBit, len = [0, 0], 8 , 1
 func (a *ShortNameForNetwork) GetExt() (ext uint8) {
-	return a.Buffer[0] & GetBitMask(8, 7) >> (7)
+	return a.Buffer[0] & GetBitMask(8, 7) >> 7
 }
 
 // ShortNameForNetwork 9.11.3.35
@@ -65,7 +65,7 @@ func (a *ShortNameForNetwork) SetExt(ext uint8) {
 // ShortNameForNetwork 9.11.3.35
 // CodingScheme Row, sBit, len = [0, 0], 7 , 3
 func (a *ShortNameForNetwork) GetCodingScheme() (codingScheme uint8) {
-	return a.Buffer[0] & GetBitMask(7, 4) >> (4)
+	return a.Buffer[0] & GetBitMask(7, 4) >> 4
 }
 
 // ShortNameForNetwork 9.11.3.35
@@ -77,7 +77,7 @@ func (a *ShortNameForNetwork) SetCodingScheme(codingScheme uint8) {
 // ShortNameForNetwork 9.11.3.35
 // AddCI Row, sBit, len = [0, 0], 4 , 1
 func (a *ShortNameForNetwork) GetAddCI() (addCI uint8) {
-	return a.Buffer[0] & GetBitMask(4, 3) >> (3)
+	return a.Buffer[0] & GetBitMask(4, 3) >> 3
 }
 
 // ShortNameForNetwork 9.11.3.35

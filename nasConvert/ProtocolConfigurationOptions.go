@@ -53,7 +53,7 @@ func (protocolConfigurationOptions *ProtocolConfigurationOptions) Marshal() []by
 	var configurationProtocol uint8 = 0
 	buffer := new(bytes.Buffer)
 
-	metaInfo = (extension << 7) | (spare << 6) | (configurationProtocol)
+	metaInfo = (extension << 7) | (spare << 6) | configurationProtocol
 	if err := binary.Write(buffer, binary.BigEndian, &metaInfo); err != nil {
 		logger.ConvertLog.Warnf("Write metaInfo failed: %+v", err)
 	}

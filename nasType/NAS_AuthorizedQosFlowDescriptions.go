@@ -50,7 +50,7 @@ func (a *AuthorizedQosFlowDescriptions) DecodeNASType() error {
 	QoSBuf := bytes.NewBuffer(a.Buffer)
 
 	for QoSBuf.Len() > 0 {
-		//Create a new QoSDescriptionstruct
+		// Create a new QoSDescriptionstruct
 		QFI, err := QoSBuf.ReadByte()
 		if err != nil {
 			return err

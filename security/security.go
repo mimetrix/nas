@@ -317,7 +317,7 @@ func getWord(stream []uint32, i int) (zi uint32) {
 	if cntBackBit == 0 {
 		zi = stream[loc]
 	} else {
-		zi = stream[loc]<<(cntBackBit) | (stream[loc+1] >> cntFrontBit)
+		zi = stream[loc]<<cntBackBit | (stream[loc+1] >> cntFrontBit)
 	}
 	return zi
 }

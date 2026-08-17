@@ -70,7 +70,7 @@ func (a *Capability5GSM) SetLen(len uint8) {
 // Capability5GSM 9.11.4.1
 // MH6PDU Row, sBit, len = [0, 0], 2 , 1
 func (a *Capability5GSM) GetMH6PDU() (mH6PDU uint8) {
-	return a.Octet[0] & GetBitMask(2, 1) >> (1)
+	return a.Octet[0] & GetBitMask(2, 1) >> 1
 }
 
 // Capability5GSM 9.11.4.1

@@ -157,7 +157,7 @@ func (a *UESecurityCapability) SetLen(len uint8) {
 // UESecurityCapability 9.11.3.54
 // EA0_5G Row, sBit, len = [0, 0], 8 , 1
 func (a *UESecurityCapability) GetEA0_5G() (eA0_5G uint8) {
-	return a.Buffer[0] & GetBitMask(8, 7) >> (7)
+	return a.Buffer[0] & GetBitMask(8, 7) >> 7
 }
 
 // UESecurityCapability 9.11.3.54
@@ -169,7 +169,7 @@ func (a *UESecurityCapability) SetEA0_5G(eA0_5G uint8) {
 // UESecurityCapability 9.11.3.54
 // EA1_128_5G Row, sBit, len = [0, 0], 7 , 1
 func (a *UESecurityCapability) GetEA1_128_5G() (eA1_128_5G uint8) {
-	return a.Buffer[0] & GetBitMask(7, 6) >> (6)
+	return a.Buffer[0] & GetBitMask(7, 6) >> 6
 }
 
 // UESecurityCapability 9.11.3.54
@@ -181,7 +181,7 @@ func (a *UESecurityCapability) SetEA1_128_5G(eA1_128_5G uint8) {
 // UESecurityCapability 9.11.3.54
 // EA2_128_5G Row, sBit, len = [0, 0], 6 , 1
 func (a *UESecurityCapability) GetEA2_128_5G() (eA2_128_5G uint8) {
-	return a.Buffer[0] & GetBitMask(6, 5) >> (5)
+	return a.Buffer[0] & GetBitMask(6, 5) >> 5
 }
 
 // UESecurityCapability 9.11.3.54
@@ -193,7 +193,7 @@ func (a *UESecurityCapability) SetEA2_128_5G(eA2_128_5G uint8) {
 // UESecurityCapability 9.11.3.54
 // EA3_128_5G Row, sBit, len = [0, 0], 5 , 1
 func (a *UESecurityCapability) GetEA3_128_5G() (eA3_128_5G uint8) {
-	return a.Buffer[0] & GetBitMask(5, 4) >> (4)
+	return a.Buffer[0] & GetBitMask(5, 4) >> 4
 }
 
 // UESecurityCapability 9.11.3.54
@@ -205,7 +205,7 @@ func (a *UESecurityCapability) SetEA3_128_5G(eA3_128_5G uint8) {
 // UESecurityCapability 9.11.3.54
 // EA4_5G Row, sBit, len = [0, 0], 4 , 1
 func (a *UESecurityCapability) GetEA4_5G() (eA4_5G uint8) {
-	return a.Buffer[0] & GetBitMask(4, 3) >> (3)
+	return a.Buffer[0] & GetBitMask(4, 3) >> 3
 }
 
 // UESecurityCapability 9.11.3.54
@@ -217,7 +217,7 @@ func (a *UESecurityCapability) SetEA4_5G(eA4_5G uint8) {
 // UESecurityCapability 9.11.3.54
 // EA5_5G Row, sBit, len = [0, 0], 3 , 1
 func (a *UESecurityCapability) GetEA5_5G() (eA5_5G uint8) {
-	return a.Buffer[0] & GetBitMask(3, 2) >> (2)
+	return a.Buffer[0] & GetBitMask(3, 2) >> 2
 }
 
 // UESecurityCapability 9.11.3.54
@@ -229,7 +229,7 @@ func (a *UESecurityCapability) SetEA5_5G(eA5_5G uint8) {
 // UESecurityCapability 9.11.3.54
 // EA6_5G Row, sBit, len = [0, 0], 2 , 1
 func (a *UESecurityCapability) GetEA6_5G() (eA6_5G uint8) {
-	return a.Buffer[0] & GetBitMask(2, 1) >> (1)
+	return a.Buffer[0] & GetBitMask(2, 1) >> 1
 }
 
 // UESecurityCapability 9.11.3.54
@@ -253,7 +253,7 @@ func (a *UESecurityCapability) SetEA7_5G(eA7_5G uint8) {
 // UESecurityCapability 9.11.3.54
 // IA0_5G Row, sBit, len = [1, 1], 8 , 1
 func (a *UESecurityCapability) GetIA0_5G() (iA0_5G uint8) {
-	return a.Buffer[1] & GetBitMask(8, 7) >> (7)
+	return a.Buffer[1] & GetBitMask(8, 7) >> 7
 }
 
 // UESecurityCapability 9.11.3.54
@@ -265,7 +265,7 @@ func (a *UESecurityCapability) SetIA0_5G(iA0_5G uint8) {
 // UESecurityCapability 9.11.3.54
 // IA1_128_5G Row, sBit, len = [1, 1], 7 , 1
 func (a *UESecurityCapability) GetIA1_128_5G() (iA1_128_5G uint8) {
-	return a.Buffer[1] & GetBitMask(7, 6) >> (6)
+	return a.Buffer[1] & GetBitMask(7, 6) >> 6
 }
 
 // UESecurityCapability 9.11.3.54
@@ -277,7 +277,7 @@ func (a *UESecurityCapability) SetIA1_128_5G(iA1_128_5G uint8) {
 // UESecurityCapability 9.11.3.54
 // IA2_128_5G Row, sBit, len = [1, 1], 6 , 1
 func (a *UESecurityCapability) GetIA2_128_5G() (iA2_128_5G uint8) {
-	return a.Buffer[1] & GetBitMask(6, 5) >> (5)
+	return a.Buffer[1] & GetBitMask(6, 5) >> 5
 }
 
 // UESecurityCapability 9.11.3.54
@@ -289,7 +289,7 @@ func (a *UESecurityCapability) SetIA2_128_5G(iA2_128_5G uint8) {
 // UESecurityCapability 9.11.3.54
 // IA3_128_5G Row, sBit, len = [1, 1], 5 , 1
 func (a *UESecurityCapability) GetIA3_128_5G() (iA3_128_5G uint8) {
-	return a.Buffer[1] & GetBitMask(5, 4) >> (4)
+	return a.Buffer[1] & GetBitMask(5, 4) >> 4
 }
 
 // UESecurityCapability 9.11.3.54
@@ -301,7 +301,7 @@ func (a *UESecurityCapability) SetIA3_128_5G(iA3_128_5G uint8) {
 // UESecurityCapability 9.11.3.54
 // IA4_5G Row, sBit, len = [1, 1], 4 , 1
 func (a *UESecurityCapability) GetIA4_5G() (iA4_5G uint8) {
-	return a.Buffer[1] & GetBitMask(4, 3) >> (3)
+	return a.Buffer[1] & GetBitMask(4, 3) >> 3
 }
 
 // UESecurityCapability 9.11.3.54
@@ -313,7 +313,7 @@ func (a *UESecurityCapability) SetIA4_5G(iA4_5G uint8) {
 // UESecurityCapability 9.11.3.54
 // IA5_5G Row, sBit, len = [1, 1], 3 , 1
 func (a *UESecurityCapability) GetIA5_5G() (iA5_5G uint8) {
-	return a.Buffer[1] & GetBitMask(3, 2) >> (2)
+	return a.Buffer[1] & GetBitMask(3, 2) >> 2
 }
 
 // UESecurityCapability 9.11.3.54
@@ -325,7 +325,7 @@ func (a *UESecurityCapability) SetIA5_5G(iA5_5G uint8) {
 // UESecurityCapability 9.11.3.54
 // IA6_5G Row, sBit, len = [1, 1], 2 , 1
 func (a *UESecurityCapability) GetIA6_5G() (iA6_5G uint8) {
-	return a.Buffer[1] & GetBitMask(2, 1) >> (1)
+	return a.Buffer[1] & GetBitMask(2, 1) >> 1
 }
 
 // UESecurityCapability 9.11.3.54
@@ -349,7 +349,7 @@ func (a *UESecurityCapability) SetIA7_5G(iA7_5G uint8) {
 // UESecurityCapability 9.11.3.54
 // EEA0 Row, sBit, len = [2, 2], 8 , 1
 func (a *UESecurityCapability) GetEEA0() (eEA0 uint8) {
-	return a.Buffer[2] & GetBitMask(8, 7) >> (7)
+	return a.Buffer[2] & GetBitMask(8, 7) >> 7
 }
 
 // UESecurityCapability 9.11.3.54
@@ -361,7 +361,7 @@ func (a *UESecurityCapability) SetEEA0(eEA0 uint8) {
 // UESecurityCapability 9.11.3.54
 // EEA1_128 Row, sBit, len = [2, 2], 7 , 1
 func (a *UESecurityCapability) GetEEA1_128() (eEA1_128 uint8) {
-	return a.Buffer[2] & GetBitMask(7, 6) >> (6)
+	return a.Buffer[2] & GetBitMask(7, 6) >> 6
 }
 
 // UESecurityCapability 9.11.3.54
@@ -373,7 +373,7 @@ func (a *UESecurityCapability) SetEEA1_128(eEA1_128 uint8) {
 // UESecurityCapability 9.11.3.54
 // EEA2_128 Row, sBit, len = [2, 2], 6 , 1
 func (a *UESecurityCapability) GetEEA2_128() (eEA2_128 uint8) {
-	return a.Buffer[2] & GetBitMask(6, 5) >> (5)
+	return a.Buffer[2] & GetBitMask(6, 5) >> 5
 }
 
 // UESecurityCapability 9.11.3.54
@@ -385,7 +385,7 @@ func (a *UESecurityCapability) SetEEA2_128(eEA2_128 uint8) {
 // UESecurityCapability 9.11.3.54
 // EEA3_128 Row, sBit, len = [2, 2], 5 , 1
 func (a *UESecurityCapability) GetEEA3_128() (eEA3_128 uint8) {
-	return a.Buffer[2] & GetBitMask(5, 4) >> (4)
+	return a.Buffer[2] & GetBitMask(5, 4) >> 4
 }
 
 // UESecurityCapability 9.11.3.54
@@ -397,7 +397,7 @@ func (a *UESecurityCapability) SetEEA3_128(eEA3_128 uint8) {
 // UESecurityCapability 9.11.3.54
 // EEA4 Row, sBit, len = [2, 2], 4 , 1
 func (a *UESecurityCapability) GetEEA4() (eEA4 uint8) {
-	return a.Buffer[2] & GetBitMask(4, 3) >> (3)
+	return a.Buffer[2] & GetBitMask(4, 3) >> 3
 }
 
 // UESecurityCapability 9.11.3.54
@@ -409,7 +409,7 @@ func (a *UESecurityCapability) SetEEA4(eEA4 uint8) {
 // UESecurityCapability 9.11.3.54
 // EEA5 Row, sBit, len = [2, 2], 3 , 1
 func (a *UESecurityCapability) GetEEA5() (eEA5 uint8) {
-	return a.Buffer[2] & GetBitMask(3, 2) >> (2)
+	return a.Buffer[2] & GetBitMask(3, 2) >> 2
 }
 
 // UESecurityCapability 9.11.3.54
@@ -421,7 +421,7 @@ func (a *UESecurityCapability) SetEEA5(eEA5 uint8) {
 // UESecurityCapability 9.11.3.54
 // EEA6 Row, sBit, len = [2, 2], 2 , 1
 func (a *UESecurityCapability) GetEEA6() (eEA6 uint8) {
-	return a.Buffer[2] & GetBitMask(2, 1) >> (1)
+	return a.Buffer[2] & GetBitMask(2, 1) >> 1
 }
 
 // UESecurityCapability 9.11.3.54
@@ -445,7 +445,7 @@ func (a *UESecurityCapability) SetEEA7(eEA7 uint8) {
 // UESecurityCapability 9.11.3.54
 // EIA0 Row, sBit, len = [3, 3], 8 , 1
 func (a *UESecurityCapability) GetEIA0() (eIA0 uint8) {
-	return a.Buffer[3] & GetBitMask(8, 7) >> (7)
+	return a.Buffer[3] & GetBitMask(8, 7) >> 7
 }
 
 // UESecurityCapability 9.11.3.54
@@ -457,7 +457,7 @@ func (a *UESecurityCapability) SetEIA0(eIA0 uint8) {
 // UESecurityCapability 9.11.3.54
 // EIA1_128 Row, sBit, len = [3, 3], 7 , 1
 func (a *UESecurityCapability) GetEIA1_128() (eIA1_128 uint8) {
-	return a.Buffer[3] & GetBitMask(7, 6) >> (6)
+	return a.Buffer[3] & GetBitMask(7, 6) >> 6
 }
 
 // UESecurityCapability 9.11.3.54
@@ -469,7 +469,7 @@ func (a *UESecurityCapability) SetEIA1_128(eIA1_128 uint8) {
 // UESecurityCapability 9.11.3.54
 // EIA2_128 Row, sBit, len = [3, 3], 6 , 1
 func (a *UESecurityCapability) GetEIA2_128() (eIA2_128 uint8) {
-	return a.Buffer[3] & GetBitMask(6, 5) >> (5)
+	return a.Buffer[3] & GetBitMask(6, 5) >> 5
 }
 
 // UESecurityCapability 9.11.3.54
@@ -481,7 +481,7 @@ func (a *UESecurityCapability) SetEIA2_128(eIA2_128 uint8) {
 // UESecurityCapability 9.11.3.54
 // EIA3_128 Row, sBit, len = [3, 3], 5 , 1
 func (a *UESecurityCapability) GetEIA3_128() (eIA3_128 uint8) {
-	return a.Buffer[3] & GetBitMask(5, 4) >> (4)
+	return a.Buffer[3] & GetBitMask(5, 4) >> 4
 }
 
 // UESecurityCapability 9.11.3.54
@@ -493,7 +493,7 @@ func (a *UESecurityCapability) SetEIA3_128(eIA3_128 uint8) {
 // UESecurityCapability 9.11.3.54
 // EIA4 Row, sBit, len = [3, 3], 4 , 1
 func (a *UESecurityCapability) GetEIA4() (eIA4 uint8) {
-	return a.Buffer[3] & GetBitMask(4, 3) >> (3)
+	return a.Buffer[3] & GetBitMask(4, 3) >> 3
 }
 
 // UESecurityCapability 9.11.3.54
@@ -505,7 +505,7 @@ func (a *UESecurityCapability) SetEIA4(eIA4 uint8) {
 // UESecurityCapability 9.11.3.54
 // EIA5 Row, sBit, len = [3, 3], 3 , 1
 func (a *UESecurityCapability) GetEIA5() (eIA5 uint8) {
-	return a.Buffer[3] & GetBitMask(3, 2) >> (2)
+	return a.Buffer[3] & GetBitMask(3, 2) >> 2
 }
 
 // UESecurityCapability 9.11.3.54
@@ -517,7 +517,7 @@ func (a *UESecurityCapability) SetEIA5(eIA5 uint8) {
 // UESecurityCapability 9.11.3.54
 // EIA6 Row, sBit, len = [3, 3], 2 , 1
 func (a *UESecurityCapability) GetEIA6() (eIA6 uint8) {
-	return a.Buffer[3] & GetBitMask(2, 1) >> (1)
+	return a.Buffer[3] & GetBitMask(2, 1) >> 1
 }
 
 // UESecurityCapability 9.11.3.54

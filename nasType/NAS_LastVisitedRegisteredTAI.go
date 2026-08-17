@@ -34,7 +34,7 @@ func (a *LastVisitedRegisteredTAI) SetIei(iei uint8) {
 // LastVisitedRegisteredTAI 9.11.3.8
 // MCCDigit2 Row, sBit, len = [0, 0], 8 , 4
 func (a *LastVisitedRegisteredTAI) GetMCCDigit2() (mCCDigit2 uint8) {
-	return a.Octet[0] & GetBitMask(8, 4) >> (4)
+	return a.Octet[0] & GetBitMask(8, 4) >> 4
 }
 
 // LastVisitedRegisteredTAI 9.11.3.8
@@ -58,7 +58,7 @@ func (a *LastVisitedRegisteredTAI) SetMCCDigit1(mCCDigit1 uint8) {
 // LastVisitedRegisteredTAI 9.11.3.8
 // MNCDigit3 Row, sBit, len = [1, 1], 8 , 4
 func (a *LastVisitedRegisteredTAI) GetMNCDigit3() (mNCDigit3 uint8) {
-	return a.Octet[1] & GetBitMask(8, 4) >> (4)
+	return a.Octet[1] & GetBitMask(8, 4) >> 4
 }
 
 // LastVisitedRegisteredTAI 9.11.3.8
@@ -82,7 +82,7 @@ func (a *LastVisitedRegisteredTAI) SetMCCDigit3(mCCDigit3 uint8) {
 // LastVisitedRegisteredTAI 9.11.3.8
 // MNCDigit2 Row, sBit, len = [2, 2], 8 , 4
 func (a *LastVisitedRegisteredTAI) GetMNCDigit2() (mNCDigit2 uint8) {
-	return a.Octet[2] & GetBitMask(8, 4) >> (4)
+	return a.Octet[2] & GetBitMask(8, 4) >> 4
 }
 
 // LastVisitedRegisteredTAI 9.11.3.8

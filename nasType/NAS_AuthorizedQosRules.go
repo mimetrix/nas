@@ -19,7 +19,7 @@ type NewPktFilters struct{
 */
 
 var RuleOperationCodes = map[uint8]string{
-	//0:"Reserved",
+	// 0:"Reserved",
 	1: "Create new QoS rule",
 	2: "Delete existing QoS rule",
 	3: "Modify existing QoS rule and add packet filters",

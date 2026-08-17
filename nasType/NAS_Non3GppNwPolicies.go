@@ -11,7 +11,7 @@ func NewNon3GppNwPolicies(iei uint8) (non3GppNwPolicies *Non3GppNwPolicies) {
 }
 
 func (a *Non3GppNwPolicies) GetIei() (iei uint8) {
-	return a.Octet & GetBitMask(8, 4) >> (4)
+	return a.Octet & GetBitMask(8, 4) >> 4
 }
 
 func (a *Non3GppNwPolicies) SetIei(iei uint8) {

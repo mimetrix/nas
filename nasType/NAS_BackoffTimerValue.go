@@ -42,7 +42,7 @@ func (a *BackoffTimerValue) SetLen(len uint8) {
 // BackoffTimerValue 9.11.2.5
 // UnitTimerValue Row, sBit, len = [0, 0], 8 , 3
 func (a *BackoffTimerValue) GetUnitTimerValue() (unitTimerValue uint8) {
-	return a.Octet & GetBitMask(8, 5) >> (5)
+	return a.Octet & GetBitMask(8, 5) >> 5
 }
 
 // BackoffTimerValue 9.11.2.5
