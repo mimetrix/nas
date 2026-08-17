@@ -69,9 +69,7 @@ func (a *PDUSessionReleaseComplete) DecodePDUSessionReleaseComplete(byteArray *[
 	if err := binary.Read(buffer, binary.BigEndian, &a.ExtendedProtocolDiscriminator.Octet); err != nil {
 		return fmt.Errorf("NAS decode error (PDUSessionReleaseComplete/ExtendedProtocolDiscriminator): %w", err)
 	}
-	if err := a.ExtendedProtocolDiscriminator.DecodeNASType(); err != nil {
-		return fmt.Errorf("NAS decode error (PDUSessionReleaseComplete/ExtendedProtocolDiscriminator): %w", err)
-	}
+	_ = a.ExtendedProtocolDiscriminator.DecodeNASType()
 	if err := binary.Read(buffer, binary.BigEndian, &a.PDUSessionID.Octet); err != nil {
 		return fmt.Errorf("NAS decode error (PDUSessionReleaseComplete/PDUSessionID): %w", err)
 	}
@@ -100,24 +98,23 @@ func (a *PDUSessionReleaseComplete) DecodePDUSessionReleaseComplete(byteArray *[
 			if err := binary.Read(buffer, binary.BigEndian, &a.Cause5GSM.Octet); err != nil {
 				return fmt.Errorf("NAS decode error (PDUSessionReleaseComplete/Cause5GSM): %w", err)
 			}
-			if err := a.Cause5GSM.DecodeNASType(); err != nil {
-				return fmt.Errorf("NAS decode error (PDUSessionReleaseComplete/Cause5GSM): %w", err)
-			}
+			_ = a.Cause5GSM.DecodeNASType()
 		case PDUSessionReleaseCompleteExtendedProtocolConfigurationOptionsType:
 			a.ExtendedProtocolConfigurationOptions = nasType.NewExtendedProtocolConfigurationOptions(ieiN)
 			if err := binary.Read(buffer, binary.BigEndian, &a.ExtendedProtocolConfigurationOptions.Len); err != nil {
 				return fmt.Errorf("NAS decode error (PDUSessionReleaseComplete/ExtendedProtocolConfigurationOptions): %w", err)
 			}
 			if a.ExtendedProtocolConfigurationOptions.Len < 1 {
-				return fmt.Errorf("invalid ie length (PDUSessionReleaseComplete/ExtendedProtocolConfigurationOptions): %d", a.ExtendedProtocolConfigurationOptions.Len)
+				// Non-conformant length: skip this IE rather than
+				// discarding the rest of the message.
+				a.ExtendedProtocolConfigurationOptions = nil
+				break
 			}
 			a.ExtendedProtocolConfigurationOptions.SetLen(a.ExtendedProtocolConfigurationOptions.GetLen())
 			if err := binary.Read(buffer, binary.BigEndian, a.ExtendedProtocolConfigurationOptions.Buffer); err != nil {
 				return fmt.Errorf("NAS decode error (PDUSessionReleaseComplete/ExtendedProtocolConfigurationOptions): %w", err)
 			}
-			if err := a.ExtendedProtocolConfigurationOptions.DecodeNASType(); err != nil {
-				return fmt.Errorf("NAS decode error (PDUSessionReleaseComplete/ExtendedProtocolConfigurationOptions): %w", err)
-			}
+			_ = a.ExtendedProtocolConfigurationOptions.DecodeNASType()
 		default:
 		}
 	}

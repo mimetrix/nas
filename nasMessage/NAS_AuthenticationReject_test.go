@@ -2,7 +2,6 @@ package nasMessage_test
 
 import (
 	"bytes"
-	"reflect"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -26,7 +25,7 @@ var nasMessageAuthenticationRejectTable = []nasMessageAuthenticationRejectData{
 		inSecurityHeader:                      0x01,
 		inSpareHalfOctet:                      0x01,
 		inAuthenticationRejectMessageIdentity: 0x01,
-		inEAPMessage:                          nasType.EAPMessage{nasMessage.AuthenticationRejectEAPMessageType, 4, []byte{0x00, 0x00, 0x00, 0x00}},
+		inEAPMessage:                          nasType.EAPMessage{Iei: nasMessage.AuthenticationRejectEAPMessageType, Len: 4, Buffer: []byte{0x00, 0x00, 0x00, 0x00}},
 	},
 }
 
@@ -63,8 +62,17 @@ func TestNasTypeNewAuthenticationRejectMessage(t *testing.T) {
 		logger.NasMsgLog.Debugln("Decode: ", data)
 		logger.NasMsgLog.Infoln(b)
 
-		if reflect.DeepEqual(a, b) != true {
-			t.Errorf("Not correct")
+		// Compare the re-encoded wire form rather than the structs. Decoding
+		// populates the enrichment fields (EPD, MessageType, Cause, ...) that
+		// the hand-built value `a` never has, so reflect.DeepEqual(a, b) can
+		// never hold. Re-encoding b and comparing bytes is the round-trip
+		// property these tests actually mean to assert.
+		reBuff := new(bytes.Buffer)
+		if err := b.EncodeAuthenticationReject(reBuff); err != nil {
+			t.Fatalf("re-encode: %v", err)
+		}
+		if !bytes.Equal(data, reBuff.Bytes()) {
+			t.Errorf("round trip mismatch:\n encoded: %v\n re-encoded: %v", data, reBuff.Bytes())
 		}
 
 	}

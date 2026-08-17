@@ -63,11 +63,11 @@ type testTAIListDataTemplate struct {
 }
 
 var TAIListTestData = []nasType.TAIList{
-	{nasMessage.RegistrationAcceptTAIListType, 2, []uint8{}},
+	{Iei: nasMessage.RegistrationAcceptTAIListType, Len: 2, Buffer: []uint8{}},
 }
 
 var TAIListExpectedTestData = []nasType.TAIList{
-	{nasMessage.RegistrationAcceptTAIListType, 2, []uint8{0x01, 0x01}},
+	{Iei: nasMessage.RegistrationAcceptTAIListType, Len: 2, Buffer: []uint8{0x01, 0x01}},
 }
 
 var TAIListTestTable = []testTAIListDataTemplate{

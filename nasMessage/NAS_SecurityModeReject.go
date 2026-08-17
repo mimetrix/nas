@@ -43,24 +43,18 @@ func (a *SecurityModeReject) DecodeSecurityModeReject(byteArray *[]byte) error {
 	if err := binary.Read(buffer, binary.BigEndian, &a.ExtendedProtocolDiscriminator.Octet); err != nil {
 		return fmt.Errorf("NAS decode error (SecurityModeReject/ExtendedProtocolDiscriminator): %w", err)
 	}
-	if err := a.ExtendedProtocolDiscriminator.DecodeNASType(); err != nil {
-		return fmt.Errorf("NAS decode error (SecurityModeReject/ExtendedProtocolDiscriminator): %w", err)
-	}
+	_ = a.ExtendedProtocolDiscriminator.DecodeNASType()
 	if err := binary.Read(buffer, binary.BigEndian, &a.SpareHalfOctetAndSecurityHeaderType.Octet); err != nil {
 		return fmt.Errorf("NAS decode error (SecurityModeReject/SpareHalfOctetAndSecurityHeaderType): %w", err)
 	}
-	if err := a.SpareHalfOctetAndSecurityHeaderType.DecodeNASType(); err != nil {
-		return fmt.Errorf("NAS decode error (SecurityModeReject/SpareHalfOctetAndSecurityHeaderType): %w", err)
-	}
+	_ = a.SpareHalfOctetAndSecurityHeaderType.DecodeNASType()
 	if err := binary.Read(buffer, binary.BigEndian, &a.SecurityModeRejectMessageIdentity.Octet); err != nil {
 		return fmt.Errorf("NAS decode error (SecurityModeReject/SecurityModeRejectMessageIdentity): %w", err)
 	}
 	if err := binary.Read(buffer, binary.BigEndian, &a.Cause5GMM.Octet); err != nil {
 		return fmt.Errorf("NAS decode error (SecurityModeReject/Cause5GMM): %w", err)
 	}
-	if err := a.Cause5GMM.DecodeNASType(); err != nil {
-		return fmt.Errorf("NAS decode error (SecurityModeReject/Cause5GMM): %w", err)
-	}
+	_ = a.Cause5GMM.DecodeNASType()
 	for buffer.Len() > 0 {
 		var ieiN uint8
 		var tmpIeiN uint8

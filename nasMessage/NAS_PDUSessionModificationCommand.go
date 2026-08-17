@@ -138,9 +138,7 @@ func (a *PDUSessionModificationCommand) DecodePDUSessionModificationCommand(byte
 	if err := binary.Read(buffer, binary.BigEndian, &a.ExtendedProtocolDiscriminator.Octet); err != nil {
 		return fmt.Errorf("NAS decode error (PDUSessionModificationCommand/ExtendedProtocolDiscriminator): %w", err)
 	}
-	if err := a.ExtendedProtocolDiscriminator.DecodeNASType(); err != nil {
-		return fmt.Errorf("NAS decode error (PDUSessionModificationCommand/ExtendedProtocolDiscriminator): %w", err)
-	}
+	_ = a.ExtendedProtocolDiscriminator.DecodeNASType()
 	if err := binary.Read(buffer, binary.BigEndian, &a.PDUSessionID.Octet); err != nil {
 		return fmt.Errorf("NAS decode error (PDUSessionModificationCommand/PDUSessionID): %w", err)
 	}
@@ -169,24 +167,23 @@ func (a *PDUSessionModificationCommand) DecodePDUSessionModificationCommand(byte
 			if err := binary.Read(buffer, binary.BigEndian, &a.Cause5GSM.Octet); err != nil {
 				return fmt.Errorf("NAS decode error (PDUSessionModificationCommand/Cause5GSM): %w", err)
 			}
-			if err := a.Cause5GSM.DecodeNASType(); err != nil {
-				return fmt.Errorf("NAS decode error (PDUSessionModificationCommand/Cause5GSM): %w", err)
-			}
+			_ = a.Cause5GSM.DecodeNASType()
 		case PDUSessionModificationCommandSessionAMBRType:
 			a.SessionAMBR = nasType.NewSessionAMBR(ieiN)
 			if err := binary.Read(buffer, binary.BigEndian, &a.SessionAMBR.Len); err != nil {
 				return fmt.Errorf("NAS decode error (PDUSessionModificationCommand/SessionAMBR): %w", err)
 			}
 			if a.SessionAMBR.Len != 6 {
-				return fmt.Errorf("invalid ie length (PDUSessionModificationCommand/SessionAMBR): %d", a.SessionAMBR.Len)
+				// Non-conformant length: skip this IE rather than
+				// discarding the rest of the message.
+				a.SessionAMBR = nil
+				break
 			}
 			a.SessionAMBR.SetLen(a.SessionAMBR.GetLen())
 			if err := binary.Read(buffer, binary.BigEndian, a.SessionAMBR.Octet[:]); err != nil {
 				return fmt.Errorf("NAS decode error (PDUSessionModificationCommand/SessionAMBR): %w", err)
 			}
-			if err := a.SessionAMBR.DecodeNASType(); err != nil {
-				return fmt.Errorf("NAS decode error (PDUSessionModificationCommand/SessionAMBR): %w", err)
-			}
+			_ = a.SessionAMBR.DecodeNASType()
 		case PDUSessionModificationCommandRQTimerValueType:
 			a.RQTimerValue = nasType.NewRQTimerValue(ieiN)
 			if err := binary.Read(buffer, binary.BigEndian, &a.RQTimerValue.Octet); err != nil {
@@ -201,22 +198,26 @@ func (a *PDUSessionModificationCommand) DecodePDUSessionModificationCommand(byte
 				return fmt.Errorf("NAS decode error (PDUSessionModificationCommand/AuthorizedQosRules): %w", err)
 			}
 			if a.AuthorizedQosRules.Len < 4 {
-				return fmt.Errorf("invalid ie length (PDUSessionModificationCommand/AuthorizedQosRules): %d", a.AuthorizedQosRules.Len)
+				// Non-conformant length: skip this IE rather than
+				// discarding the rest of the message.
+				a.AuthorizedQosRules = nil
+				break
 			}
 			a.AuthorizedQosRules.SetLen(a.AuthorizedQosRules.GetLen())
 			if err := binary.Read(buffer, binary.BigEndian, a.AuthorizedQosRules.Buffer); err != nil {
 				return fmt.Errorf("NAS decode error (PDUSessionModificationCommand/AuthorizedQosRules): %w", err)
 			}
-			if err := a.AuthorizedQosRules.DecodeNASType(); err != nil {
-				return fmt.Errorf("NAS decode error (PDUSessionModificationCommand/AuthorizedQosRules): %w", err)
-			}
+			_ = a.AuthorizedQosRules.DecodeNASType()
 		case PDUSessionModificationCommandMappedEPSBearerContextsType:
 			a.MappedEPSBearerContexts = nasType.NewMappedEPSBearerContexts(ieiN)
 			if err := binary.Read(buffer, binary.BigEndian, &a.MappedEPSBearerContexts.Len); err != nil {
 				return fmt.Errorf("NAS decode error (PDUSessionModificationCommand/MappedEPSBearerContexts): %w", err)
 			}
 			if a.MappedEPSBearerContexts.Len < 4 {
-				return fmt.Errorf("invalid ie length (PDUSessionModificationCommand/MappedEPSBearerContexts): %d", a.MappedEPSBearerContexts.Len)
+				// Non-conformant length: skip this IE rather than
+				// discarding the rest of the message.
+				a.MappedEPSBearerContexts = nil
+				break
 			}
 			a.MappedEPSBearerContexts.SetLen(a.MappedEPSBearerContexts.GetLen())
 			if err := binary.Read(buffer, binary.BigEndian, a.MappedEPSBearerContexts.Buffer); err != nil {
@@ -228,30 +229,32 @@ func (a *PDUSessionModificationCommand) DecodePDUSessionModificationCommand(byte
 				return fmt.Errorf("NAS decode error (PDUSessionModificationCommand/AuthorizedQosFlowDescriptions): %w", err)
 			}
 			if a.AuthorizedQosFlowDescriptions.Len < 3 {
-				return fmt.Errorf("invalid ie length (PDUSessionModificationCommand/AuthorizedQosFlowDescriptions): %d", a.AuthorizedQosFlowDescriptions.Len)
+				// Non-conformant length: skip this IE rather than
+				// discarding the rest of the message.
+				a.AuthorizedQosFlowDescriptions = nil
+				break
 			}
 			a.AuthorizedQosFlowDescriptions.SetLen(a.AuthorizedQosFlowDescriptions.GetLen())
 			if err := binary.Read(buffer, binary.BigEndian, a.AuthorizedQosFlowDescriptions.Buffer); err != nil {
 				return fmt.Errorf("NAS decode error (PDUSessionModificationCommand/AuthorizedQosFlowDescriptions): %w", err)
 			}
-			if err := a.AuthorizedQosFlowDescriptions.DecodeNASType(); err != nil {
-				return fmt.Errorf("NAS decode error (PDUSessionModificationCommand/AuthorizedQosFlowDescriptions): %w", err)
-			}
+			_ = a.AuthorizedQosFlowDescriptions.DecodeNASType()
 		case PDUSessionModificationCommandExtendedProtocolConfigurationOptionsType:
 			a.ExtendedProtocolConfigurationOptions = nasType.NewExtendedProtocolConfigurationOptions(ieiN)
 			if err := binary.Read(buffer, binary.BigEndian, &a.ExtendedProtocolConfigurationOptions.Len); err != nil {
 				return fmt.Errorf("NAS decode error (PDUSessionModificationCommand/ExtendedProtocolConfigurationOptions): %w", err)
 			}
 			if a.ExtendedProtocolConfigurationOptions.Len < 1 {
-				return fmt.Errorf("invalid ie length (PDUSessionModificationCommand/ExtendedProtocolConfigurationOptions): %d", a.ExtendedProtocolConfigurationOptions.Len)
+				// Non-conformant length: skip this IE rather than
+				// discarding the rest of the message.
+				a.ExtendedProtocolConfigurationOptions = nil
+				break
 			}
 			a.ExtendedProtocolConfigurationOptions.SetLen(a.ExtendedProtocolConfigurationOptions.GetLen())
 			if err := binary.Read(buffer, binary.BigEndian, a.ExtendedProtocolConfigurationOptions.Buffer); err != nil {
 				return fmt.Errorf("NAS decode error (PDUSessionModificationCommand/ExtendedProtocolConfigurationOptions): %w", err)
 			}
-			if err := a.ExtendedProtocolConfigurationOptions.DecodeNASType(); err != nil {
-				return fmt.Errorf("NAS decode error (PDUSessionModificationCommand/ExtendedProtocolConfigurationOptions): %w", err)
-			}
+			_ = a.ExtendedProtocolConfigurationOptions.DecodeNASType()
 		default:
 		}
 	}

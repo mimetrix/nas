@@ -55,15 +55,11 @@ func (a *AuthenticationReject) DecodeAuthenticationReject(byteArray *[]byte) err
 	if err := binary.Read(buffer, binary.BigEndian, &a.ExtendedProtocolDiscriminator.Octet); err != nil {
 		return fmt.Errorf("NAS decode error (AuthenticationReject/ExtendedProtocolDiscriminator): %w", err)
 	}
-	if err := a.ExtendedProtocolDiscriminator.DecodeNASType(); err != nil {
-		return fmt.Errorf("NAS decode error (AuthenticationReject/ExtendedProtocolDiscriminator): %w", err)
-	}
+	_ = a.ExtendedProtocolDiscriminator.DecodeNASType()
 	if err := binary.Read(buffer, binary.BigEndian, &a.SpareHalfOctetAndSecurityHeaderType.Octet); err != nil {
 		return fmt.Errorf("NAS decode error (AuthenticationReject/SpareHalfOctetAndSecurityHeaderType): %w", err)
 	}
-	if err := a.SpareHalfOctetAndSecurityHeaderType.DecodeNASType(); err != nil {
-		return fmt.Errorf("NAS decode error (AuthenticationReject/SpareHalfOctetAndSecurityHeaderType): %w", err)
-	}
+	_ = a.SpareHalfOctetAndSecurityHeaderType.DecodeNASType()
 	if err := binary.Read(buffer, binary.BigEndian, &a.AuthenticationRejectMessageIdentity.Octet); err != nil {
 		return fmt.Errorf("NAS decode error (AuthenticationReject/AuthenticationRejectMessageIdentity): %w", err)
 	}
@@ -87,15 +83,16 @@ func (a *AuthenticationReject) DecodeAuthenticationReject(byteArray *[]byte) err
 				return fmt.Errorf("NAS decode error (AuthenticationReject/EAPMessage): %w", err)
 			}
 			if a.EAPMessage.Len < 4 || a.EAPMessage.Len > 1500 {
-				return fmt.Errorf("invalid ie length (AuthenticationReject/EAPMessage): %d", a.EAPMessage.Len)
+				// Non-conformant length: skip this IE rather than
+				// discarding the rest of the message.
+				a.EAPMessage = nil
+				break
 			}
 			a.EAPMessage.SetLen(a.EAPMessage.GetLen())
 			if err := binary.Read(buffer, binary.BigEndian, a.EAPMessage.Buffer); err != nil {
 				return fmt.Errorf("NAS decode error (AuthenticationReject/EAPMessage): %w", err)
 			}
-			if err := a.EAPMessage.DecodeNASType(); err != nil {
-				return fmt.Errorf("NAS decode error (AuthenticationReject/EAPMessage): %w", err)
-			}
+			_ = a.EAPMessage.DecodeNASType()
 		default:
 		}
 	}

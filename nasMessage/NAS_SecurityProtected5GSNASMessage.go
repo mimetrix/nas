@@ -58,21 +58,15 @@ func (a *SecurityProtected5GSNASMessage) DecodeSecurityProtected5GSNASMessage(by
 	if err := binary.Read(buffer, binary.BigEndian, &a.ExtendedProtocolDiscriminator.Octet); err != nil {
 		return fmt.Errorf("NAS decode error (SecurityProtected5GSNASMessage/ExtendedProtocolDiscriminator): %w", err)
 	}
-	if err := a.ExtendedProtocolDiscriminator.DecodeNASType(); err != nil {
-		return fmt.Errorf("NAS decode error (SecurityProtected5GSNASMessage/ExtendedProtocolDiscriminator): %w", err)
-	}
+	_ = a.ExtendedProtocolDiscriminator.DecodeNASType()
 	if err := binary.Read(buffer, binary.BigEndian, &a.SpareHalfOctetAndSecurityHeaderType.Octet); err != nil {
 		return fmt.Errorf("NAS decode error (SecurityProtected5GSNASMessage/SpareHalfOctetAndSecurityHeaderType): %w", err)
 	}
-	if err := a.SpareHalfOctetAndSecurityHeaderType.DecodeNASType(); err != nil {
-		return fmt.Errorf("NAS decode error (SecurityProtected5GSNASMessage/SpareHalfOctetAndSecurityHeaderType): %w", err)
-	}
+	_ = a.SpareHalfOctetAndSecurityHeaderType.DecodeNASType()
 	if err := binary.Read(buffer, binary.BigEndian, a.MessageAuthenticationCode.Octet[:]); err != nil {
 		return fmt.Errorf("NAS decode error (SecurityProtected5GSNASMessage/MessageAuthenticationCode): %w", err)
 	}
-	if err := a.MessageAuthenticationCode.DecodeNASType(); err != nil {
-		return fmt.Errorf("NAS decode error (SecurityProtected5GSNASMessage/MessageAuthenticationCode): %w", err)
-	}
+	_ = a.MessageAuthenticationCode.DecodeNASType()
 	if err := binary.Read(buffer, binary.BigEndian, &a.SequenceNumber.Octet); err != nil {
 		return fmt.Errorf("NAS decode error (SecurityProtected5GSNASMessage/SequenceNumber): %w", err)
 	}

@@ -66,24 +66,18 @@ func (a *AuthenticationResult) DecodeAuthenticationResult(byteArray *[]byte) err
 	if err := binary.Read(buffer, binary.BigEndian, &a.ExtendedProtocolDiscriminator.Octet); err != nil {
 		return fmt.Errorf("NAS decode error (AuthenticationResult/ExtendedProtocolDiscriminator): %w", err)
 	}
-	if err := a.ExtendedProtocolDiscriminator.DecodeNASType(); err != nil {
-		return fmt.Errorf("NAS decode error (AuthenticationResult/ExtendedProtocolDiscriminator): %w", err)
-	}
+	_ = a.ExtendedProtocolDiscriminator.DecodeNASType()
 	if err := binary.Read(buffer, binary.BigEndian, &a.SpareHalfOctetAndSecurityHeaderType.Octet); err != nil {
 		return fmt.Errorf("NAS decode error (AuthenticationResult/SpareHalfOctetAndSecurityHeaderType): %w", err)
 	}
-	if err := a.SpareHalfOctetAndSecurityHeaderType.DecodeNASType(); err != nil {
-		return fmt.Errorf("NAS decode error (AuthenticationResult/SpareHalfOctetAndSecurityHeaderType): %w", err)
-	}
+	_ = a.SpareHalfOctetAndSecurityHeaderType.DecodeNASType()
 	if err := binary.Read(buffer, binary.BigEndian, &a.AuthenticationResultMessageIdentity.Octet); err != nil {
 		return fmt.Errorf("NAS decode error (AuthenticationResult/AuthenticationResultMessageIdentity): %w", err)
 	}
 	if err := binary.Read(buffer, binary.BigEndian, &a.SpareHalfOctetAndNgksi.Octet); err != nil {
 		return fmt.Errorf("NAS decode error (AuthenticationResult/SpareHalfOctetAndNgksi): %w", err)
 	}
-	if err := a.SpareHalfOctetAndNgksi.DecodeNASType(); err != nil {
-		return fmt.Errorf("NAS decode error (AuthenticationResult/SpareHalfOctetAndNgksi): %w", err)
-	}
+	_ = a.SpareHalfOctetAndNgksi.DecodeNASType()
 	if err := binary.Read(buffer, binary.BigEndian, &a.EAPMessage.Len); err != nil {
 		return fmt.Errorf("NAS decode error (AuthenticationResult/EAPMessage): %w", err)
 	}
@@ -94,9 +88,7 @@ func (a *AuthenticationResult) DecodeAuthenticationResult(byteArray *[]byte) err
 	if err := binary.Read(buffer, binary.BigEndian, a.EAPMessage.Buffer); err != nil {
 		return fmt.Errorf("NAS decode error (AuthenticationResult/EAPMessage): %w", err)
 	}
-	if err := a.EAPMessage.DecodeNASType(); err != nil {
-		return fmt.Errorf("NAS decode error (AuthenticationResult/EAPMessage): %w", err)
-	}
+	_ = a.EAPMessage.DecodeNASType()
 	for buffer.Len() > 0 {
 		var ieiN uint8
 		var tmpIeiN uint8
@@ -117,15 +109,16 @@ func (a *AuthenticationResult) DecodeAuthenticationResult(byteArray *[]byte) err
 				return fmt.Errorf("NAS decode error (AuthenticationResult/ABBA): %w", err)
 			}
 			if a.ABBA.Len < 2 {
-				return fmt.Errorf("invalid ie length (AuthenticationResult/ABBA): %d", a.ABBA.Len)
+				// Non-conformant length: skip this IE rather than
+				// discarding the rest of the message.
+				a.ABBA = nil
+				break
 			}
 			a.ABBA.SetLen(a.ABBA.GetLen())
 			if err := binary.Read(buffer, binary.BigEndian, a.ABBA.Buffer); err != nil {
 				return fmt.Errorf("NAS decode error (AuthenticationResult/ABBA): %w", err)
 			}
-			if err := a.ABBA.DecodeNASType(); err != nil {
-				return fmt.Errorf("NAS decode error (AuthenticationResult/ABBA): %w", err)
-			}
+			_ = a.ABBA.DecodeNASType()
 		default:
 		}
 	}

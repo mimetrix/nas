@@ -4,9 +4,9 @@ package nasType
 // AuthenticationParameterAUTN 9.11.3.15
 // AUTN Row, sBit, len = [0, 15], 8 , 128
 type AuthenticationParameterAUTN struct {
-	Iei   uint8     `json:"-,omitempty"`
-	Len   uint8     `json:"-,omitempty"`
-	Octet [16]uint8 `json:"-,omitempty"`
+	Iei   uint8     `json:"-"`
+	Len   uint8     `json:"-"`
+	Octet [16]uint8 `json:"-"`
 	Autn  string
 }
 

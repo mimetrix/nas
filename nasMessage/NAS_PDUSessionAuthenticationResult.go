@@ -72,9 +72,7 @@ func (a *PDUSessionAuthenticationResult) DecodePDUSessionAuthenticationResult(by
 	if err := binary.Read(buffer, binary.BigEndian, &a.ExtendedProtocolDiscriminator.Octet); err != nil {
 		return fmt.Errorf("NAS decode error (PDUSessionAuthenticationResult/ExtendedProtocolDiscriminator): %w", err)
 	}
-	if err := a.ExtendedProtocolDiscriminator.DecodeNASType(); err != nil {
-		return fmt.Errorf("NAS decode error (PDUSessionAuthenticationResult/ExtendedProtocolDiscriminator): %w", err)
-	}
+	_ = a.ExtendedProtocolDiscriminator.DecodeNASType()
 	if err := binary.Read(buffer, binary.BigEndian, &a.PDUSessionID.Octet); err != nil {
 		return fmt.Errorf("NAS decode error (PDUSessionAuthenticationResult/PDUSessionID): %w", err)
 	}
@@ -104,30 +102,32 @@ func (a *PDUSessionAuthenticationResult) DecodePDUSessionAuthenticationResult(by
 				return fmt.Errorf("NAS decode error (PDUSessionAuthenticationResult/EAPMessage): %w", err)
 			}
 			if a.EAPMessage.Len < 4 || a.EAPMessage.Len > 1500 {
-				return fmt.Errorf("invalid ie length (PDUSessionAuthenticationResult/EAPMessage): %d", a.EAPMessage.Len)
+				// Non-conformant length: skip this IE rather than
+				// discarding the rest of the message.
+				a.EAPMessage = nil
+				break
 			}
 			a.EAPMessage.SetLen(a.EAPMessage.GetLen())
 			if err := binary.Read(buffer, binary.BigEndian, a.EAPMessage.Buffer); err != nil {
 				return fmt.Errorf("NAS decode error (PDUSessionAuthenticationResult/EAPMessage): %w", err)
 			}
-			if err := a.EAPMessage.DecodeNASType(); err != nil {
-				return fmt.Errorf("NAS decode error (PDUSessionAuthenticationResult/EAPMessage): %w", err)
-			}
+			_ = a.EAPMessage.DecodeNASType()
 		case PDUSessionAuthenticationResultExtendedProtocolConfigurationOptionsType:
 			a.ExtendedProtocolConfigurationOptions = nasType.NewExtendedProtocolConfigurationOptions(ieiN)
 			if err := binary.Read(buffer, binary.BigEndian, &a.ExtendedProtocolConfigurationOptions.Len); err != nil {
 				return fmt.Errorf("NAS decode error (PDUSessionAuthenticationResult/ExtendedProtocolConfigurationOptions): %w", err)
 			}
 			if a.ExtendedProtocolConfigurationOptions.Len < 1 {
-				return fmt.Errorf("invalid ie length (PDUSessionAuthenticationResult/ExtendedProtocolConfigurationOptions): %d", a.ExtendedProtocolConfigurationOptions.Len)
+				// Non-conformant length: skip this IE rather than
+				// discarding the rest of the message.
+				a.ExtendedProtocolConfigurationOptions = nil
+				break
 			}
 			a.ExtendedProtocolConfigurationOptions.SetLen(a.ExtendedProtocolConfigurationOptions.GetLen())
 			if err := binary.Read(buffer, binary.BigEndian, a.ExtendedProtocolConfigurationOptions.Buffer); err != nil {
 				return fmt.Errorf("NAS decode error (PDUSessionAuthenticationResult/ExtendedProtocolConfigurationOptions): %w", err)
 			}
-			if err := a.ExtendedProtocolConfigurationOptions.DecodeNASType(); err != nil {
-				return fmt.Errorf("NAS decode error (PDUSessionAuthenticationResult/ExtendedProtocolConfigurationOptions): %w", err)
-			}
+			_ = a.ExtendedProtocolConfigurationOptions.DecodeNASType()
 		default:
 		}
 	}

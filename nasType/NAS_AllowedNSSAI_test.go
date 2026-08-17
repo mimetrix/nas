@@ -63,11 +63,11 @@ type testAllowedNSSAIDataTemplate struct {
 }
 
 var AllowedNSSAITestData = []nasType.AllowedNSSAI{
-	{nasMessage.ConfigurationUpdateCommandConfiguredNSSAIType, 2, []uint8{0x00, 0x01}},
+	{Iei: nasMessage.ConfigurationUpdateCommandConfiguredNSSAIType, Len: 2, Buffer: []uint8{0x00, 0x01}},
 }
 
 var AllowedNSSAIExpectedTestData = []nasType.AllowedNSSAI{
-	{nasMessage.ConfigurationUpdateCommandConfiguredNSSAIType, 2, []uint8{0x00, 0x01}},
+	{Iei: nasMessage.ConfigurationUpdateCommandConfiguredNSSAIType, Len: 2, Buffer: []uint8{0x00, 0x01}},
 }
 
 var AllowedNSSAITable = []testAllowedNSSAIDataTemplate{

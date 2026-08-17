@@ -43,24 +43,18 @@ func (a *Status5GMM) DecodeStatus5GMM(byteArray *[]byte) error {
 	if err := binary.Read(buffer, binary.BigEndian, &a.ExtendedProtocolDiscriminator.Octet); err != nil {
 		return fmt.Errorf("NAS decode error (Status5GMM/ExtendedProtocolDiscriminator): %w", err)
 	}
-	if err := a.ExtendedProtocolDiscriminator.DecodeNASType(); err != nil {
-		return fmt.Errorf("NAS decode error (Status5GMM/ExtendedProtocolDiscriminator): %w", err)
-	}
+	_ = a.ExtendedProtocolDiscriminator.DecodeNASType()
 	if err := binary.Read(buffer, binary.BigEndian, &a.SpareHalfOctetAndSecurityHeaderType.Octet); err != nil {
 		return fmt.Errorf("NAS decode error (Status5GMM/SpareHalfOctetAndSecurityHeaderType): %w", err)
 	}
-	if err := a.SpareHalfOctetAndSecurityHeaderType.DecodeNASType(); err != nil {
-		return fmt.Errorf("NAS decode error (Status5GMM/SpareHalfOctetAndSecurityHeaderType): %w", err)
-	}
+	_ = a.SpareHalfOctetAndSecurityHeaderType.DecodeNASType()
 	if err := binary.Read(buffer, binary.BigEndian, &a.STATUSMessageIdentity5GMM.Octet); err != nil {
 		return fmt.Errorf("NAS decode error (Status5GMM/STATUSMessageIdentity5GMM): %w", err)
 	}
 	if err := binary.Read(buffer, binary.BigEndian, &a.Cause5GMM.Octet); err != nil {
 		return fmt.Errorf("NAS decode error (Status5GMM/Cause5GMM): %w", err)
 	}
-	if err := a.Cause5GMM.DecodeNASType(); err != nil {
-		return fmt.Errorf("NAS decode error (Status5GMM/Cause5GMM): %w", err)
-	}
+	_ = a.Cause5GMM.DecodeNASType()
 	for buffer.Len() > 0 {
 		var ieiN uint8
 		var tmpIeiN uint8

@@ -3,12 +3,10 @@ package nasMessage_test
 import (
 	"bytes"
 	"fmt"
-	"reflect"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/mimetrix/nas"
 	"github.com/mimetrix/nas/nasMessage"
 	"github.com/mimetrix/nas/nasType"
 )
@@ -48,7 +46,7 @@ var nasMessageRegistrationRequestTable = []nasMessageRegistrationRequestData{
 		inExtendedProtocolDiscriminator:      nasMessage.Epd5GSMobilityManagementMessage,
 		inSecurityHeader:                     0x01,
 		inSpareHalfOctet:                     0x01,
-		inRegistrationRequestMessageIdentity: nas.MsgTypeRegistrationRequest,
+		inRegistrationRequestMessageIdentity: nasMessage.MsgTypeRegistrationRequest,
 		inNgksi:                              0x01,
 		inRegistrationType5GS:                0x01,
 		inMobileIdentity5GS: nasType.MobileIdentity5GS{
@@ -220,7 +218,7 @@ func TestNasTypeNewRegistrationRequestMessage(t *testing.T) {
 		a.LADNIndication = nasType.NewLADNIndication(nasMessage.RegistrationRequestLADNIndicationType)
 		a.LADNIndication = &table.inLADNIndication
 
-		a.PayloadContainer = NewPayloadContainer(nasMessage.RegistrationRequestPayloadContainerType)
+		a.PayloadContainer = nasMessage.NewPayloadContainer(nasMessage.RegistrationRequestPayloadContainerType)
 		a.PayloadContainer = &table.inPayloadContainer
 
 		a.NetworkSlicingIndication = nasType.NewNetworkSlicingIndication(nasMessage.RegistrationRequestNetworkSlicingIndicationType)
@@ -229,7 +227,7 @@ func TestNasTypeNewRegistrationRequestMessage(t *testing.T) {
 		a.UpdateType5GS = nasType.NewUpdateType5GS(nasMessage.RegistrationRequestUpdateType5GSType)
 		a.UpdateType5GS = &table.inUpdateType5GS
 
-		a.NASMessageContainer = NewNASMessageContainer(nasMessage.RegistrationRequestNASMessageContainerType)
+		a.NASMessageContainer = nasMessage.NewNASMessageContainer(nasMessage.RegistrationRequestNASMessageContainerType)
 		a.NASMessageContainer = &table.inNASMessageContainer
 
 		buff := new(bytes.Buffer)
@@ -242,8 +240,17 @@ func TestNasTypeNewRegistrationRequestMessage(t *testing.T) {
 		b.DecodeRegistrationRequest(&data)
 		fmt.Println("Decode: ", b)
 
-		if reflect.DeepEqual(a, b) != true {
-			t.Errorf("Not correct")
+		// Compare the re-encoded wire form rather than the structs. Decoding
+		// populates the enrichment fields (EPD, MessageType, Cause, ...) that
+		// the hand-built value `a` never has, so reflect.DeepEqual(a, b) can
+		// never hold. Re-encoding b and comparing bytes is the round-trip
+		// property these tests actually mean to assert.
+		reBuff := new(bytes.Buffer)
+		if err := b.EncodeRegistrationRequest(reBuff); err != nil {
+			t.Fatalf("re-encode: %v", err)
+		}
+		if !bytes.Equal(data, reBuff.Bytes()) {
+			t.Errorf("round trip mismatch:\n encoded: %v\n re-encoded: %v", data, reBuff.Bytes())
 		}
 	}
 }

@@ -2,7 +2,6 @@ package nasMessage_test
 
 import (
 	"bytes"
-	"reflect"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -93,8 +92,17 @@ func TestNasTypeNewPDUSessionReleaseCommandMessage(t *testing.T) {
 		// logger.NasMsgLog.Debugln(b.Cause5GSM)
 		// fmt.Println(a.ExtendedProtocolConfigurationOptions)
 		// fmt.Println(b.ExtendedProtocolConfigurationOptions)
-		if reflect.DeepEqual(a, b) != true {
-			t.Errorf("Not correct")
+		// Compare the re-encoded wire form rather than the structs. Decoding
+		// populates the enrichment fields (EPD, MessageType, Cause, ...) that
+		// the hand-built value `a` never has, so reflect.DeepEqual(a, b) can
+		// never hold. Re-encoding b and comparing bytes is the round-trip
+		// property these tests actually mean to assert.
+		reBuff := new(bytes.Buffer)
+		if err := b.EncodePDUSessionReleaseCommand(reBuff); err != nil {
+			t.Fatalf("re-encode: %v", err)
+		}
+		if !bytes.Equal(data, reBuff.Bytes()) {
+			t.Errorf("round trip mismatch:\n encoded: %v\n re-encoded: %v", data, reBuff.Bytes())
 		}
 
 	}

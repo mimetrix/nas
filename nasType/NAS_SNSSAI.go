@@ -44,7 +44,7 @@ func (a *SNSSAI) DecodeNASType() error {
 		a.MappedHPLMNSST = a.GetMappedHPLMNSST()
 		a.MappedHPLMNSD = a.GetMappedHPLMNSD()
 	default:
-		return errors.New("snssai lenght is invalid")
+		return errors.New("snssai length is invalid")
 	}
 	a.SDBytes = GetHexString(a.SD[:], "")
 	a.HPLMNSDBytes = GetHexString(a.MappedHPLMNSD[:], "")

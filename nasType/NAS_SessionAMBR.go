@@ -56,10 +56,12 @@ func (s *SessionAMBR) DecodeNASType() error {
 }
 
 func calculateAMBR(buf [2]uint8) uint16 {
+	// The third line used `=` instead of `+=`, discarding the two most
+	// significant digits, so every decoded session AMBR was wrong.
 	AMBR := (uint16(buf[0]&0xf0) >> 4) * 1000
-	AMBR = AMBR + uint16(buf[0]&0xf)*100
-	AMBR = (uint16(buf[1]&0xf0) >> 4) * 1000
-	AMBR = AMBR + uint16(buf[1]&0xf)
+	AMBR += uint16(buf[0]&0xf) * 100
+	AMBR += (uint16(buf[1]&0xf0) >> 4) * 10
+	AMBR += uint16(buf[1] & 0xf)
 	return AMBR
 }
 

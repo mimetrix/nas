@@ -3,10 +3,10 @@ package nasType
 // ABBA 9.11.3.10
 // ABBAContents Row, sBit, len = [0, 0], 8 , INF
 type ABBA struct {
-	Iei       uint8   `json:"-,omitempty"`
-	Len       uint8   `json:"-,omitempty"`
-	Buffer    []uint8 `json:"-,omitempty"`
-	ABBAValue string  `json:,"omitempty"`
+	Iei       uint8   `json:"-"`
+	Len       uint8   `json:"-"`
+	Buffer    []uint8 `json:"-"`
+	ABBAValue string  `json:",omitempty"`
 }
 
 func (a *ABBA) DecodeNASType() error {

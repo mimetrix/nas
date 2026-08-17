@@ -5,7 +5,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/mimetrix/nas"
+	"github.com/mimetrix/nas/nasMessage"
 	"github.com/mimetrix/nas/nasType"
 )
 
@@ -20,7 +20,7 @@ type nasTypePDUSESSIONAUTHENTICATIONCOMPLETEMessageIdentityMessageType struct {
 }
 
 var nasTypePDUSESSIONAUTHENTICATIONCOMPLETEMessageIdentityMessageTypeTable = []nasTypePDUSESSIONAUTHENTICATIONCOMPLETEMessageIdentityMessageType{
-	{nas.MsgTypePDUSessionAuthenticationComplete, nas.MsgTypePDUSessionAuthenticationComplete},
+	{nasMessage.MsgTypePDUSessionAuthenticationComplete, nasMessage.MsgTypePDUSessionAuthenticationComplete},
 }
 
 func TestNasTypeGetSetPDUSESSIONAUTHENTICATIONCOMPLETEMessageIdentityMessageType(t *testing.T) {

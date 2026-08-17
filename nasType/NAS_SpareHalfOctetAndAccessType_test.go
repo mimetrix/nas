@@ -36,11 +36,11 @@ type AccessTypeAndSpareHalfOctetTestDataTemplate struct {
 }
 
 var accessTypeAndSpareHalfOctetTestData = []nasType.SpareHalfOctetAndAccessType{
-	{0x03},
+	{Octet: 0x03},
 }
 
 var accessTypeAndSpareHalfOctetExpectedTestData = []nasType.SpareHalfOctetAndAccessType{
-	{0x03},
+	{Octet: 0x03},
 }
 
 var accessTypeAndSpareHalfOctetTable = []AccessTypeAndSpareHalfOctetTestDataTemplate{

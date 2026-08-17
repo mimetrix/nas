@@ -39,15 +39,11 @@ func (a *DeregistrationAcceptUEOriginatingDeregistration) DecodeDeregistrationAc
 	if err := binary.Read(buffer, binary.BigEndian, &a.ExtendedProtocolDiscriminator.Octet); err != nil {
 		return fmt.Errorf("NAS decode error (DeregistrationAcceptUEOriginatingDeregistration/ExtendedProtocolDiscriminator): %w", err)
 	}
-	if err := a.ExtendedProtocolDiscriminator.DecodeNASType(); err != nil {
-		return fmt.Errorf("NAS decode error (DeregistrationAcceptUEOriginatingDeregistration/ExtendedProtocolDiscriminator): %w", err)
-	}
+	_ = a.ExtendedProtocolDiscriminator.DecodeNASType()
 	if err := binary.Read(buffer, binary.BigEndian, &a.SpareHalfOctetAndSecurityHeaderType.Octet); err != nil {
 		return fmt.Errorf("NAS decode error (DeregistrationAcceptUEOriginatingDeregistration/SpareHalfOctetAndSecurityHeaderType): %w", err)
 	}
-	if err := a.SpareHalfOctetAndSecurityHeaderType.DecodeNASType(); err != nil {
-		return fmt.Errorf("NAS decode error (DeregistrationAcceptUEOriginatingDeregistration/SpareHalfOctetAndSecurityHeaderType): %w", err)
-	}
+	_ = a.SpareHalfOctetAndSecurityHeaderType.DecodeNASType()
 	if err := binary.Read(buffer, binary.BigEndian, &a.DeregistrationAcceptMessageIdentity.Octet); err != nil {
 		return fmt.Errorf("NAS decode error (DeregistrationAcceptUEOriginatingDeregistration/DeregistrationAcceptMessageIdentity): %w", err)
 	}

@@ -18,7 +18,7 @@ type nasMessageSecurityProtected5GSNASMessageData struct {
 	inSpareHalfOctet                uint8
 	inMessageAuthenticationCode     nasType.MessageAuthenticationCode
 	inSequenceNumber                nasType.SequenceNumber
-	inPlain5GSNASMessage            nasType.Plain5GSNASMessage
+	inPlainNASMessage               []uint8
 }
 
 var nasMessageSecurityProtected5GSNASMessageTable = []nasMessageSecurityProtected5GSNASMessageData{
@@ -32,7 +32,8 @@ var nasMessageSecurityProtected5GSNASMessageTable = []nasMessageSecurityProtecte
 		inSequenceNumber: nasType.SequenceNumber{
 			Octet: 0x01,
 		},
-		inPlain5GSNASMessage: nasType.Plain5GSNASMessage{},
+		// A minimal plain 5GMM Registration complete as the protected payload.
+		inPlainNASMessage: []uint8{0x7e, 0x00, 0x43},
 	},
 }
 
@@ -55,20 +56,39 @@ func TestNasTypeNewSecurityProtected5GSNASMessageMessage(t *testing.T) {
 
 		a.MessageAuthenticationCode = table.inMessageAuthenticationCode
 		a.SequenceNumber = table.inSequenceNumber
-		a.Plain5GSNASMessage = table.inPlain5GSNASMessage
 
+		// Build the wire form: 6-octet security header + protected payload.
 		buff := new(bytes.Buffer)
-		a.EncodeSecurityProtected5GSNASMessage(buff)
+		if err := a.EncodeSecurityProtected5GSNASMessage(buff); err != nil {
+			t.Fatalf("encode: %v", err)
+		}
+		buff.Write(table.inPlainNASMessage)
 		logger.NasMsgLog.Debugln("Encode: ", a)
 
 		data := make([]byte, buff.Len())
 		buff.Read(data)
 		logger.NasMsgLog.Debugln(data)
-		b.DecodeSecurityProtected5GSNASMessage(&data)
+		if err := b.DecodeSecurityProtected5GSNASMessage(&data); err != nil {
+			t.Fatalf("decode: %v", err)
+		}
 		logger.NasMsgLog.Debugln("Decode: ", b)
 
-		if reflect.DeepEqual(a, b) != true {
-			t.Errorf("Not correct")
+		// The security header must survive the round trip. Compare the raw
+		// octets only: decoding also populates the enrichment fields (here,
+		// the hex MAC string), which the hand-built value `a` never has.
+		if !reflect.DeepEqual(a.MessageAuthenticationCode.Octet, b.MessageAuthenticationCode.Octet) {
+			t.Errorf("MessageAuthenticationCode mismatch: %v != %v",
+				a.MessageAuthenticationCode.Octet, b.MessageAuthenticationCode.Octet)
+		}
+		if !reflect.DeepEqual(a.SequenceNumber.Octet, b.SequenceNumber.Octet) {
+			t.Errorf("SequenceNumber mismatch: %v != %v",
+				a.SequenceNumber.Octet, b.SequenceNumber.Octet)
+		}
+
+		// Unlike upstream, this fork recursively decodes the protected payload
+		// instead of holding it as an opaque blob.
+		if b.PlainNASMessage == nil {
+			t.Errorf("PlainNASMessage was not decoded")
 		}
 	}
 }

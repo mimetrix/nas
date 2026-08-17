@@ -68,21 +68,15 @@ func (a *SecurityModeComplete) DecodeSecurityModeComplete(byteArray *[]byte) err
 	if err := binary.Read(buffer, binary.BigEndian, &a.ExtendedProtocolDiscriminator.Octet); err != nil {
 		return fmt.Errorf("NAS decode error (SecurityModeComplete/ExtendedProtocolDiscriminator): %w", err)
 	}
-	if err := a.ExtendedProtocolDiscriminator.DecodeNASType(); err != nil {
-		return fmt.Errorf("NAS decode error (SecurityModeComplete/ExtendedProtocolDiscriminator): %w", err)
-	}
+	_ = a.ExtendedProtocolDiscriminator.DecodeNASType()
 	if err := binary.Read(buffer, binary.BigEndian, &a.SpareHalfOctetAndSecurityHeaderType.Octet); err != nil {
 		return fmt.Errorf("NAS decode error (SecurityModeComplete/SpareHalfOctetAndSecurityHeaderType): %w", err)
 	}
-	if err := a.SpareHalfOctetAndSecurityHeaderType.DecodeNASType(); err != nil {
-		return fmt.Errorf("NAS decode error (SecurityModeComplete/SpareHalfOctetAndSecurityHeaderType): %w", err)
-	}
+	_ = a.SpareHalfOctetAndSecurityHeaderType.DecodeNASType()
 	if err := binary.Read(buffer, binary.BigEndian, &a.SecurityModeCompleteMessageIdentity.Octet); err != nil {
 		return fmt.Errorf("NAS decode error (SecurityModeComplete/SecurityModeCompleteMessageIdentity): %w", err)
 	}
-	if err := a.SecurityModeCompleteMessageIdentity.DecodeNASType(); err != nil {
-		return fmt.Errorf("NAS decode error (SecurityModeComplete/SecurityModeCompleteMessageIdentity): %w", err)
-	}
+	_ = a.SecurityModeCompleteMessageIdentity.DecodeNASType()
 	for buffer.Len() > 0 {
 		var ieiN uint8
 		var tmpIeiN uint8
@@ -103,30 +97,34 @@ func (a *SecurityModeComplete) DecodeSecurityModeComplete(byteArray *[]byte) err
 				return fmt.Errorf("NAS decode error (SecurityModeComplete/IMEISV): %w", err)
 			}
 			if a.IMEISV.Len != 9 {
-				return fmt.Errorf("invalid ie length (SecurityModeComplete/IMEISV): %d", a.IMEISV.Len)
+				// Non-conformant length: skip this IE rather than
+				// discarding the rest of the message.
+				a.IMEISV = nil
+				break
 			}
 			a.IMEISV.SetLen(a.IMEISV.GetLen())
 			if err := binary.Read(buffer, binary.BigEndian, a.IMEISV.Octet[:]); err != nil {
 				return fmt.Errorf("NAS decode error (SecurityModeComplete/IMEISV): %w", err)
 			}
-			if err := a.IMEISV.DecodeNASType(); err != nil {
-				return fmt.Errorf("NAS decode error (SecurityModeComplete/IMEISV): %w", err)
-			}
+			_ = a.IMEISV.DecodeNASType()
 		case SecurityModeCompleteNASMessageContainerType:
 			a.NASMessageContainer = NewNASMessageContainer(ieiN)
 			if err := binary.Read(buffer, binary.BigEndian, &a.NASMessageContainer.Len); err != nil {
 				return fmt.Errorf("NAS decode error (SecurityModeComplete/NASMessageContainer): %w", err)
 			}
 			if a.NASMessageContainer.Len < 1 {
-				return fmt.Errorf("invalid ie length (SecurityModeComplete/NASMessageContainer): %d", a.NASMessageContainer.Len)
+				// Non-conformant length: skip this IE rather than
+				// discarding the rest of the message.
+				a.NASMessageContainer = nil
+				break
 			}
 			a.NASMessageContainer.SetLen(a.NASMessageContainer.GetLen())
 			if err := binary.Read(buffer, binary.BigEndian, a.NASMessageContainer.Buffer); err != nil {
 				return fmt.Errorf("NAS decode error (SecurityModeComplete/NASMessageContainer): %w", err)
 			}
-			if err := a.NASMessageContainer.DecodeNASType(); err != nil {
-				return fmt.Errorf("NAS decode error (SecurityModeComplete/NASMessageContainer): %w", err)
-			}
+			// Best effort: the nested NAS message may be ciphertext or a
+			// non-NAS body. A failure here must not abort the outer decode.
+			_ = a.NASMessageContainer.DecodeNASType()
 		default:
 		}
 	}

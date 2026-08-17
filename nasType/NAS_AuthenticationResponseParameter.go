@@ -12,7 +12,6 @@ type AuthenticationResponseParameter struct {
 func (a *AuthenticationResponseParameter) DecodeNASType() error {
 	a.RES = GetHexString(a.Octet[0:16], "")
 	return nil
-
 }
 
 func NewAuthenticationResponseParameter(iei uint8) (authenticationResponseParameter *AuthenticationResponseParameter) {

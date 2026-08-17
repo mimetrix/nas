@@ -1,7 +1,5 @@
 package nasType
 
-import "fmt"
-
 // ShortNameForNetwork 9.11.3.35
 // Ext Row, sBit, len = [0, 0], 8 , 1
 // CodingScheme Row, sBit, len = [0, 0], 7 , 3
@@ -17,7 +15,7 @@ type ShortNameForNetwork struct {
 
 func (s *ShortNameForNetwork) DecodeNASType() error {
 
-	s.NetworkName = fmt.Sprintf("%s", s.GetTextString())
+	s.NetworkName = string(s.GetTextString())
 
 	return nil
 }

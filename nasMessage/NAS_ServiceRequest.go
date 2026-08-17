@@ -105,15 +105,11 @@ func (a *ServiceRequest) DecodeServiceRequest(byteArray *[]byte) error {
 	if err := binary.Read(buffer, binary.BigEndian, &a.ExtendedProtocolDiscriminator.Octet); err != nil {
 		return fmt.Errorf("NAS decode error (ServiceRequest/ExtendedProtocolDiscriminator): %w", err)
 	}
-	if err := a.ExtendedProtocolDiscriminator.DecodeNASType(); err != nil {
-		return fmt.Errorf("NAS decode error (ServiceRequest/ExtendedProtocolDiscriminator): %w", err)
-	}
+	_ = a.ExtendedProtocolDiscriminator.DecodeNASType()
 	if err := binary.Read(buffer, binary.BigEndian, &a.SpareHalfOctetAndSecurityHeaderType.Octet); err != nil {
 		return fmt.Errorf("NAS decode error (ServiceRequest/SpareHalfOctetAndSecurityHeaderType): %w", err)
 	}
-	if err := a.SpareHalfOctetAndSecurityHeaderType.DecodeNASType(); err != nil {
-		return fmt.Errorf("NAS decode error (ServiceRequest/SpareHalfOctetAndSecurityHeaderType): %w", err)
-	}
+	_ = a.SpareHalfOctetAndSecurityHeaderType.DecodeNASType()
 	if err := binary.Read(buffer, binary.BigEndian, &a.ServiceRequestMessageIdentity.Octet); err != nil {
 		return fmt.Errorf("NAS decode error (ServiceRequest/ServiceRequestMessageIdentity): %w", err)
 	}
@@ -150,7 +146,10 @@ func (a *ServiceRequest) DecodeServiceRequest(byteArray *[]byte) error {
 				return fmt.Errorf("NAS decode error (ServiceRequest/UplinkDataStatus): %w", err)
 			}
 			if a.UplinkDataStatus.Len < 2 || a.UplinkDataStatus.Len > 32 {
-				return fmt.Errorf("invalid ie length (ServiceRequest/UplinkDataStatus): %d", a.UplinkDataStatus.Len)
+				// Non-conformant length: skip this IE rather than
+				// discarding the rest of the message.
+				a.UplinkDataStatus = nil
+				break
 			}
 			a.UplinkDataStatus.SetLen(a.UplinkDataStatus.GetLen())
 			if err := binary.Read(buffer, binary.BigEndian, a.UplinkDataStatus.Buffer); err != nil {
@@ -162,7 +161,10 @@ func (a *ServiceRequest) DecodeServiceRequest(byteArray *[]byte) error {
 				return fmt.Errorf("NAS decode error (ServiceRequest/PDUSessionStatus): %w", err)
 			}
 			if a.PDUSessionStatus.Len < 2 || a.PDUSessionStatus.Len > 32 {
-				return fmt.Errorf("invalid ie length (ServiceRequest/PDUSessionStatus): %d", a.PDUSessionStatus.Len)
+				// Non-conformant length: skip this IE rather than
+				// discarding the rest of the message.
+				a.PDUSessionStatus = nil
+				break
 			}
 			a.PDUSessionStatus.SetLen(a.PDUSessionStatus.GetLen())
 			if err := binary.Read(buffer, binary.BigEndian, a.PDUSessionStatus.Buffer); err != nil {
@@ -174,7 +176,10 @@ func (a *ServiceRequest) DecodeServiceRequest(byteArray *[]byte) error {
 				return fmt.Errorf("NAS decode error (ServiceRequest/AllowedPDUSessionStatus): %w", err)
 			}
 			if a.AllowedPDUSessionStatus.Len < 2 || a.AllowedPDUSessionStatus.Len > 32 {
-				return fmt.Errorf("invalid ie length (ServiceRequest/AllowedPDUSessionStatus): %d", a.AllowedPDUSessionStatus.Len)
+				// Non-conformant length: skip this IE rather than
+				// discarding the rest of the message.
+				a.AllowedPDUSessionStatus = nil
+				break
 			}
 			a.AllowedPDUSessionStatus.SetLen(a.AllowedPDUSessionStatus.GetLen())
 			if err := binary.Read(buffer, binary.BigEndian, a.AllowedPDUSessionStatus.Buffer); err != nil {
@@ -186,15 +191,18 @@ func (a *ServiceRequest) DecodeServiceRequest(byteArray *[]byte) error {
 				return fmt.Errorf("NAS decode error (ServiceRequest/NASMessageContainer): %w", err)
 			}
 			if a.NASMessageContainer.Len < 1 {
-				return fmt.Errorf("invalid ie length (ServiceRequest/NASMessageContainer): %d", a.NASMessageContainer.Len)
+				// Non-conformant length: skip this IE rather than
+				// discarding the rest of the message.
+				a.NASMessageContainer = nil
+				break
 			}
 			a.NASMessageContainer.SetLen(a.NASMessageContainer.GetLen())
 			if err := binary.Read(buffer, binary.BigEndian, a.NASMessageContainer.Buffer); err != nil {
 				return fmt.Errorf("NAS decode error (ServiceRequest/NASMessageContainer): %w", err)
 			}
-			if err := a.NASMessageContainer.DecodeNASType(); err != nil {
-				return fmt.Errorf("NAS decode error (ServiceRequest/NASMessageContainer): %w", err)
-			}
+			// Best effort: the nested NAS message may be ciphertext or a
+			// non-NAS body. A failure here must not abort the outer decode.
+			_ = a.NASMessageContainer.DecodeNASType()
 		default:
 		}
 	}

@@ -120,11 +120,11 @@ type testSessionAMBRDataTemplate struct {
 }
 
 var sessionAMBRTestData = []nasType.SessionAMBR{
-	{nasMessage.PDUSessionModificationCommandSessionAMBRType, 6, [6]uint8{}},
+	{Iei: nasMessage.PDUSessionModificationCommandSessionAMBRType, Len: 6, Octet: [6]uint8{}},
 }
 
 var sessionAMBRExpectedTestData = []nasType.SessionAMBR{
-	{nasMessage.PDUSessionModificationCommandSessionAMBRType, 6, [6]uint8{0x01, 0x01, 0x01, 0x01, 0x01, 0x01}},
+	{Iei: nasMessage.PDUSessionModificationCommandSessionAMBRType, Len: 6, Octet: [6]uint8{0x01, 0x01, 0x01, 0x01, 0x01, 0x01}},
 }
 
 var sessionAMBRTable = []testSessionAMBRDataTemplate{

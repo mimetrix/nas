@@ -3,8 +3,6 @@ package nasType
 import (
 	"bytes"
 	"fmt"
-	//"github.com/davecgh/go-spew/spew"
-	//"encoding/binary"
 )
 
 // TAIList 9.11.3.9
@@ -93,22 +91,20 @@ func (t *TAIList) DecodeNASType() error {
 
 		numElements := (headerByte & 0x1F) + 1
 
-		if TAIType == 0x01 {
-
+		switch TAIType {
+		case 0x01:
 			var type01Buf [6]byte
-			_, err := payload.Read(type01Buf[:])
-			if err != nil {
-				fmt.Println(err)
-				return (err)
+			if _, err := payload.Read(type01Buf[:]); err != nil {
+				return err
 			}
 
 			TAI01 := NewTAI01(numElements, type01Buf)
 			t.TAIs = append(t.TAIs, TAI01)
 
-		} else if TAIType == 0x00 {
-			//TODO
-		} else if TAIType == 0x10 {
-			//TODO
+		default:
+			// Only the type-01 partial TAI list (list of TACs belonging to one
+			// PLMN) is decoded today. Types 00 and 10 are left untouched
+			// rather than guessed at.
 		}
 
 	}

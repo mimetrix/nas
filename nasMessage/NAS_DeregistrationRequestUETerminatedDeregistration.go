@@ -69,15 +69,11 @@ func (a *DeregistrationRequestUETerminatedDeregistration) DecodeDeregistrationRe
 	if err := binary.Read(buffer, binary.BigEndian, &a.ExtendedProtocolDiscriminator.Octet); err != nil {
 		return fmt.Errorf("NAS decode error (DeregistrationRequestUETerminatedDeregistration/ExtendedProtocolDiscriminator): %w", err)
 	}
-	if err := a.ExtendedProtocolDiscriminator.DecodeNASType(); err != nil {
-		return fmt.Errorf("NAS decode error (DeregistrationRequestUETerminatedDeregistration/ExtendedProtocolDiscriminator): %w", err)
-	}
+	_ = a.ExtendedProtocolDiscriminator.DecodeNASType()
 	if err := binary.Read(buffer, binary.BigEndian, &a.SpareHalfOctetAndSecurityHeaderType.Octet); err != nil {
 		return fmt.Errorf("NAS decode error (DeregistrationRequestUETerminatedDeregistration/SpareHalfOctetAndSecurityHeaderType): %w", err)
 	}
-	if err := a.SpareHalfOctetAndSecurityHeaderType.DecodeNASType(); err != nil {
-		return fmt.Errorf("NAS decode error (DeregistrationRequestUETerminatedDeregistration/SpareHalfOctetAndSecurityHeaderType): %w", err)
-	}
+	_ = a.SpareHalfOctetAndSecurityHeaderType.DecodeNASType()
 	if err := binary.Read(buffer, binary.BigEndian, &a.DeregistrationRequestMessageIdentity.Octet); err != nil {
 		return fmt.Errorf("NAS decode error (DeregistrationRequestUETerminatedDeregistration/DeregistrationRequestMessageIdentity): %w", err)
 	}
@@ -103,16 +99,17 @@ func (a *DeregistrationRequestUETerminatedDeregistration) DecodeDeregistrationRe
 			if err := binary.Read(buffer, binary.BigEndian, &a.Cause5GMM.Octet); err != nil {
 				return fmt.Errorf("NAS decode error (DeregistrationRequestUETerminatedDeregistration/Cause5GMM): %w", err)
 			}
-			if err := a.Cause5GMM.DecodeNASType(); err != nil {
-				return fmt.Errorf("NAS decode error (DeregistrationRequestUETerminatedDeregistration/Cause5GMM): %w", err)
-			}
+			_ = a.Cause5GMM.DecodeNASType()
 		case DeregistrationRequestUETerminatedDeregistrationT3346ValueType:
 			a.T3346Value = nasType.NewT3346Value(ieiN)
 			if err := binary.Read(buffer, binary.BigEndian, &a.T3346Value.Len); err != nil {
 				return fmt.Errorf("NAS decode error (DeregistrationRequestUETerminatedDeregistration/T3346Value): %w", err)
 			}
 			if a.T3346Value.Len != 1 {
-				return fmt.Errorf("invalid ie length (DeregistrationRequestUETerminatedDeregistration/T3346Value): %d", a.T3346Value.Len)
+				// Non-conformant length: skip this IE rather than
+				// discarding the rest of the message.
+				a.T3346Value = nil
+				break
 			}
 			a.T3346Value.SetLen(a.T3346Value.GetLen())
 			if err := binary.Read(buffer, binary.BigEndian, &a.T3346Value.Octet); err != nil {

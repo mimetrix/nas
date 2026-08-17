@@ -62,11 +62,11 @@ type testEAPDataTemplate struct {
 }
 
 var EAPMessageTestData = []nasType.EAPMessage{
-	{0, 2, []byte{0x00, 0x00}}, // AuthenticationResult
+	{Iei: 0, Len: 2, Buffer: []byte{0x00, 0x00}}, // AuthenticationResult
 }
 
 var EAPMessageExpectedTestData = []nasType.EAPMessage{
-	{0, 2, []byte{0x00, 0x00}}, // AuthenticationResult
+	{Iei: 0, Len: 2, Buffer: []byte{0x00, 0x00}}, // AuthenticationResult
 }
 
 var EAPMessageTestTable = []testEAPDataTemplate{

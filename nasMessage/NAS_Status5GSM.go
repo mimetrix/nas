@@ -47,9 +47,7 @@ func (a *Status5GSM) DecodeStatus5GSM(byteArray *[]byte) error {
 	if err := binary.Read(buffer, binary.BigEndian, &a.ExtendedProtocolDiscriminator.Octet); err != nil {
 		return fmt.Errorf("NAS decode error (Status5GSM/ExtendedProtocolDiscriminator): %w", err)
 	}
-	if err := a.ExtendedProtocolDiscriminator.DecodeNASType(); err != nil {
-		return fmt.Errorf("NAS decode error (Status5GSM/ExtendedProtocolDiscriminator): %w", err)
-	}
+	_ = a.ExtendedProtocolDiscriminator.DecodeNASType()
 	if err := binary.Read(buffer, binary.BigEndian, &a.PDUSessionID.Octet); err != nil {
 		return fmt.Errorf("NAS decode error (Status5GSM/PDUSessionID): %w", err)
 	}
@@ -62,9 +60,7 @@ func (a *Status5GSM) DecodeStatus5GSM(byteArray *[]byte) error {
 	if err := binary.Read(buffer, binary.BigEndian, &a.Cause5GSM.Octet); err != nil {
 		return fmt.Errorf("NAS decode error (Status5GSM/Cause5GSM): %w", err)
 	}
-	if err := a.Cause5GSM.DecodeNASType(); err != nil {
-		return fmt.Errorf("NAS decode error (Status5GSM/Cause5GSM): %w", err)
-	}
+	_ = a.Cause5GSM.DecodeNASType()
 	for buffer.Len() > 0 {
 		var ieiN uint8
 		var tmpIeiN uint8

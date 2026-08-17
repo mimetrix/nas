@@ -71,11 +71,11 @@ type testRegistrationType5GSAndNgksiDataTemplate struct {
 }
 
 var registrationType5GSAndNgksiTestData = []nasType.NgksiAndRegistrationType5GS{
-	{0x01},
+	{Octet: 0x01},
 }
 
 var registrationType5GSAndNgksiExpectedTestData = []nasType.NgksiAndRegistrationType5GS{
-	{0x99},
+	{Octet: 0x99},
 }
 
 var registrationType5GSAndNgksiTestTable = []testRegistrationType5GSAndNgksiDataTemplate{

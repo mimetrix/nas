@@ -5,7 +5,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/mimetrix/nas"
+	"github.com/mimetrix/nas/nasMessage"
 	"github.com/mimetrix/nas/nasType"
 )
 
@@ -15,7 +15,7 @@ type nasTypeDeregistrationRequestMessageIdentityData struct {
 }
 
 var nasTypeDeregistrationRequestMessageIdentityTable = []nasTypeDeregistrationRequestMessageIdentityData{
-	{nas.MsgTypeDeregistrationRequestUETerminatedDeregistration, nas.MsgTypeDeregistrationRequestUETerminatedDeregistration},
+	{nasMessage.MsgTypeDeregistrationRequestUETerminatedDeregistration, nasMessage.MsgTypeDeregistrationRequestUETerminatedDeregistration},
 }
 
 func TestNasTypeNewDeregistrationRequestMessageIdentity(t *testing.T) {

@@ -55,15 +55,11 @@ func (a *NotificationResponse) DecodeNotificationResponse(byteArray *[]byte) err
 	if err := binary.Read(buffer, binary.BigEndian, &a.ExtendedProtocolDiscriminator.Octet); err != nil {
 		return fmt.Errorf("NAS decode error (NotificationResponse/ExtendedProtocolDiscriminator): %w", err)
 	}
-	if err := a.ExtendedProtocolDiscriminator.DecodeNASType(); err != nil {
-		return fmt.Errorf("NAS decode error (NotificationResponse/ExtendedProtocolDiscriminator): %w", err)
-	}
+	_ = a.ExtendedProtocolDiscriminator.DecodeNASType()
 	if err := binary.Read(buffer, binary.BigEndian, &a.SpareHalfOctetAndSecurityHeaderType.Octet); err != nil {
 		return fmt.Errorf("NAS decode error (NotificationResponse/SpareHalfOctetAndSecurityHeaderType): %w", err)
 	}
-	if err := a.SpareHalfOctetAndSecurityHeaderType.DecodeNASType(); err != nil {
-		return fmt.Errorf("NAS decode error (NotificationResponse/SpareHalfOctetAndSecurityHeaderType): %w", err)
-	}
+	_ = a.SpareHalfOctetAndSecurityHeaderType.DecodeNASType()
 	if err := binary.Read(buffer, binary.BigEndian, &a.NotificationResponseMessageIdentity.Octet); err != nil {
 		return fmt.Errorf("NAS decode error (NotificationResponse/NotificationResponseMessageIdentity): %w", err)
 	}
@@ -87,7 +83,10 @@ func (a *NotificationResponse) DecodeNotificationResponse(byteArray *[]byte) err
 				return fmt.Errorf("NAS decode error (NotificationResponse/PDUSessionStatus): %w", err)
 			}
 			if a.PDUSessionStatus.Len < 2 || a.PDUSessionStatus.Len > 32 {
-				return fmt.Errorf("invalid ie length (NotificationResponse/PDUSessionStatus): %d", a.PDUSessionStatus.Len)
+				// Non-conformant length: skip this IE rather than
+				// discarding the rest of the message.
+				a.PDUSessionStatus = nil
+				break
 			}
 			a.PDUSessionStatus.SetLen(a.PDUSessionStatus.GetLen())
 			if err := binary.Read(buffer, binary.BigEndian, a.PDUSessionStatus.Buffer); err != nil {

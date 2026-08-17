@@ -55,21 +55,15 @@ func (a *RegistrationComplete) DecodeRegistrationComplete(byteArray *[]byte) err
 	if err := binary.Read(buffer, binary.BigEndian, &a.ExtendedProtocolDiscriminator.Octet); err != nil {
 		return fmt.Errorf("NAS decode error (RegistrationComplete/ExtendedProtocolDiscriminator): %w", err)
 	}
-	if err := a.ExtendedProtocolDiscriminator.DecodeNASType(); err != nil {
-		return fmt.Errorf("NAS decode error (RegistrationComplete/ExtendedProtocolDiscriminator): %w", err)
-	}
+	_ = a.ExtendedProtocolDiscriminator.DecodeNASType()
 	if err := binary.Read(buffer, binary.BigEndian, &a.SpareHalfOctetAndSecurityHeaderType.Octet); err != nil {
 		return fmt.Errorf("NAS decode error (RegistrationComplete/SpareHalfOctetAndSecurityHeaderType): %w", err)
 	}
-	if err := a.SpareHalfOctetAndSecurityHeaderType.DecodeNASType(); err != nil {
-		return fmt.Errorf("NAS decode error (RegistrationComplete/SpareHalfOctetAndSecurityHeaderType): %w", err)
-	}
+	_ = a.SpareHalfOctetAndSecurityHeaderType.DecodeNASType()
 	if err := binary.Read(buffer, binary.BigEndian, &a.RegistrationCompleteMessageIdentity.Octet); err != nil {
 		return fmt.Errorf("NAS decode error (RegistrationComplete/RegistrationCompleteMessageIdentity): %w", err)
 	}
-	if err := a.RegistrationCompleteMessageIdentity.DecodeNASType(); err != nil {
-		return fmt.Errorf("NAS decode error (RegistrationComplete/RegistrationCompleteMessageIdentity): %w", err)
-	}
+	_ = a.RegistrationCompleteMessageIdentity.DecodeNASType()
 	for buffer.Len() > 0 {
 		var ieiN uint8
 		var tmpIeiN uint8
@@ -90,7 +84,10 @@ func (a *RegistrationComplete) DecodeRegistrationComplete(byteArray *[]byte) err
 				return fmt.Errorf("NAS decode error (RegistrationComplete/SORTransparentContainer): %w", err)
 			}
 			if a.SORTransparentContainer.Len < 17 || a.SORTransparentContainer.Len > 2045 {
-				return fmt.Errorf("invalid ie length (RegistrationComplete/SORTransparentContainer): %d", a.SORTransparentContainer.Len)
+				// Non-conformant length: skip this IE rather than
+				// discarding the rest of the message.
+				a.SORTransparentContainer = nil
+				break
 			}
 			a.SORTransparentContainer.SetLen(a.SORTransparentContainer.GetLen())
 			if err := binary.Read(buffer, binary.BigEndian, a.SORTransparentContainer.Buffer); err != nil {

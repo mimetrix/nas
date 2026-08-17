@@ -36,11 +36,11 @@ type SecurityModeCommandMessageIdentityTestDataTemplate struct {
 }
 
 var SecurityModeCommandMessageIdentityTestData = []nasType.SecurityModeCommandMessageIdentity{
-	{0x03},
+	{Octet: 0x03},
 }
 
 var SecurityModeCommandMessageIdentityExpectedTestData = []nasType.SecurityModeCommandMessageIdentity{
-	{0x03},
+	{Octet: 0x03},
 }
 
 var SecurityModeCommandMessageIdentityTable = []SecurityModeCommandMessageIdentityTestDataTemplate{

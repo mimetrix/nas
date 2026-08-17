@@ -43,24 +43,18 @@ func (a *Notification) DecodeNotification(byteArray *[]byte) error {
 	if err := binary.Read(buffer, binary.BigEndian, &a.ExtendedProtocolDiscriminator.Octet); err != nil {
 		return fmt.Errorf("NAS decode error (Notification/ExtendedProtocolDiscriminator): %w", err)
 	}
-	if err := a.ExtendedProtocolDiscriminator.DecodeNASType(); err != nil {
-		return fmt.Errorf("NAS decode error (Notification/ExtendedProtocolDiscriminator): %w", err)
-	}
+	_ = a.ExtendedProtocolDiscriminator.DecodeNASType()
 	if err := binary.Read(buffer, binary.BigEndian, &a.SpareHalfOctetAndSecurityHeaderType.Octet); err != nil {
 		return fmt.Errorf("NAS decode error (Notification/SpareHalfOctetAndSecurityHeaderType): %w", err)
 	}
-	if err := a.SpareHalfOctetAndSecurityHeaderType.DecodeNASType(); err != nil {
-		return fmt.Errorf("NAS decode error (Notification/SpareHalfOctetAndSecurityHeaderType): %w", err)
-	}
+	_ = a.SpareHalfOctetAndSecurityHeaderType.DecodeNASType()
 	if err := binary.Read(buffer, binary.BigEndian, &a.NotificationMessageIdentity.Octet); err != nil {
 		return fmt.Errorf("NAS decode error (Notification/NotificationMessageIdentity): %w", err)
 	}
 	if err := binary.Read(buffer, binary.BigEndian, &a.SpareHalfOctetAndAccessType.Octet); err != nil {
 		return fmt.Errorf("NAS decode error (Notification/SpareHalfOctetAndAccessType): %w", err)
 	}
-	if err := a.SpareHalfOctetAndAccessType.DecodeNASType(); err != nil {
-		return fmt.Errorf("NAS decode error (Notification/SpareHalfOctetAndAccessType): %w", err)
-	}
+	_ = a.SpareHalfOctetAndAccessType.DecodeNASType()
 	for buffer.Len() > 0 {
 		var ieiN uint8
 		var tmpIeiN uint8

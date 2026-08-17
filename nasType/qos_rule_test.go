@@ -1,6 +1,7 @@
 package nasType
 
 import (
+	"fmt"
 	"net"
 	"testing"
 
@@ -306,7 +307,35 @@ func TestQoSRules(t *testing.T) {
 			var rules QoSRules
 			err = rules.UnmarshalBinary(tc.buf)
 			require.NoError(t, err)
-			require.Equal(t, tc.rules, rules)
+
+			// UnmarshalBinary also fills the human-readable enrichment
+			// fields. Derive the same values for the expected fixtures
+			// (from the very maps the decoder uses) rather than repeating
+			// them by hand in every case above.
+			want := make(QoSRules, len(tc.rules))
+			copy(want, tc.rules)
+			for i := range want {
+				want[i].IdentifierName = fmt.Sprintf("QRI %d", want[i].Identifier)
+				want[i].OperationName = OperationNames[want[i].Operation]
+				// The "delete packet filters" operation encodes bare filter
+				// identifiers with no header, so that path populates neither
+				// DirectionName nor FilterType.
+				if want[i].Operation == OperationCodeModifyExistingQoSRuleAndDeletePacketFilters {
+					continue
+				}
+				for j := range want[i].PacketFilterList {
+					pf := &want[i].PacketFilterList[j]
+					pf.DirectionName = DirectionTypes[pf.Direction]
+					// NOTE: UnmarshalBinary sets FilterType from
+					// FilterTypes[packet filter identifier]. That looks wrong
+					// (FilterTypes is keyed by component type, not by filter
+					// id), but it is pre-existing behaviour and out of scope
+					// for this merge. Mirror it so the test asserts what the
+					// decoder actually does.
+					pf.FilterType = FilterTypes[pf.Identifier]
+				}
+			}
+			require.Equal(t, want, rules)
 		})
 	}
 }

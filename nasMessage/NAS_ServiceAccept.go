@@ -94,15 +94,11 @@ func (a *ServiceAccept) DecodeServiceAccept(byteArray *[]byte) error {
 	if err := binary.Read(buffer, binary.BigEndian, &a.ExtendedProtocolDiscriminator.Octet); err != nil {
 		return fmt.Errorf("NAS decode error (ServiceAccept/ExtendedProtocolDiscriminator): %w", err)
 	}
-	if err := a.ExtendedProtocolDiscriminator.DecodeNASType(); err != nil {
-		return fmt.Errorf("NAS decode error (ServiceAccept/ExtendedProtocolDiscriminator): %w", err)
-	}
+	_ = a.ExtendedProtocolDiscriminator.DecodeNASType()
 	if err := binary.Read(buffer, binary.BigEndian, &a.SpareHalfOctetAndSecurityHeaderType.Octet); err != nil {
 		return fmt.Errorf("NAS decode error (ServiceAccept/SpareHalfOctetAndSecurityHeaderType): %w", err)
 	}
-	if err := a.SpareHalfOctetAndSecurityHeaderType.DecodeNASType(); err != nil {
-		return fmt.Errorf("NAS decode error (ServiceAccept/SpareHalfOctetAndSecurityHeaderType): %w", err)
-	}
+	_ = a.SpareHalfOctetAndSecurityHeaderType.DecodeNASType()
 	if err := binary.Read(buffer, binary.BigEndian, &a.ServiceAcceptMessageIdentity.Octet); err != nil {
 		return fmt.Errorf("NAS decode error (ServiceAccept/ServiceAcceptMessageIdentity): %w", err)
 	}
@@ -126,7 +122,10 @@ func (a *ServiceAccept) DecodeServiceAccept(byteArray *[]byte) error {
 				return fmt.Errorf("NAS decode error (ServiceAccept/PDUSessionStatus): %w", err)
 			}
 			if a.PDUSessionStatus.Len < 2 || a.PDUSessionStatus.Len > 32 {
-				return fmt.Errorf("invalid ie length (ServiceAccept/PDUSessionStatus): %d", a.PDUSessionStatus.Len)
+				// Non-conformant length: skip this IE rather than
+				// discarding the rest of the message.
+				a.PDUSessionStatus = nil
+				break
 			}
 			a.PDUSessionStatus.SetLen(a.PDUSessionStatus.GetLen())
 			if err := binary.Read(buffer, binary.BigEndian, a.PDUSessionStatus.Buffer); err != nil {
@@ -138,7 +137,10 @@ func (a *ServiceAccept) DecodeServiceAccept(byteArray *[]byte) error {
 				return fmt.Errorf("NAS decode error (ServiceAccept/PDUSessionReactivationResult): %w", err)
 			}
 			if a.PDUSessionReactivationResult.Len < 2 || a.PDUSessionReactivationResult.Len > 32 {
-				return fmt.Errorf("invalid ie length (ServiceAccept/PDUSessionReactivationResult): %d", a.PDUSessionReactivationResult.Len)
+				// Non-conformant length: skip this IE rather than
+				// discarding the rest of the message.
+				a.PDUSessionReactivationResult = nil
+				break
 			}
 			a.PDUSessionReactivationResult.SetLen(a.PDUSessionReactivationResult.GetLen())
 			if err := binary.Read(buffer, binary.BigEndian, a.PDUSessionReactivationResult.Buffer); err != nil {
@@ -150,7 +152,10 @@ func (a *ServiceAccept) DecodeServiceAccept(byteArray *[]byte) error {
 				return fmt.Errorf("NAS decode error (ServiceAccept/PDUSessionReactivationResultErrorCause): %w", err)
 			}
 			if a.PDUSessionReactivationResultErrorCause.Len < 2 || a.PDUSessionReactivationResultErrorCause.Len > 512 {
-				return fmt.Errorf("invalid ie length (ServiceAccept/PDUSessionReactivationResultErrorCause): %d", a.PDUSessionReactivationResultErrorCause.Len)
+				// Non-conformant length: skip this IE rather than
+				// discarding the rest of the message.
+				a.PDUSessionReactivationResultErrorCause = nil
+				break
 			}
 			a.PDUSessionReactivationResultErrorCause.SetLen(a.PDUSessionReactivationResultErrorCause.GetLen())
 			if err := binary.Read(buffer, binary.BigEndian, a.PDUSessionReactivationResultErrorCause.Buffer); err != nil {
@@ -162,15 +167,16 @@ func (a *ServiceAccept) DecodeServiceAccept(byteArray *[]byte) error {
 				return fmt.Errorf("NAS decode error (ServiceAccept/EAPMessage): %w", err)
 			}
 			if a.EAPMessage.Len < 4 || a.EAPMessage.Len > 1500 {
-				return fmt.Errorf("invalid ie length (ServiceAccept/EAPMessage): %d", a.EAPMessage.Len)
+				// Non-conformant length: skip this IE rather than
+				// discarding the rest of the message.
+				a.EAPMessage = nil
+				break
 			}
 			a.EAPMessage.SetLen(a.EAPMessage.GetLen())
 			if err := binary.Read(buffer, binary.BigEndian, a.EAPMessage.Buffer); err != nil {
 				return fmt.Errorf("NAS decode error (ServiceAccept/EAPMessage): %w", err)
 			}
-			if err := a.EAPMessage.DecodeNASType(); err != nil {
-				return fmt.Errorf("NAS decode error (ServiceAccept/EAPMessage): %w", err)
-			}
+			_ = a.EAPMessage.DecodeNASType()
 		default:
 		}
 	}

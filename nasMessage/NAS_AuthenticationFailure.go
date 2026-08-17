@@ -59,24 +59,18 @@ func (a *AuthenticationFailure) DecodeAuthenticationFailure(byteArray *[]byte) e
 	if err := binary.Read(buffer, binary.BigEndian, &a.ExtendedProtocolDiscriminator.Octet); err != nil {
 		return fmt.Errorf("NAS decode error (AuthenticationFailure/ExtendedProtocolDiscriminator): %w", err)
 	}
-	if err := a.ExtendedProtocolDiscriminator.DecodeNASType(); err != nil {
-		return fmt.Errorf("NAS decode error (AuthenticationFailure/ExtendedProtocolDiscriminator): %w", err)
-	}
+	_ = a.ExtendedProtocolDiscriminator.DecodeNASType()
 	if err := binary.Read(buffer, binary.BigEndian, &a.SpareHalfOctetAndSecurityHeaderType.Octet); err != nil {
 		return fmt.Errorf("NAS decode error (AuthenticationFailure/SpareHalfOctetAndSecurityHeaderType): %w", err)
 	}
-	if err := a.SpareHalfOctetAndSecurityHeaderType.DecodeNASType(); err != nil {
-		return fmt.Errorf("NAS decode error (AuthenticationFailure/SpareHalfOctetAndSecurityHeaderType): %w", err)
-	}
+	_ = a.SpareHalfOctetAndSecurityHeaderType.DecodeNASType()
 	if err := binary.Read(buffer, binary.BigEndian, &a.AuthenticationFailureMessageIdentity.Octet); err != nil {
 		return fmt.Errorf("NAS decode error (AuthenticationFailure/AuthenticationFailureMessageIdentity): %w", err)
 	}
 	if err := binary.Read(buffer, binary.BigEndian, &a.Cause5GMM.Octet); err != nil {
 		return fmt.Errorf("NAS decode error (AuthenticationFailure/Cause5GMM): %w", err)
 	}
-	if err := a.Cause5GMM.DecodeNASType(); err != nil {
-		return fmt.Errorf("NAS decode error (AuthenticationFailure/Cause5GMM): %w", err)
-	}
+	_ = a.Cause5GMM.DecodeNASType()
 	for buffer.Len() > 0 {
 		var ieiN uint8
 		var tmpIeiN uint8
@@ -97,7 +91,10 @@ func (a *AuthenticationFailure) DecodeAuthenticationFailure(byteArray *[]byte) e
 				return fmt.Errorf("NAS decode error (AuthenticationFailure/AuthenticationFailureParameter): %w", err)
 			}
 			if a.AuthenticationFailureParameter.Len != 14 {
-				return fmt.Errorf("invalid ie length (AuthenticationFailure/AuthenticationFailureParameter): %d", a.AuthenticationFailureParameter.Len)
+				// Non-conformant length: skip this IE rather than
+				// discarding the rest of the message.
+				a.AuthenticationFailureParameter = nil
+				break
 			}
 			a.AuthenticationFailureParameter.SetLen(a.AuthenticationFailureParameter.GetLen())
 			if err := binary.Read(buffer, binary.BigEndian, a.AuthenticationFailureParameter.Octet[:]); err != nil {

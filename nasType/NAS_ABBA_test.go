@@ -70,11 +70,11 @@ type testABBADataTemplate struct {
 }
 
 var aBBATestData = []nasType.ABBA{
-	{nasMessage.AuthenticationResultABBAType, 2, []byte{0x00, 0x00}},
+	{Iei: nasMessage.AuthenticationResultABBAType, Len: 2, Buffer: []byte{0x00, 0x00}},
 }
 
 var aBBAExpectedTestData = []nasType.ABBA{
-	{nasMessage.AuthenticationResultABBAType, 2, []byte{0x00, 0x00}},
+	{Iei: nasMessage.AuthenticationResultABBAType, Len: 2, Buffer: []byte{0x00, 0x00}},
 }
 
 var aBBATestTable = []testABBADataTemplate{

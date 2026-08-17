@@ -12,7 +12,6 @@ type Additional5GSecurityInformation struct {
 }
 
 func (a *Additional5GSecurityInformation) DecodeNASType() error {
-
 	a.RINMR = a.GetRINMR() == 1
 	a.HDP = a.GetHDP() == 1
 	return nil

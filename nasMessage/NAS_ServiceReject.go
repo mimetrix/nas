@@ -85,24 +85,18 @@ func (a *ServiceReject) DecodeServiceReject(byteArray *[]byte) error {
 	if err := binary.Read(buffer, binary.BigEndian, &a.ExtendedProtocolDiscriminator.Octet); err != nil {
 		return fmt.Errorf("NAS decode error (ServiceReject/ExtendedProtocolDiscriminator): %w", err)
 	}
-	if err := a.ExtendedProtocolDiscriminator.DecodeNASType(); err != nil {
-		return fmt.Errorf("NAS decode error (ServiceReject/ExtendedProtocolDiscriminator): %w", err)
-	}
+	_ = a.ExtendedProtocolDiscriminator.DecodeNASType()
 	if err := binary.Read(buffer, binary.BigEndian, &a.SpareHalfOctetAndSecurityHeaderType.Octet); err != nil {
 		return fmt.Errorf("NAS decode error (ServiceReject/SpareHalfOctetAndSecurityHeaderType): %w", err)
 	}
-	if err := a.SpareHalfOctetAndSecurityHeaderType.DecodeNASType(); err != nil {
-		return fmt.Errorf("NAS decode error (ServiceReject/SpareHalfOctetAndSecurityHeaderType): %w", err)
-	}
+	_ = a.SpareHalfOctetAndSecurityHeaderType.DecodeNASType()
 	if err := binary.Read(buffer, binary.BigEndian, &a.ServiceRejectMessageIdentity.Octet); err != nil {
 		return fmt.Errorf("NAS decode error (ServiceReject/ServiceRejectMessageIdentity): %w", err)
 	}
 	if err := binary.Read(buffer, binary.BigEndian, &a.Cause5GMM.Octet); err != nil {
 		return fmt.Errorf("NAS decode error (ServiceReject/Cause5GMM): %w", err)
 	}
-	if err := a.Cause5GMM.DecodeNASType(); err != nil {
-		return fmt.Errorf("NAS decode error (ServiceReject/Cause5GMM): %w", err)
-	}
+	_ = a.Cause5GMM.DecodeNASType()
 	for buffer.Len() > 0 {
 		var ieiN uint8
 		var tmpIeiN uint8
@@ -123,7 +117,10 @@ func (a *ServiceReject) DecodeServiceReject(byteArray *[]byte) error {
 				return fmt.Errorf("NAS decode error (ServiceReject/PDUSessionStatus): %w", err)
 			}
 			if a.PDUSessionStatus.Len < 2 || a.PDUSessionStatus.Len > 32 {
-				return fmt.Errorf("invalid ie length (ServiceReject/PDUSessionStatus): %d", a.PDUSessionStatus.Len)
+				// Non-conformant length: skip this IE rather than
+				// discarding the rest of the message.
+				a.PDUSessionStatus = nil
+				break
 			}
 			a.PDUSessionStatus.SetLen(a.PDUSessionStatus.GetLen())
 			if err := binary.Read(buffer, binary.BigEndian, a.PDUSessionStatus.Buffer); err != nil {
@@ -135,7 +132,10 @@ func (a *ServiceReject) DecodeServiceReject(byteArray *[]byte) error {
 				return fmt.Errorf("NAS decode error (ServiceReject/T3346Value): %w", err)
 			}
 			if a.T3346Value.Len != 1 {
-				return fmt.Errorf("invalid ie length (ServiceReject/T3346Value): %d", a.T3346Value.Len)
+				// Non-conformant length: skip this IE rather than
+				// discarding the rest of the message.
+				a.T3346Value = nil
+				break
 			}
 			a.T3346Value.SetLen(a.T3346Value.GetLen())
 			if err := binary.Read(buffer, binary.BigEndian, &a.T3346Value.Octet); err != nil {
@@ -147,15 +147,16 @@ func (a *ServiceReject) DecodeServiceReject(byteArray *[]byte) error {
 				return fmt.Errorf("NAS decode error (ServiceReject/EAPMessage): %w", err)
 			}
 			if a.EAPMessage.Len < 4 || a.EAPMessage.Len > 1500 {
-				return fmt.Errorf("invalid ie length (ServiceReject/EAPMessage): %d", a.EAPMessage.Len)
+				// Non-conformant length: skip this IE rather than
+				// discarding the rest of the message.
+				a.EAPMessage = nil
+				break
 			}
 			a.EAPMessage.SetLen(a.EAPMessage.GetLen())
 			if err := binary.Read(buffer, binary.BigEndian, a.EAPMessage.Buffer); err != nil {
 				return fmt.Errorf("NAS decode error (ServiceReject/EAPMessage): %w", err)
 			}
-			if err := a.EAPMessage.DecodeNASType(); err != nil {
-				return fmt.Errorf("NAS decode error (ServiceReject/EAPMessage): %w", err)
-			}
+			_ = a.EAPMessage.DecodeNASType()
 		default:
 		}
 	}

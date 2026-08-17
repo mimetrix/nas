@@ -4,7 +4,7 @@ package nasType
 // MAC Row, sBit, len = [0, 3], 8 , 32
 type MessageAuthenticationCode struct {
 	Octet [4]uint8 `json:"-"`
-	MAC   string   `json:,omitempty`
+	MAC   string   `json:",omitempty"`
 }
 
 func (m *MessageAuthenticationCode) DecodeNASType() error {

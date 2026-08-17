@@ -1,8 +1,7 @@
 package nasType
 
 import (
-	//"github.com/davecgh/go-spew/spew"
-	"fmt"
+// "github.com/davecgh/go-spew/spew"
 )
 
 // FullNameForNetwork 9.11.3.35
@@ -20,7 +19,7 @@ type FullNameForNetwork struct {
 
 func (f *FullNameForNetwork) DecodeNASType() error {
 
-	f.NetworkName = fmt.Sprintf("%s", f.GetTextString())
+	f.NetworkName = string(f.GetTextString())
 
 	return nil
 }

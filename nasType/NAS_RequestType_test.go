@@ -50,11 +50,11 @@ type RequestTypeTestDataTemplate struct {
 }
 
 var RequestTypeTestData = []nasType.RequestType{
-	{nasMessage.ULNASTransportRequestTypeType + 0x01},
+	{Octet: nasMessage.ULNASTransportRequestTypeType + 0x01},
 }
 
 var RequestTypeExpectedTestData = []nasType.RequestType{
-	{0x81},
+	{Octet: 0x81},
 }
 
 var RequestTypeTable = []RequestTypeTestDataTemplate{

@@ -4,7 +4,6 @@ import (
 	"encoding/hex"
 	"errors"
 	"fmt"
-	//"github.com/davecgh/go-spew/spew"
 	"math/bits"
 	"strconv"
 	"strings"
@@ -14,8 +13,8 @@ import (
 // MobileIdentity5GSContents Row, sBit, len = [0, 0], 8 , INF
 type MobileIdentity5GS struct {
 	Iei          uint8   `json:"Iei,omitempty"`
-	Len          uint16  `json:"-,omitempty"`
-	Buffer       []uint8 `json:"-,omitempty"`
+	Len          uint16  `json:"-"`
+	Buffer       []uint8 `json:"-"`
 	IdentityType string  `json:",omitempty"`
 	SUCI         string  `json:",omitempty"`
 	FiveGTMSI    string  `json:",omitempty"`

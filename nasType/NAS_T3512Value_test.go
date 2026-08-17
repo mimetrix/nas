@@ -78,11 +78,11 @@ type testT3512ValueDataTemplate struct {
 }
 
 var T3512ValueTestData = []nasType.T3512Value{
-	{nasMessage.RegistrationAcceptT3512ValueType, 1, 0x00},
+	{Iei: nasMessage.RegistrationAcceptT3512ValueType, Len: 1, Octet: 0x00},
 }
 
 var T3512ValueExpectedData = []nasType.T3512Value{
-	{nasMessage.RegistrationAcceptT3512ValueType, 1, 0x21},
+	{Iei: nasMessage.RegistrationAcceptT3512ValueType, Len: 1, Octet: 0x21},
 }
 
 var T3512ValueDataTestTable = []testT3512ValueDataTemplate{
