@@ -139,34 +139,34 @@ type GmmMessage struct {
 }
 
 const (
-	MsgTypeRegistrationRequest                              uint8 = 65  //0x41
-	MsgTypeRegistrationAccept                               uint8 = 66  //0x42
-	MsgTypeRegistrationComplete                             uint8 = 67  //0x43
-	MsgTypeRegistrationReject                               uint8 = 68  //0x44
-	MsgTypeDeregistrationRequestUEOriginatingDeregistration uint8 = 69  //0x45
-	MsgTypeDeregistrationAcceptUEOriginatingDeregistration  uint8 = 70  //0x46
-	MsgTypeDeregistrationRequestUETerminatedDeregistration  uint8 = 71  //0x47
-	MsgTypeDeregistrationAcceptUETerminatedDeregistration   uint8 = 72  //0x48
-	MsgTypeServiceRequest                                   uint8 = 76  //0x4c
-	MsgTypeServiceReject                                    uint8 = 77  //0x4d
-	MsgTypeServiceAccept                                    uint8 = 78  //0x4e
-	MsgTypeConfigurationUpdateCommand                       uint8 = 84  //0x54
-	MsgTypeConfigurationUpdateComplete                      uint8 = 85  //0x55
-	MsgTypeAuthenticationRequest                            uint8 = 86  //0x56
-	MsgTypeAuthenticationResponse                           uint8 = 87  //0x57
-	MsgTypeAuthenticationReject                             uint8 = 88  //0x58
-	MsgTypeAuthenticationFailure                            uint8 = 89  //0x59
-	MsgTypeAuthenticationResult                             uint8 = 90  //0x5a
-	MsgTypeIdentityRequest                                  uint8 = 91  //0x5b
-	MsgTypeIdentityResponse                                 uint8 = 92  //0x5c
-	MsgTypeSecurityModeCommand                              uint8 = 93  //0x5d
-	MsgTypeSecurityModeComplete                             uint8 = 94  //0x5e
-	MsgTypeSecurityModeReject                               uint8 = 95  //0x5f
-	MsgTypeStatus5GMM                                       uint8 = 100 //0x64
-	MsgTypeNotification                                     uint8 = 101 //0x65
-	MsgTypeNotificationResponse                             uint8 = 102 //0x66
-	MsgTypeULNASTransport                                   uint8 = 103 //0x67
-	MsgTypeDLNASTransport                                   uint8 = 104 //0x67
+	MsgTypeRegistrationRequest                              uint8 = 65  // 0x41
+	MsgTypeRegistrationAccept                               uint8 = 66  // 0x42
+	MsgTypeRegistrationComplete                             uint8 = 67  // 0x43
+	MsgTypeRegistrationReject                               uint8 = 68  // 0x44
+	MsgTypeDeregistrationRequestUEOriginatingDeregistration uint8 = 69  // 0x45
+	MsgTypeDeregistrationAcceptUEOriginatingDeregistration  uint8 = 70  // 0x46
+	MsgTypeDeregistrationRequestUETerminatedDeregistration  uint8 = 71  // 0x47
+	MsgTypeDeregistrationAcceptUETerminatedDeregistration   uint8 = 72  // 0x48
+	MsgTypeServiceRequest                                   uint8 = 76  // 0x4c
+	MsgTypeServiceReject                                    uint8 = 77  // 0x4d
+	MsgTypeServiceAccept                                    uint8 = 78  // 0x4e
+	MsgTypeConfigurationUpdateCommand                       uint8 = 84  // 0x54
+	MsgTypeConfigurationUpdateComplete                      uint8 = 85  // 0x55
+	MsgTypeAuthenticationRequest                            uint8 = 86  // 0x56
+	MsgTypeAuthenticationResponse                           uint8 = 87  // 0x57
+	MsgTypeAuthenticationReject                             uint8 = 88  // 0x58
+	MsgTypeAuthenticationFailure                            uint8 = 89  // 0x59
+	MsgTypeAuthenticationResult                             uint8 = 90  // 0x5a
+	MsgTypeIdentityRequest                                  uint8 = 91  // 0x5b
+	MsgTypeIdentityResponse                                 uint8 = 92  // 0x5c
+	MsgTypeSecurityModeCommand                              uint8 = 93  // 0x5d
+	MsgTypeSecurityModeComplete                             uint8 = 94  // 0x5e
+	MsgTypeSecurityModeReject                               uint8 = 95  // 0x5f
+	MsgTypeStatus5GMM                                       uint8 = 100 // 0x64
+	MsgTypeNotification                                     uint8 = 101 // 0x65
+	MsgTypeNotificationResponse                             uint8 = 102 // 0x66
+	MsgTypeULNASTransport                                   uint8 = 103 // 0x67
+	MsgTypeDLNASTransport                                   uint8 = 104 // 0x67
 	// 0x5d
 )
 
