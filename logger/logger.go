@@ -3,8 +3,8 @@ package logger
 import (
 	"time"
 
-	formatter "github.com/antonfisher/nested-logrus-formatter"
 	"github.com/sirupsen/logrus"
+	formatter "github.com/tim-ywliu/nested-logrus-formatter"
 )
 
 var (
@@ -38,8 +38,8 @@ func GetLogger() *logrus.Logger {
 }
 
 func SetLogLevel(level logrus.Level) {
-	NasLog.Infoln("set log level :", level)
 	log.SetLevel(level)
+	NasLog.Infoln("set log level :", level)
 }
 
 func SetReportCaller(enable bool) {

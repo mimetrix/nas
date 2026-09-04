@@ -63,11 +63,11 @@ type testSelectedNASSecurityAlgorithmsDataTemplate struct {
 }
 
 var SelectedNASSecurityAlgorithmsTestData = []nasType.SelectedNASSecurityAlgorithms{
-	{nasMessage.SecurityModeCommandSelectedEPSNASSecurityAlgorithmsType, 0x01},
+	{Iei: nasMessage.SecurityModeCommandSelectedEPSNASSecurityAlgorithmsType, Octet: 0x01},
 }
 
 var SelectedNASSecurityAlgorithmsExpectedTestData = []nasType.SelectedNASSecurityAlgorithms{
-	{nasMessage.SecurityModeCommandSelectedEPSNASSecurityAlgorithmsType, 0x11},
+	{Iei: nasMessage.SecurityModeCommandSelectedEPSNASSecurityAlgorithmsType, Octet: 0x11},
 }
 
 var SelectedNASSecurityAlgorithmsTestTable = []testSelectedNASSecurityAlgorithmsDataTemplate{

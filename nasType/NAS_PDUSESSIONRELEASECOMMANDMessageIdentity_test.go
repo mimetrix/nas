@@ -36,11 +36,11 @@ type PDUSESSIONRELEASECOMMANDMessageIdentityTestDataTemplate struct {
 }
 
 var pDUSESSIONRELEASECOMMANDMessageIdentityTestData = []nasType.PDUSESSIONRELEASECOMMANDMessageIdentity{
-	{0x03},
+	{Octet: 0x03},
 }
 
 var pDUSESSIONRELEASECOMMANDMessageIdentityExpectedTestData = []nasType.PDUSESSIONRELEASECOMMANDMessageIdentity{
-	{0x03},
+	{Octet: 0x03},
 }
 
 var pDUSESSIONRELEASECOMMANDMessageIdentityTable = []PDUSESSIONRELEASECOMMANDMessageIdentityTestDataTemplate{

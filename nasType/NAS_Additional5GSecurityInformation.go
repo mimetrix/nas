@@ -7,15 +7,14 @@ type Additional5GSecurityInformation struct {
 	Iei   uint8 `json:"-"`
 	Len   uint8 `json:"-"`
 	Octet uint8 `json:"-"`
-    RINMR bool 
-    HDP bool 
+	RINMR bool
+	HDP   bool
 }
 
-func (a *Additional5GSecurityInformation ) DecodeNASType() error {
-    
-    a.RINMR = a.GetRINMR() == 1
-    a.HDP = a.GetHDP() == 1
-    return nil
+func (a *Additional5GSecurityInformation) DecodeNASType() error {
+	a.RINMR = a.GetRINMR() == 1
+	a.HDP = a.GetHDP() == 1
+	return nil
 }
 
 func NewAdditional5GSecurityInformation(iei uint8) (additional5GSecurityInformation *Additional5GSecurityInformation) {
@@ -51,7 +50,7 @@ func (a *Additional5GSecurityInformation) SetLen(len uint8) {
 // Additional5GSecurityInformation 9.11.3.12
 // RINMR Row, sBit, len = [0, 0], 2 , 1
 func (a *Additional5GSecurityInformation) GetRINMR() (rINMR uint8) {
-	return a.Octet & GetBitMask(2, 1) >> (1)
+	return a.Octet & GetBitMask(2, 1) >> 1
 }
 
 // Additional5GSecurityInformation 9.11.3.12

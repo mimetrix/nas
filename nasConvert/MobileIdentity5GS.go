@@ -2,15 +2,18 @@ package nasConvert
 
 import (
 	"encoding/hex"
+	"errors"
 	"fmt"
 	"math/bits"
 	"strconv"
 	"strings"
+	"unicode"
+
+	"github.com/free5gc/openapi/models"
 
 	"github.com/mimetrix/nas/logger"
 	"github.com/mimetrix/nas/nasMessage"
 	"github.com/mimetrix/nas/nasType"
-	"github.com/free5gc/openapi/models"
 )
 
 func GetTypeOfIdentity(buf byte) uint8 {
@@ -22,12 +25,30 @@ func GetTypeOfIdentity(buf byte) uint8 {
 // "suci-0-${mcc}-${mnc}-${routingIndentifier}-${protectionScheme}-${homeNetworkPublicKeyIdentifier}-${schemeOutput}"
 // suci(nai) = "nai-${naiString}"
 func SuciToString(buf []byte) (suci string, plmnId string) {
+	var err error
+	suci, plmnId, err = SuciToStringWithError(buf)
+	if err != nil {
+		logger.ConvertLog.Warnf("SuciToString: %+v", err)
+		return "", ""
+	}
+	return
+}
+
+func SuciToStringWithError(buf []byte) (suci string, plmnId string, err error) {
 	var mcc, mnc, routingInd, protectionScheme, homeNetworkPublicKeyIdentifier, schemeOutput string
+
+	if len(buf) < 1 {
+		return "", "", errors.New("too short SUCI")
+	}
 
 	supiFormat := (buf[0] & 0xf0) >> 4
 	if supiFormat == nasMessage.SupiFormatNai {
-		suci = NaiToString(buf)
-		return suci, ""
+		suci, err = naiToString(buf)
+		return suci, "", err
+	}
+
+	if len(buf) < 9 {
+		return "", "", errors.New("too short SUCI")
 	}
 
 	// Encode buf to SUCI in supi format "IMSI"
@@ -83,10 +104,23 @@ func SuciToString(buf []byte) (suci string, plmnId string) {
 		"suci", "0", mcc, mnc, routingInd, protectionScheme, homeNetworkPublicKeyIdentifier,
 		schemeOutput,
 	}, "-")
-	return suci, plmnId
+	return suci, plmnId, nil
 }
 
 func NaiToString(buf []byte) (nai string) {
+	var err error
+	nai, err = naiToString(buf)
+	if err != nil {
+		logger.ConvertLog.Warnf("NaiToString: %+v", err)
+		return ""
+	}
+	return
+}
+
+func naiToString(buf []byte) (nai string, err error) {
+	if len(buf) < 2 {
+		return "", errors.New("too short NAI")
+	}
 	prefix := "nai"
 	naiBytes := buf[1:]
 	naiStr := hex.EncodeToString(naiBytes)
@@ -96,11 +130,24 @@ func NaiToString(buf []byte) (nai string) {
 
 // nasType: TS 24.501 9.11.3.4
 func GutiToString(buf []byte) (guami models.Guami, guti string) {
+	var err error
+	guami, guti, err = GutiToStringWithError(buf)
+	if err != nil {
+		logger.ConvertLog.Warnf("GutiToString: %+v", err)
+		return models.Guami{}, ""
+	}
+	return
+}
+
+func GutiToStringWithError(buf []byte) (guami models.Guami, guti string, err error) {
+	if len(buf) != 11 {
+		return models.Guami{}, "", errors.New("invalid GUTI length")
+	}
 	plmnID := PlmnIDToString(buf[1:4])
 	amfID := hex.EncodeToString(buf[4:7])
 	tmsi5G := hex.EncodeToString(buf[7:])
 
-	guami.PlmnId = new(models.PlmnId)
+	guami.PlmnId = new(models.PlmnIdNid)
 	guami.PlmnId.Mcc = plmnID[:3]
 	guami.PlmnId.Mnc = plmnID[3:]
 	guami.AmfId = amfID
@@ -109,7 +156,20 @@ func GutiToString(buf []byte) (guami models.Guami, guti string) {
 }
 
 func GutiToNas(guti string) nasType.GUTI5G {
+	gutiNas, err := GutiToNasWithError(guti)
+	if err != nil {
+		logger.ConvertLog.Warnf("GutiToNas: %+v", err)
+		return nasType.GUTI5G{Len: 11}
+	}
+	return gutiNas
+}
+
+func GutiToNasWithError(guti string) (nasType.GUTI5G, error) {
 	var gutiNas nasType.GUTI5G
+
+	if len(guti) != 19 && len(guti) != 20 {
+		return nasType.GUTI5G{}, errors.New("invalid GUTI length")
+	}
 
 	gutiNas.SetLen(11)
 	gutiNas.SetSpare(0)
@@ -118,27 +178,27 @@ func GutiToNas(guti string) nasType.GUTI5G {
 
 	var mcc1, mcc2, mcc3, mnc1, mnc2, mnc3 int
 	if mcc1Tmp, err := strconv.Atoi(string(guti[0])); err != nil {
-		logger.ConvertLog.Warnf("atoi mcc1 error: %+v", err)
+		return nasType.GUTI5G{}, fmt.Errorf("atoi mcc1 error: %w", err)
 	} else {
 		mcc1 = mcc1Tmp
 	}
 	if mcc2Tmp, err := strconv.Atoi(string(guti[1])); err != nil {
-		logger.ConvertLog.Warnf("atoi mcc2 error: %+v", err)
+		return nasType.GUTI5G{}, fmt.Errorf("atoi mcc2 error: %w", err)
 	} else {
 		mcc2 = mcc2Tmp
 	}
 	if mcc3Tmp, err := strconv.Atoi(string(guti[2])); err != nil {
-		logger.ConvertLog.Warnf("atoi mcc3 error: %+v", err)
+		return nasType.GUTI5G{}, fmt.Errorf("atoi mcc3 error: %w", err)
 	} else {
 		mcc3 = mcc3Tmp
 	}
 	if mnc1Tmp, err := strconv.Atoi(string(guti[3])); err != nil {
-		logger.ConvertLog.Warnf("atoi mnc1 error: %+v", err)
+		return nasType.GUTI5G{}, fmt.Errorf("atoi mnc1 error: %w", err)
 	} else {
 		mnc1 = mnc1Tmp
 	}
 	if mnc2Tmp, err := strconv.Atoi(string(guti[4])); err != nil {
-		logger.ConvertLog.Warnf("atoi mnc2 error: %+v", err)
+		return nasType.GUTI5G{}, fmt.Errorf("atoi mnc2 error: %w", err)
 	} else {
 		mnc2 = mnc2Tmp
 	}
@@ -147,7 +207,7 @@ func GutiToNas(guti string) nasType.GUTI5G {
 	tmsi := ""
 	if len(guti) == 20 {
 		if mnc3Tmp, err := strconv.Atoi(string(guti[5])); err != nil {
-			logger.ConvertLog.Warnf("atoi guti error: %+v", err)
+			return nasType.GUTI5G{}, fmt.Errorf("atoi guti error: %w", err)
 		} else {
 			mnc3 = mnc3Tmp
 		}
@@ -164,21 +224,37 @@ func GutiToNas(guti string) nasType.GUTI5G {
 	gutiNas.SetMNCDigit2(uint8(mnc2))
 	gutiNas.SetMNCDigit3(uint8(mnc3))
 
-	amfRegionId, amfSetId, amfPointer := AmfIdToNas(amfId)
-	gutiNas.SetAMFRegionID(amfRegionId)
-	gutiNas.SetAMFSetID(amfSetId)
-	gutiNas.SetAMFPointer(amfPointer)
+	if amfRegionId, amfSetId, amfPointer, err := AmfIdToNasWithError(amfId); err != nil {
+		return nasType.GUTI5G{}, fmt.Errorf("decode AMF ID failed: %w", err)
+	} else {
+		gutiNas.SetAMFRegionID(amfRegionId)
+		gutiNas.SetAMFSetID(amfSetId)
+		gutiNas.SetAMFPointer(amfPointer)
+	}
 	if tmsiBytes, err := hex.DecodeString(tmsi); err != nil {
-		logger.ConvertLog.Warnf("Decode TMSI failed: %+v", err)
+		return nasType.GUTI5G{}, fmt.Errorf("decode TMSI failed: %w", err)
 	} else {
 		copy(gutiNas.Octet[7:11], tmsiBytes[:])
 	}
-	return gutiNas
+	return gutiNas, nil
 }
 
 // PEI: ^(imei-[0-9]{15}|imeisv-[0-9]{16}|.+)$
 func PeiToString(buf []byte) string {
+	pei, err := PeiToStringWithError(buf)
+	if err != nil {
+		logger.ConvertLog.Warnf("PeiToString: %+v", err)
+		return ""
+	}
+	return pei
+}
+
+func PeiToStringWithError(buf []byte) (string, error) {
 	var prefix string
+
+	if len(buf) < 1 {
+		return "", errors.New("too short PEI")
+	}
 
 	typeOfIdentity := buf[0] & 0x07
 	if typeOfIdentity == 0x03 {
@@ -208,5 +284,52 @@ func PeiToString(buf []byte) string {
 		digitStr = digitStr[:len(digitStr)-1] // remove the last digit
 	}
 
-	return prefix + digitStr
+	if prefix == "imei-" {
+		// Validate IMEI before returning
+		if len(digitStr) != 15 {
+			return "", fmt.Errorf("invalid IMEI length: expected 15 digits, got %d", len(digitStr))
+		}
+		valid, err := validateIMEI(digitStr)
+		if err != nil {
+			return "", fmt.Errorf("IMEI validation error: %w", err)
+		}
+		if !valid {
+			return "", fmt.Errorf("invalid IMEI checksum")
+		}
+	} else {
+		if len(digitStr) != 16 {
+			return "", fmt.Errorf("invalid IMEISV length: expected 16 digits, got %d", len(digitStr))
+		}
+	}
+
+	return prefix + digitStr, nil
+}
+
+func validateIMEI(imei string) (bool, error) {
+	// Remove any non-digit characters
+	cleanIMEI := strings.ReplaceAll(imei, "-", "")
+	cleanIMEI = strings.ReplaceAll(cleanIMEI, " ", "")
+
+	// Check if all characters are digits
+	for _, char := range cleanIMEI {
+		if !unicode.IsDigit(char) {
+			return false, fmt.Errorf("IMEI contains non-digit character: %c", char)
+		}
+	}
+
+	// Luhn algorithm validation
+	sum := 0
+	for i := len(cleanIMEI) - 1; i >= 0; i-- {
+		digit := int(cleanIMEI[i] - '0')
+
+		if (len(cleanIMEI)-i)%2 == 0 {
+			digit *= 2
+			if digit > 9 {
+				digit = digit/10 + digit%10
+			}
+		}
+		sum += digit
+	}
+
+	return sum%10 == 0, nil
 }

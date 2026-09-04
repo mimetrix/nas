@@ -139,11 +139,11 @@ type testShortNameForNetworkDataTemplate struct {
 }
 
 var ShortNameForNetworkTestData = []nasType.ShortNameForNetwork{
-	{nasMessage.ConfigurationUpdateCommandShortNameForNetworkType, 3, []uint8{}},
+	{Iei: nasMessage.ConfigurationUpdateCommandShortNameForNetworkType, Len: 3, Buffer: []uint8{}},
 }
 
 var ShortNameForNetworkExpectedTestData = []nasType.ShortNameForNetwork{
-	{nasMessage.ConfigurationUpdateCommandShortNameForNetworkType, 3, []uint8{0x99, 0x01, 0x01}},
+	{Iei: nasMessage.ConfigurationUpdateCommandShortNameForNetworkType, Len: 3, Buffer: []uint8{0x99, 0x01, 0x01}},
 }
 
 var ShortNameForNetworkTestTable = []testShortNameForNetworkDataTemplate{

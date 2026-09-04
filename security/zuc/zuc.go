@@ -46,19 +46,22 @@ var ek_d = [16]uint32{
 }
 
 // Lfsr : linear feedback shift register, the top layer of the zuc algorithm.
-//        It has 16 of 31-bit cells (s0, s1,…, s15).
+//
+//	It has 16 of 31-bit cells (s0, s1,…, s15).
 type Lfsr struct {
 	s [16]uint32
 }
 
 // Br : bit-reorganization, the middle layer of the zuc algorithm.
-//      It extracts 128 bits from the cells of the LFSR and forms 4 of 32-bit words. (x0, x1, x2, x3)
+//
+//	It extracts 128 bits from the cells of the LFSR and forms 4 of 32-bit words. (x0, x1, x2, x3)
 type Br struct {
 	x [4]uint32
 }
 
 // Fsm : nonlinear function, the bottom layer of the zuc algorithm.
-//     It has 2 of 32-bit memory cells. (r0, r1)
+//
+//	It has 2 of 32-bit memory cells. (r0, r1)
 type Fsm struct {
 	r [2]uint32
 }
@@ -119,7 +122,7 @@ func generateKeystream(wlength uint32, l *Lfsr, br *Br, f *Fsm) []uint32 {
 func (l *Lfsr) state(mode string, u uint32) {
 	x := []int{0, 4, 10, 13, 15}
 	k := []int{8, 20, 21, 17, 15}
-	var f uint32 = l.s[0]
+	f := l.s[0]
 
 	for i, v := range x {
 		f += ((l.s[v] << k[i]) | (l.s[v] >> (31 - k[i]))) & 0x7FFFFFFF

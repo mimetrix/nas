@@ -11,32 +11,31 @@ package nasType
 // EMCN Row, sBit, len = [1, 1], 1 , 1
 // Spare Row, sBit, len = [2, 2], 8 , 8
 type NetworkFeatureSupport5GS struct {
-	Iei     uint8    `json:"-"`
-	Len     uint8    `json:"-"`
-	Octet   [3]uint8 `json:"-"`
-    MPSI    bool
-    IWKN26  bool
-    EMF     uint8
-    EMC     uint8
-    IMSVoPSN3GPP    bool
-    IMSVoPS3GPP     bool
-    MCSI            bool
-    EMCN            bool
+	Iei          uint8    `json:"-"`
+	Len          uint8    `json:"-"`
+	Octet        [3]uint8 `json:"-"`
+	MPSI         bool
+	IWKN26       bool
+	EMF          uint8
+	EMC          uint8
+	IMSVoPSN3GPP bool
+	IMSVoPS3GPP  bool
+	MCSI         bool
+	EMCN         bool
 }
 
-func (n *NetworkFeatureSupport5GS) DecodeNASType() error{
-    
-    n.MPSI = n.GetMPSI() == 1
-    n.IWKN26 = n.GetIWKN26() == 1
-    n.EMF = n.GetEMF() 
-    n.EMC = n.GetEMC()
-    n.IMSVoPSN3GPP = n.GetIMSVoPSN3GPP() == 1
+func (n *NetworkFeatureSupport5GS) DecodeNASType() error {
+	n.MPSI = n.GetMPSI() == 1
+	n.IWKN26 = n.GetIWKN26() == 1
+	n.EMF = n.GetEMF()
+	n.EMC = n.GetEMC()
+	n.IMSVoPSN3GPP = n.GetIMSVoPSN3GPP() == 1
 
-    n.IMSVoPS3GPP = n.GetIMSVoPS3GPP() == 1
-    n.MCSI = n.GetMCSI() == 1
-    n.EMCN = n.GetEMCN() == 1
-    
-    return nil
+	n.IMSVoPS3GPP = n.GetIMSVoPS3GPP() == 1
+	n.MCSI = n.GetMCSI() == 1
+	n.EMCN = n.GetEMCN() == 1
+
+	return nil
 }
 
 func NewNetworkFeatureSupport5GS(iei uint8) (networkFeatureSupport5GS *NetworkFeatureSupport5GS) {
@@ -72,7 +71,7 @@ func (a *NetworkFeatureSupport5GS) SetLen(len uint8) {
 // NetworkFeatureSupport5GS 9.11.3.5
 // MPSI Row, sBit, len = [0, 0], 8 , 1
 func (a *NetworkFeatureSupport5GS) GetMPSI() (mPSI uint8) {
-	return a.Octet[0] & GetBitMask(8, 7) >> (7)
+	return a.Octet[0] & GetBitMask(8, 7) >> 7
 }
 
 // NetworkFeatureSupport5GS 9.11.3.5
@@ -84,7 +83,7 @@ func (a *NetworkFeatureSupport5GS) SetMPSI(mPSI uint8) {
 // NetworkFeatureSupport5GS 9.11.3.5
 // IWKN26 Row, sBit, len = [0, 0], 7 , 1
 func (a *NetworkFeatureSupport5GS) GetIWKN26() (iWKN26 uint8) {
-	return a.Octet[0] & GetBitMask(7, 6) >> (6)
+	return a.Octet[0] & GetBitMask(7, 6) >> 6
 }
 
 // NetworkFeatureSupport5GS 9.11.3.5
@@ -96,7 +95,7 @@ func (a *NetworkFeatureSupport5GS) SetIWKN26(iWKN26 uint8) {
 // NetworkFeatureSupport5GS 9.11.3.5
 // EMF Row, sBit, len = [0, 0], 6 , 2
 func (a *NetworkFeatureSupport5GS) GetEMF() (eMF uint8) {
-	return a.Octet[0] & GetBitMask(6, 4) >> (4)
+	return a.Octet[0] & GetBitMask(6, 4) >> 4
 }
 
 // NetworkFeatureSupport5GS 9.11.3.5
@@ -108,7 +107,7 @@ func (a *NetworkFeatureSupport5GS) SetEMF(eMF uint8) {
 // NetworkFeatureSupport5GS 9.11.3.5
 // EMC Row, sBit, len = [0, 0], 4 , 2
 func (a *NetworkFeatureSupport5GS) GetEMC() (eMC uint8) {
-	return a.Octet[0] & GetBitMask(4, 2) >> (2)
+	return a.Octet[0] & GetBitMask(4, 2) >> 2
 }
 
 // NetworkFeatureSupport5GS 9.11.3.5
@@ -120,7 +119,7 @@ func (a *NetworkFeatureSupport5GS) SetEMC(eMC uint8) {
 // NetworkFeatureSupport5GS 9.11.3.5
 // IMSVoPSN3GPP Row, sBit, len = [0, 0], 2 , 1
 func (a *NetworkFeatureSupport5GS) GetIMSVoPSN3GPP() (iMSVoPSN3GPP uint8) {
-	return a.Octet[0] & GetBitMask(2, 1) >> (1)
+	return a.Octet[0] & GetBitMask(2, 1) >> 1
 }
 
 // NetworkFeatureSupport5GS 9.11.3.5
@@ -144,7 +143,7 @@ func (a *NetworkFeatureSupport5GS) SetIMSVoPS3GPP(iMSVoPS3GPP uint8) {
 // NetworkFeatureSupport5GS 9.11.3.5
 // MCSI Row, sBit, len = [1, 1], 2 , 1
 func (a *NetworkFeatureSupport5GS) GetMCSI() (mCSI uint8) {
-	return a.Octet[1] & GetBitMask(2, 1) >> (1)
+	return a.Octet[1] & GetBitMask(2, 1) >> 1
 }
 
 // NetworkFeatureSupport5GS 9.11.3.5

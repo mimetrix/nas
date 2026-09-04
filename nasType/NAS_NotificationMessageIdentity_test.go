@@ -5,7 +5,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/mimetrix/nas"
+	"github.com/mimetrix/nas/nasMessage"
 	"github.com/mimetrix/nas/nasType"
 )
 
@@ -20,7 +20,7 @@ type nasTypeNotificationMessageIdentityMessageType struct {
 }
 
 var nasTypeNotificationMessageIdentityMessageTypeTable = []nasTypeNotificationMessageIdentityMessageType{
-	{nas.MsgTypeNotification, nas.MsgTypeNotification},
+	{nasMessage.MsgTypeNotification, nasMessage.MsgTypeNotification},
 }
 
 func TestNasTypeGetSetNotificationMessageIdentityMessageType(t *testing.T) {

@@ -3,15 +3,15 @@ package nasType
 // EAPMessage 9.11.2.2
 // EAPMessage Row, sBit, len = [0, 0], 8 , INF
 type EAPMessage struct {
-	Iei    uint8   `json:"Iei,omitempty"`
-	Len    uint16  `json:"Len,omitempty"`
-	Buffer []uint8 `json:"Buffer,omitempty"`
-    Message string
+	Iei     uint8   `json:"Iei,omitempty"`
+	Len     uint16  `json:"Len,omitempty"`
+	Buffer  []uint8 `json:"Buffer,omitempty"`
+	Message string
 }
 
-func (e *EAPMessage) DecodeNASType() error{
-    e.Message = GetHexString(e.GetEAPMessage(), ":")
-    return nil
+func (e *EAPMessage) DecodeNASType() error {
+	e.Message = GetHexString(e.GetEAPMessage(), ":")
+	return nil
 }
 
 func NewEAPMessage(iei uint8) (eAPMessage *EAPMessage) {

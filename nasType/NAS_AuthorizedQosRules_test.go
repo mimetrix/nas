@@ -63,11 +63,11 @@ type testAuthorizedQosRulesDataTemplate struct {
 }
 
 var AuthorizedQosRulesTestData = []nasType.AuthorizedQosRules{
-	{nasMessage.PDUSessionModificationCommandAuthorizedQosRulesType, 2, []byte{0x00, 0x00}}, // AuthenticationResult
+	{Iei: nasMessage.PDUSessionModificationCommandAuthorizedQosRulesType, Len: 2, Buffer: []byte{0x00, 0x00}}, // AuthenticationResult
 }
 
 var AuthorizedQosRulesExpectedData = []nasType.AuthorizedQosRules{
-	{nasMessage.PDUSessionModificationCommandAuthorizedQosRulesType, 2, []byte{0x00, 0x00}}, // AuthenticationResult
+	{Iei: nasMessage.PDUSessionModificationCommandAuthorizedQosRulesType, Len: 2, Buffer: []byte{0x00, 0x00}}, // AuthenticationResult
 }
 
 var AuthorizedQosRulesTestTable = []testAuthorizedQosRulesDataTemplate{

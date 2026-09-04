@@ -36,11 +36,11 @@ type ULNASTRANSPORTMessageIdentityTestDataTemplate struct {
 }
 
 var ULNASTRANSPORTMessageIdentityTestData = []nasType.ULNASTRANSPORTMessageIdentity{
-	{0x03},
+	{Octet: 0x03},
 }
 
 var ULNASTRANSPORTMessageIdentityExpectedTestData = []nasType.ULNASTRANSPORTMessageIdentity{
-	{0x03},
+	{Octet: 0x03},
 }
 
 var ULNASTRANSPORTMessageIdentityTable = []ULNASTRANSPORTMessageIdentityTestDataTemplate{

@@ -5,23 +5,22 @@ package nasType
 // RequestTypeValue Row, sBit, len = [0, 0], 3 , 3
 type RequestType struct {
 	Octet uint8 `json:"-"`
-    Type string
+	Type  string
 }
 
-var RequestTypes = map[uint8]string {
-    1:"initial request",
-    2:"existing PDU session",
-    3:"initial emergency request",
-    4:"existing emergency PDU session",
-    5:"modification request",
-    6:"MA PDU request",
-    7:"reserved",
+var RequestTypes = map[uint8]string{
+	1: "initial request",
+	2: "existing PDU session",
+	3: "initial emergency request",
+	4: "existing emergency PDU session",
+	5: "modification request",
+	6: "MA PDU request",
+	7: "reserved",
 }
 
 func (r *RequestType) DecodeNASType() error {
-
-    r.Type = RequestTypes[r.GetRequestTypeValue()]
-    return nil
+	r.Type = RequestTypes[r.GetRequestTypeValue()]
+	return nil
 }
 
 func NewRequestType(iei uint8) (requestType *RequestType) {
@@ -33,7 +32,7 @@ func NewRequestType(iei uint8) (requestType *RequestType) {
 // RequestType 9.11.3.47
 // Iei Row, sBit, len = [0, 0], 8 , 4
 func (a *RequestType) GetIei() (iei uint8) {
-	return a.Octet & GetBitMask(8, 4) >> (4)
+	return a.Octet & GetBitMask(8, 4) >> 4
 }
 
 // RequestType 9.11.3.47

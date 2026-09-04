@@ -50,7 +50,7 @@ func (a *TMSI5GS) SetLen(len uint16) {
 // TMSI5GS 9.11.3.4
 // Spare Row, sBit, len = [0, 0], 4 , 1
 func (a *TMSI5GS) GetSpare() (spare uint8) {
-	return a.Octet[0] & GetBitMask(4, 3) >> (3)
+	return a.Octet[0] & GetBitMask(4, 3) >> 3
 }
 
 // TMSI5GS 9.11.3.4
@@ -74,13 +74,13 @@ func (a *TMSI5GS) SetTypeOfIdentity(typeOfIdentity uint8) {
 // TMSI5GS 9.11.3.4
 // AMFSetID Row, sBit, len = [1, 2], 8 , 10
 func (a *TMSI5GS) GetAMFSetID() (aMFSetID uint16) {
-	return (uint16(a.Octet[1])<<2 + uint16((a.Octet[2])&GetBitMask(8, 2))>>6)
+	return (uint16(a.Octet[1])<<2 + uint16(a.Octet[2]&GetBitMask(8, 2))>>6)
 }
 
 // TMSI5GS 9.11.3.4
 // AMFSetID Row, sBit, len = [1, 2], 8 , 10
 func (a *TMSI5GS) SetAMFSetID(aMFSetID uint16) {
-	a.Octet[1] = uint8((aMFSetID)>>2) & 255
+	a.Octet[1] = uint8(aMFSetID>>2) & 255
 	a.Octet[2] = a.Octet[2]&GetBitMask(6, 6) + uint8(aMFSetID&3)<<6
 }
 

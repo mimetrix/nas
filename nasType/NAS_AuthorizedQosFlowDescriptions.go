@@ -47,11 +47,10 @@ var FlowOperationCodes = map[uint8]string{
 }
 
 func (a *AuthorizedQosFlowDescriptions) DecodeNASType() error {
-
 	QoSBuf := bytes.NewBuffer(a.Buffer)
 
 	for QoSBuf.Len() > 0 {
-		//Create a new QoSDescriptionstruct
+		// Create a new QoSDescriptionstruct
 		QFI, err := QoSBuf.ReadByte()
 		if err != nil {
 			return err
@@ -116,11 +115,9 @@ func (a *AuthorizedQosFlowDescriptions) DecodeNASType() error {
 		}
 
 		a.QoSDescriptions = append(a.QoSDescriptions, *NewQosDescription)
-
 	}
 
 	return nil
-
 }
 
 func NewAuthorizedQosFlowDescriptions(iei uint8) (authorizedQosFlowDescriptions *AuthorizedQosFlowDescriptions) {

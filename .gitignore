@@ -14,6 +14,12 @@ cscope.*
 .DS_Store
 
 support
+
+# NAS spec
+24501-*.zip
+spec.csv
+
+# editor scratch / compiled test binaries (fork-local)
 *swp
 *swo
 *bak

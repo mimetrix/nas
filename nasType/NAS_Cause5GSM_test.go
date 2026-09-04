@@ -49,11 +49,11 @@ type testCause5GSMDataTemplate struct {
 }
 
 var cause5GSMTestData = []nasType.Cause5GSM{
-	{nasMessage.PDUSessionReleaseCompleteCause5GSMType, 0xff},
+	{Iei: nasMessage.PDUSessionReleaseCompleteCause5GSMType, Octet: 0xff},
 }
 
 var cause5GSMExpectedTestData = []nasType.Cause5GSM{
-	{nasMessage.PDUSessionReleaseCompleteCause5GSMType, 0xff},
+	{Iei: nasMessage.PDUSessionReleaseCompleteCause5GSMType, Octet: 0xff},
 }
 
 var cause5GSMTestTable = []testCause5GSMDataTemplate{

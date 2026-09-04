@@ -7,13 +7,15 @@ import (
 	"fmt"
 
 	"github.com/aead/cmac"
+
 	"github.com/mimetrix/nas/logger"
 	"github.com/mimetrix/nas/security/snow3g"
 	"github.com/mimetrix/nas/security/zuc"
 )
 
 func NASEncrypt(AlgoID uint8, KnasEnc [16]byte, Count uint32, Bearer uint8,
-	Direction uint8, payload []byte) error {
+	Direction uint8, payload []byte,
+) error {
 	if Bearer > 0x1f {
 		return fmt.Errorf("Bearer is beyond 5 bits")
 	}
@@ -61,7 +63,8 @@ func NASEncrypt(AlgoID uint8, KnasEnc [16]byte, Count uint32, Bearer uint8,
 }
 
 func NASMacCalculate(AlgoID uint8, KnasInt [16]uint8, Count uint32,
-	Bearer uint8, Direction uint8, msg []byte) ([]byte, error) {
+	Bearer uint8, Direction uint8, msg []byte,
+) ([]byte, error) {
 	if Bearer > 0x1f {
 		return nil, fmt.Errorf("Bearer is beyond 5 bits")
 	}
@@ -123,7 +126,8 @@ func NEA1(ck [16]byte, countC, bearer, direction uint32, ibs []byte, length uint
 
 // ibs: input bit stream, obs: output bit stream
 func NEA2(key [16]byte, count uint32, bearer uint8, direction uint8,
-	ibs []byte) (obs []byte, err error) {
+	ibs []byte,
+) (obs []byte, err error) {
 	// Couter[0..32] | BEARER[0..4] | DIRECTION[0] | 0^26 | 0^64
 	couterBlk := make([]byte, 16)
 	// First 32 bits are count
@@ -146,7 +150,8 @@ func NEA2(key [16]byte, count uint32, bearer uint8, direction uint8,
 // NEA3 ibs: input bit stream, obs: output bit stream
 // ref: https://www.gsma.com/security/wp-content/uploads/2019/05/EEA3_EIA3_specification_v1_8.pdf
 func NEA3(ck [16]byte, count uint32, bearer uint8, direction uint8,
-	ibs []byte, length uint32) (obs []byte, err error) {
+	ibs []byte, length uint32,
+) (obs []byte, err error) {
 	iv := make([]byte, 16)
 	binary.BigEndian.PutUint32(iv, count)
 	iv[4] = (bearer << 3) | (direction << 2)
@@ -206,7 +211,8 @@ func mul(V, P, c uint64) uint64 {
 }
 
 func NIA1(ik [16]byte, countI uint32, bearer byte, direction uint32, msg []byte, length uint64) (
-	mac []byte, err error) {
+	mac []byte, err error,
+) {
 	fresh := uint32(bearer) << 27
 	var k [4]uint32
 	for i := uint32(0); i < 4; i++ {
@@ -265,7 +271,8 @@ func NIA2(key [16]byte, count uint32, bearer uint8, direction uint8, msg []byte)
 // NIA3 ibs: input bit stream, obs: output bit stream (mac)
 // ref: https://www.gsma.com/security/wp-content/uploads/2019/05/EEA3_EIA3_specification_v1_8.pdf
 func NIA3(ik [16]byte, count uint32, bearer uint8, direction uint8,
-	msg []byte, length uint32) (mac []byte, err error) {
+	msg []byte, length uint32,
+) (mac []byte, err error) {
 	iv := make([]byte, 16)
 	binary.BigEndian.PutUint32(iv, count)
 	iv[4] = (bearer << 3) & 0xF8
@@ -310,7 +317,7 @@ func getWord(stream []uint32, i int) (zi uint32) {
 	if cntBackBit == 0 {
 		zi = stream[loc]
 	} else {
-		zi = stream[loc]<<(cntBackBit) | (stream[loc+1] >> cntFrontBit)
+		zi = stream[loc]<<cntBackBit | (stream[loc+1] >> cntFrontBit)
 	}
 	return zi
 }

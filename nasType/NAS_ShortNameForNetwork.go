@@ -1,7 +1,5 @@
 package nasType
 
-import "fmt"
-
 // ShortNameForNetwork 9.11.3.35
 // Ext Row, sBit, len = [0, 0], 8 , 1
 // CodingScheme Row, sBit, len = [0, 0], 7 , 3
@@ -9,20 +7,17 @@ import "fmt"
 // NumberOfSpareBitsInLastOctet Row, sBit, len = [0, 0], 3 , 3
 // TextString Row, sBit, len = [1, 1], 4 , INF
 type ShortNameForNetwork struct {
-	Iei    uint8   `json:"-"`
-	Len    uint8   `json:"-"`
-	Buffer []uint8 `json:"-"`
-    NetworkName string
+	Iei         uint8   `json:"-"`
+	Len         uint8   `json:"-"`
+	Buffer      []uint8 `json:"-"`
+	NetworkName string
 }
 
+func (s *ShortNameForNetwork) DecodeNASType() error {
+	s.NetworkName = string(s.GetTextString())
 
-func (s *ShortNameForNetwork) DecodeNASType() error{
-
-   s.NetworkName = fmt.Sprintf("%s",s.GetTextString())
-    
-    return nil
+	return nil
 }
-
 
 func NewShortNameForNetwork(iei uint8) (shortNameForNetwork *ShortNameForNetwork) {
 	shortNameForNetwork = &ShortNameForNetwork{}
@@ -58,7 +53,7 @@ func (a *ShortNameForNetwork) SetLen(len uint8) {
 // ShortNameForNetwork 9.11.3.35
 // Ext Row, sBit, len = [0, 0], 8 , 1
 func (a *ShortNameForNetwork) GetExt() (ext uint8) {
-	return a.Buffer[0] & GetBitMask(8, 7) >> (7)
+	return a.Buffer[0] & GetBitMask(8, 7) >> 7
 }
 
 // ShortNameForNetwork 9.11.3.35
@@ -70,7 +65,7 @@ func (a *ShortNameForNetwork) SetExt(ext uint8) {
 // ShortNameForNetwork 9.11.3.35
 // CodingScheme Row, sBit, len = [0, 0], 7 , 3
 func (a *ShortNameForNetwork) GetCodingScheme() (codingScheme uint8) {
-	return a.Buffer[0] & GetBitMask(7, 4) >> (4)
+	return a.Buffer[0] & GetBitMask(7, 4) >> 4
 }
 
 // ShortNameForNetwork 9.11.3.35
@@ -82,7 +77,7 @@ func (a *ShortNameForNetwork) SetCodingScheme(codingScheme uint8) {
 // ShortNameForNetwork 9.11.3.35
 // AddCI Row, sBit, len = [0, 0], 4 , 1
 func (a *ShortNameForNetwork) GetAddCI() (addCI uint8) {
-	return a.Buffer[0] & GetBitMask(4, 3) >> (3)
+	return a.Buffer[0] & GetBitMask(4, 3) >> 3
 }
 
 // ShortNameForNetwork 9.11.3.35
@@ -106,14 +101,14 @@ func (a *ShortNameForNetwork) SetNumberOfSpareBitsInLastOctet(numberOfSpareBitsI
 // ShortNameForNetwork 9.11.3.35
 // TextString Row, sBit, len = [1, 1], 4 , INF
 func (a *ShortNameForNetwork) GetTextString() (textString []uint8) {
-    textLen := len(a.Buffer)
-    for i:=1; i< textLen; i++ {
-        c := a.Buffer[i]
-        if c != 0{
-            textString = append(textString,c) 
-        }
-    }
-    return textString
+	textLen := len(a.Buffer)
+	for i := 1; i < textLen; i++ {
+		c := a.Buffer[i]
+		if c != 0 {
+			textString = append(textString, c)
+		}
+	}
+	return textString
 }
 
 // ShortNameForNetwork 9.11.3.35

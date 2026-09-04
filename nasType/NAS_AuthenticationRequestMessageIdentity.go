@@ -3,13 +3,13 @@ package nasType
 // AuthenticationRequestMessageIdentity 9.7
 // MessageType Row, sBit, len = [0, 0], 8 , 8
 type AuthenticationRequestMessageIdentity struct {
-	Octet uint8         `json:"-"`
-    MessageType string `json:",omitempty"`
+	Octet       uint8  `json:"-"`
+	MessageType string `json:",omitempty"`
 }
 
-func (a *AuthenticationRequestMessageIdentity ) DecodeNASType() error{
-    a.MessageType = MessageTypes[a.GetMessageType()]
-    return nil
+func (a *AuthenticationRequestMessageIdentity) DecodeNASType() error {
+	a.MessageType = MessageTypes[a.GetMessageType()]
+	return nil
 }
 
 func NewAuthenticationRequestMessageIdentity() (authenticationRequestMessageIdentity *AuthenticationRequestMessageIdentity) {

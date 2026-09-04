@@ -64,11 +64,11 @@ type testPDUSessionTypeDataTemplate struct {
 }
 
 var pDUSessionTypeTestData = []nasType.PDUSessionType{
-	{(nasMessage.PDUSessionEstablishmentRequestPDUSessionTypeType)},
+	{Octet: (nasMessage.PDUSessionEstablishmentRequestPDUSessionTypeType)},
 }
 
 var pDUSessionTypeExpectedData = []nasType.PDUSessionType{
-	{(0x90 + 0x01)},
+	{Octet: (0x90 + 0x01)},
 }
 
 var pDUSessionTypeTestTable = []testPDUSessionTypeDataTemplate{

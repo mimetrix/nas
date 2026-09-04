@@ -3,14 +3,18 @@ package nasConvert
 import (
 	"encoding/hex"
 
+	"github.com/free5gc/openapi/models"
+
 	"github.com/mimetrix/nas/logger"
 	"github.com/mimetrix/nas/nasType"
-	"github.com/free5gc/openapi/models"
 )
 
+// TS24.501 9.11.2.8 S-NSSAI
 func SnssaiToModels(nasSnssai *nasType.SNSSAI) (snssai models.Snssai) {
-	sD := nasSnssai.GetSD()
-	snssai.Sd = hex.EncodeToString(sD[:])
+	if nasSnssai.GetLen() == uint8(4) {
+		sD := nasSnssai.GetSD()
+		snssai.Sd = hex.EncodeToString(sD[:])
+	}
 	snssai.Sst = int32(nasSnssai.GetSST())
 	return
 }

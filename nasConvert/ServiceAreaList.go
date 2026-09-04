@@ -3,9 +3,10 @@ package nasConvert
 import (
 	"encoding/hex"
 
+	"github.com/free5gc/openapi/models"
+
 	"github.com/mimetrix/nas/logger"
 	"github.com/mimetrix/nas/nasMessage"
-	"github.com/free5gc/openapi/models"
 )
 
 // TS 24.501 9.11.3.49

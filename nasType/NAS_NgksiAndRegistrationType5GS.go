@@ -6,21 +6,20 @@ package nasType
 // FOR  Row, sBit, len = [0, 0], 4 , 1
 // RegistrationType5GS Row, sBit, len = [0, 0], 3 , 3
 type NgksiAndRegistrationType5GS struct {
-	Octet uint8 `json:"-"`
-    NASKeySetIdentifiler uint8
-    RegistrationType uint8 
-    TSC uint8
-    For uint8
-    
+	Octet                uint8 `json:"-"`
+	NASKeySetIdentifiler uint8
+	RegistrationType     uint8
+	TSC                  uint8
+	For                  uint8
 }
 
-func (a *NgksiAndRegistrationType5GS) DecodeNASType() {
-    a.RegistrationType = a.GetRegistrationType5GS()
-    a.NASKeySetIdentifiler = a.GetNasKeySetIdentifiler()
-    a.TSC= a.GetTSC()
-    a.For = a.GetFOR()
+func (a *NgksiAndRegistrationType5GS) DecodeNASType() error {
+	a.RegistrationType = a.GetRegistrationType5GS()
+	a.NASKeySetIdentifiler = a.GetNasKeySetIdentifiler()
+	a.TSC = a.GetTSC()
+	a.For = a.GetFOR()
+	return nil
 }
-
 
 func NewNgksiAndRegistrationType5GS() (ngksiAndRegistrationType5GS *NgksiAndRegistrationType5GS) {
 	ngksiAndRegistrationType5GS = &NgksiAndRegistrationType5GS{}
@@ -30,7 +29,7 @@ func NewNgksiAndRegistrationType5GS() (ngksiAndRegistrationType5GS *NgksiAndRegi
 // NgksiAndRegistrationType5GS 9.11.3.7 9.11.3.32
 // TSC Row, sBit, len = [0, 0], 8 , 1
 func (a *NgksiAndRegistrationType5GS) GetTSC() (tSC uint8) {
-	return a.Octet & GetBitMask(8, 7) >> (7)
+	return a.Octet & GetBitMask(8, 7) >> 7
 }
 
 // NgksiAndRegistrationType5GS 9.11.3.7 9.11.3.32
@@ -42,7 +41,7 @@ func (a *NgksiAndRegistrationType5GS) SetTSC(tSC uint8) {
 // NgksiAndRegistrationType5GS 9.11.3.7 9.11.3.32
 // NasKeySetIdentifiler Row, sBit, len = [0, 0], 7 , 3
 func (a *NgksiAndRegistrationType5GS) GetNasKeySetIdentifiler() (nasKeySetIdentifiler uint8) {
-	return a.Octet & GetBitMask(7, 4) >> (4)
+	return a.Octet & GetBitMask(7, 4) >> 4
 }
 
 // NgksiAndRegistrationType5GS 9.11.3.7 9.11.3.32
@@ -54,7 +53,7 @@ func (a *NgksiAndRegistrationType5GS) SetNasKeySetIdentifiler(nasKeySetIdentifil
 // NgksiAndRegistrationType5GS 9.11.3.7 9.11.3.32
 // FOR Row, sBit, len = [0, 0], 4 , 1
 func (a *NgksiAndRegistrationType5GS) GetFOR() (fOR uint8) {
-	return a.Octet & GetBitMask(4, 3) >> (3)
+	return a.Octet & GetBitMask(4, 3) >> 3
 }
 
 // NgksiAndRegistrationType5GS 9.11.3.7 9.11.3.32

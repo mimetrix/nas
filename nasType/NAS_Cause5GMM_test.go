@@ -49,11 +49,11 @@ type testCause5GMMDataTemplate struct {
 }
 
 var cause5GMMTestData = []nasType.Cause5GMM{
-	{nasMessage.DeregistrationRequestUETerminatedDeregistrationCause5GMMType, 0xff},
+	{Iei: nasMessage.DeregistrationRequestUETerminatedDeregistrationCause5GMMType, Octet: 0xff},
 }
 
 var cause5GMMExpectedTestData = []nasType.Cause5GMM{
-	{nasMessage.DeregistrationRequestUETerminatedDeregistrationCause5GMMType, 0xff},
+	{Iei: nasMessage.DeregistrationRequestUETerminatedDeregistrationCause5GMMType, Octet: 0xff},
 }
 
 var cause5GMMTestTable = []testCause5GMMDataTemplate{

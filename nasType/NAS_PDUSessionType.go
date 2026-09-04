@@ -5,22 +5,22 @@ package nasType
 // Spare Row, sBit, len = [0, 0], 4 , 1
 // PDUSessionTypeValue Row, sBit, len = [0, 0], 3 , 3
 type PDUSessionType struct {
-	Octet uint8 `json:"-"`
-    SessionType string 
+	Octet       uint8 `json:"-"`
+	SessionType string
 }
 
-var SessionTypes = map[uint8]string {
-    1:"IPv4",
-    2:"IPv6",
-    3:"IPv4v6",
-    4:"Unstructured",
-    5:"Ethernet",
-    7:"reserved",
+var SessionTypes = map[uint8]string{
+	1: "IPv4",
+	2: "IPv6",
+	3: "IPv4v6",
+	4: "Unstructured",
+	5: "Ethernet",
+	7: "reserved",
 }
 
 func (p *PDUSessionType) DecodeNASType() error {
-    p.SessionType = SessionTypes[p.GetPDUSessionTypeValue()]
-    return nil
+	p.SessionType = SessionTypes[p.GetPDUSessionTypeValue()]
+	return nil
 }
 
 func NewPDUSessionType(iei uint8) (pDUSessionType *PDUSessionType) {
@@ -32,7 +32,7 @@ func NewPDUSessionType(iei uint8) (pDUSessionType *PDUSessionType) {
 // PDUSessionType 9.11.4.11
 // Iei Row, sBit, len = [0, 0], 8 , 4
 func (a *PDUSessionType) GetIei() (iei uint8) {
-	return a.Octet & GetBitMask(8, 4) >> (4)
+	return a.Octet & GetBitMask(8, 4) >> 4
 }
 
 // PDUSessionType 9.11.4.11
@@ -44,7 +44,7 @@ func (a *PDUSessionType) SetIei(iei uint8) {
 // PDUSessionType 9.11.4.11
 // Spare Row, sBit, len = [0, 0], 4 , 1
 func (a *PDUSessionType) GetSpare() (spare uint8) {
-	return a.Octet & GetBitMask(4, 3) >> (3)
+	return a.Octet & GetBitMask(4, 3) >> 3
 }
 
 // PDUSessionType 9.11.4.11

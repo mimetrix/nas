@@ -2,7 +2,6 @@ package nasMessage_test
 
 import (
 	"bytes"
-	"reflect"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -56,18 +55,18 @@ var nasMessagePDUSessionModificationRequestTable = []nasMessagePDUSessionModific
 		},
 		inRequestedQosRules: nasType.RequestedQosRules{
 			Iei:    nasMessage.PDUSessionModificationRequestRequestedQosRulesType,
-			Len:    2,
-			Buffer: []uint8{0x01, 0x01},
+			Len:    4,
+			Buffer: []uint8{0x01, 0x01, 0x01, 0x01},
 		},
 		inRequestedQosFlowDescriptions: nasType.RequestedQosFlowDescriptions{
 			Iei:    nasMessage.PDUSessionModificationRequestRequestedQosFlowDescriptionsType,
-			Len:    2,
-			Buffer: []uint8{0x01, 0x01},
+			Len:    3,
+			Buffer: []uint8{0x01, 0x01, 0x01},
 		},
 		inMappedEPSBearerContexts: nasType.MappedEPSBearerContexts{
 			Iei:    nasMessage.PDUSessionModificationRequestMappedEPSBearerContextsType,
-			Len:    2,
-			Buffer: []uint8{0x01, 0x01},
+			Len:    4,
+			Buffer: []uint8{0x01, 0x01, 0x01, 0x01},
 		},
 		inExtendedProtocolConfigurationOptions: nasType.ExtendedProtocolConfigurationOptions{
 			Iei:    nasMessage.PDUSessionModificationRequestExtendedProtocolConfigurationOptionsType,
@@ -132,8 +131,17 @@ func TestNasTypeNewPDUSessionModificationRequestMessage(t *testing.T) {
 		b.DecodePDUSessionModificationRequest(&data)
 		logger.NasMsgLog.Debugln("Decode: ", b)
 
-		if reflect.DeepEqual(a, b) != true {
-			t.Errorf("Not correct")
+		// Compare the re-encoded wire form rather than the structs. Decoding
+		// populates the enrichment fields (EPD, MessageType, Cause, ...) that
+		// the hand-built value `a` never has, so reflect.DeepEqual(a, b) can
+		// never hold. Re-encoding b and comparing bytes is the round-trip
+		// property these tests actually mean to assert.
+		reBuff := new(bytes.Buffer)
+		if err := b.EncodePDUSessionModificationRequest(reBuff); err != nil {
+			t.Fatalf("re-encode: %v", err)
+		}
+		if !bytes.Equal(data, reBuff.Bytes()) {
+			t.Errorf("round trip mismatch:\n encoded: %v\n re-encoded: %v", data, reBuff.Bytes())
 		}
 
 	}

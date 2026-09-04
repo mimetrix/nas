@@ -702,11 +702,11 @@ type testUESecurityCapabilityDataTemplate struct {
 }
 
 var UESecurityCapabilityTestData = []nasType.UESecurityCapability{
-	{nasMessage.RegistrationRequestUESecurityCapabilityType, 8, []uint8{0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01}},
+	{Iei: nasMessage.RegistrationRequestUESecurityCapabilityType, Len: 8, Buffer: []uint8{0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01}},
 }
 
 var UESecurityCapabilityExpectedData = []nasType.UESecurityCapability{
-	{nasMessage.RegistrationRequestUESecurityCapabilityType, 8, []uint8{0xff, 0xff, 0xff, 0xff, 0x11, 0x12, 0x13, 0x14}},
+	{Iei: nasMessage.RegistrationRequestUESecurityCapabilityType, Len: 8, Buffer: []uint8{0xff, 0xff, 0xff, 0xff, 0x11, 0x12, 0x13, 0x14}},
 }
 
 var UESecurityCapabilityTable = []testUESecurityCapabilityDataTemplate{

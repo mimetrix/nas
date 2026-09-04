@@ -4,11 +4,12 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/mimetrix/nas/nasType"
+
+	"github.com/mimetrix/nas/nasMessage"
 )
 
 func TestNasTypeNewPayloadContainer(t *testing.T) {
-	a := nasType.NewPayloadContainer(nasMessage.RegistrationRequestPayloadContainerType)
+	a := nasMessage.NewPayloadContainer(nasMessage.RegistrationRequestPayloadContainerType)
 	assert.NotNil(t, a)
 }
 
@@ -17,7 +18,7 @@ var nasTypePayloadContainerRegistrationRequestPayloadContainerTypeTable = []NasT
 }
 
 func TestNasTypePayloadContainerGetSetIei(t *testing.T) {
-	a := nasType.NewPayloadContainer(nasMessage.RegistrationRequestPayloadContainerType)
+	a := nasMessage.NewPayloadContainer(nasMessage.RegistrationRequestPayloadContainerType)
 	for _, table := range nasTypePayloadContainerRegistrationRequestPayloadContainerTypeTable {
 		a.SetIei(table.in)
 		assert.Equal(t, table.out, a.GetIei())
@@ -29,7 +30,7 @@ var nasTypePayloadContainerLenTable = []NasTypeLenUint16Data{
 }
 
 func TestNasTypePayloadContainerGetSetLen(t *testing.T) {
-	a := nasType.NewPayloadContainer(nasMessage.RegistrationRequestPayloadContainerType)
+	a := nasMessage.NewPayloadContainer(nasMessage.RegistrationRequestPayloadContainerType)
 	for _, table := range nasTypePayloadContainerLenTable {
 		a.SetLen(table.in)
 		assert.Equal(t, table.out, a.GetLen())
@@ -47,7 +48,7 @@ var nasTypePayloadContainerPayloadContainerContentsTable = []nasTypePayloadConta
 }
 
 func TestNasTypePayloadContainerGetSetPayloadContainerContents(t *testing.T) {
-	a := nasType.NewPayloadContainer(nasMessage.RegistrationRequestPayloadContainerType)
+	a := nasMessage.NewPayloadContainer(nasMessage.RegistrationRequestPayloadContainerType)
 	for _, table := range nasTypePayloadContainerPayloadContainerContentsTable {
 		a.SetLen(table.inLen)
 		a.SetPayloadContainerContents(table.in)
@@ -76,7 +77,7 @@ var testPayloadContainerTestTable = []testPayloadContainerDataTemplate{
 func TestNasTypePayloadContainer(t *testing.T) {
 	for i, table := range testPayloadContainerTestTable {
 		t.Logf("Test Cnt:%d", i)
-		a := nasType.NewPayloadContainer(nasMessage.RegistrationRequestPayloadContainerType)
+		a := nasMessage.NewPayloadContainer(nasMessage.RegistrationRequestPayloadContainerType)
 
 		a.SetIei(table.inIei)
 		a.SetLen(table.inLen)

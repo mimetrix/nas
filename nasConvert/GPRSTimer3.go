@@ -22,7 +22,7 @@ func GPRSTimer3ToNas(timerValue int) (timerValueNas uint8) {
 		t := uint8(timerValue / 3600)
 		timerValueNas = (nasMessage.GPRSTimer3UnitMultiplesOf1Hour << 5) + t
 	} else {
-		t := uint8(timerValue / (36000))
+		t := uint8(timerValue / 36000)
 		timerValueNas = (nasMessage.GPRSTimer3UnitMultiplesOf10Hours << 5) + t
 	}
 

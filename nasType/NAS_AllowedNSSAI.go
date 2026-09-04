@@ -6,12 +6,12 @@ type AllowedNSSAI struct {
 	Iei    uint8   `json:"-"`
 	Len    uint8   `json:"-"`
 	Buffer []uint8 `json:"-"`
-    SNSSAI string
+	SNSSAI string
 }
 
-func (a *AllowedNSSAI) DecodeNASType() error{
-    a.SNSSAI = GetHexString(a.GetSNSSAIValue(),"") 
-    return nil
+func (a *AllowedNSSAI) DecodeNASType() error {
+	a.SNSSAI = GetHexString(a.GetSNSSAIValue(), "")
+	return nil
 }
 
 func NewAllowedNSSAI(iei uint8) (allowedNSSAI *AllowedNSSAI) {

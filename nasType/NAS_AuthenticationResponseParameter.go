@@ -6,13 +6,12 @@ type AuthenticationResponseParameter struct {
 	Iei   uint8     `json:"-"`
 	Len   uint8     `json:"-"`
 	Octet [16]uint8 `json:"-"`
-    RES string
+	RES   string
 }
 
-func (a *AuthenticationResponseParameter) DecodeNASType() error{
-    a.RES = GetHexString(a.Octet[0:16], "")
-    return nil
-
+func (a *AuthenticationResponseParameter) DecodeNASType() error {
+	a.RES = GetHexString(a.Octet[0:16], "")
+	return nil
 }
 
 func NewAuthenticationResponseParameter(iei uint8) (authenticationResponseParameter *AuthenticationResponseParameter) {

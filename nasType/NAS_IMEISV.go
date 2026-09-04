@@ -1,6 +1,7 @@
 package nasType
 
 import "fmt"
+
 // IMEISV 9.11.3.4
 // IdentityDigit1 Row, sBit, len = [0, 0], 8 , 4
 // OddEvenIdic Row, sBit, len = [0, 0], 4 , 1
@@ -22,48 +23,48 @@ import "fmt"
 // IdentityDigitP_15 Row, sBit, len = [8, 8], 8 , 4
 // IdentityDigitP_14 Row, sBit, len = [8, 8], 4 , 4
 type IMEISV struct {
-	Iei   uint8    `json:"-"`
-	Len   uint16   `json:"-"`
-	Octet [9]uint8 `json:"-"`
-    IMEISV string
-    TypeAllocationCode string
-    SerialNumber string
-    SoftwareVersion string 
+	Iei                uint8    `json:"-"`
+	Len                uint16   `json:"-"`
+	Octet              [9]uint8 `json:"-"`
+	IMEISV             string
+	TypeAllocationCode string
+	SerialNumber       string
+	SoftwareVersion    string
 }
 
-func (i *IMEISV) DecodeNASType() error{
-    //TODO: Figure out why there's an extra digit - there are 17 when we only need 16
-    i.TypeAllocationCode = fmt.Sprintf("%d%d%d%d%d%d%d%d",
-        i.GetIdentityDigit1(),
-        i.GetIdentityDigitP(),
-        i.GetIdentityDigitP_1(),
-        i.GetIdentityDigitP_2(),
-        i.GetIdentityDigitP_3(),
-        i.GetIdentityDigitP_4(),
-        i.GetIdentityDigitP_5(),
-        i.GetIdentityDigitP_6(),
-    )
+func (i *IMEISV) DecodeNASType() error {
+	// TODO: Figure out why there's an extra digit - there are 17 when we only need 16
+	i.TypeAllocationCode = fmt.Sprintf("%d%d%d%d%d%d%d%d",
+		i.GetIdentityDigit1(),
+		i.GetIdentityDigitP(),
+		i.GetIdentityDigitP_1(),
+		i.GetIdentityDigitP_2(),
+		i.GetIdentityDigitP_3(),
+		i.GetIdentityDigitP_4(),
+		i.GetIdentityDigitP_5(),
+		i.GetIdentityDigitP_6(),
+	)
 
-    i.SerialNumber = fmt.Sprintf("%d%d%d%d%d%d",
-        i.GetIdentityDigitP_7(),
-        i.GetIdentityDigitP_8(),
-        i.GetIdentityDigitP_9(),
-        i.GetIdentityDigitP_10(),
-        i.GetIdentityDigitP_11(),
-        i.GetIdentityDigitP_12(),
-    )
+	i.SerialNumber = fmt.Sprintf("%d%d%d%d%d%d",
+		i.GetIdentityDigitP_7(),
+		i.GetIdentityDigitP_8(),
+		i.GetIdentityDigitP_9(),
+		i.GetIdentityDigitP_10(),
+		i.GetIdentityDigitP_11(),
+		i.GetIdentityDigitP_12(),
+	)
 
-    i.SoftwareVersion = fmt.Sprintf("%d%d",
-        i.GetIdentityDigitP_13(),
-        i.GetIdentityDigitP_14(),
-    )
+	i.SoftwareVersion = fmt.Sprintf("%d%d",
+		i.GetIdentityDigitP_13(),
+		i.GetIdentityDigitP_14(),
+	)
 
-    i.IMEISV = fmt.Sprintf("%s%s%s",
-        i.TypeAllocationCode,
-        i.SerialNumber,
-        i.SoftwareVersion,
-    )
-    return nil
+	i.IMEISV = fmt.Sprintf("%s%s%s",
+		i.TypeAllocationCode,
+		i.SerialNumber,
+		i.SoftwareVersion,
+	)
+	return nil
 }
 
 func NewIMEISV(iei uint8) (iMEISV *IMEISV) {
@@ -99,7 +100,7 @@ func (a *IMEISV) SetLen(len uint16) {
 // IMEISV 9.11.3.4
 // IdentityDigit1 Row, sBit, len = [0, 0], 8 , 4
 func (a *IMEISV) GetIdentityDigit1() (identityDigit1 uint8) {
-	return a.Octet[0] & GetBitMask(8, 4) >> (4)
+	return a.Octet[0] & GetBitMask(8, 4) >> 4
 }
 
 // IMEISV 9.11.3.4
@@ -111,7 +112,7 @@ func (a *IMEISV) SetIdentityDigit1(identityDigit1 uint8) {
 // IMEISV 9.11.3.4
 // OddEvenIdic Row, sBit, len = [0, 0], 4 , 1
 func (a *IMEISV) GetOddEvenIdic() (oddEvenIdic uint8) {
-	return a.Octet[0] & GetBitMask(4, 3) >> (3)
+	return a.Octet[0] & GetBitMask(4, 3) >> 3
 }
 
 // IMEISV 9.11.3.4
@@ -135,7 +136,7 @@ func (a *IMEISV) SetTypeOfIdentity(typeOfIdentity uint8) {
 // IMEISV 9.11.3.4
 // IdentityDigitP_1 Row, sBit, len = [1, 1], 8 , 4
 func (a *IMEISV) GetIdentityDigitP_1() (identityDigitP_1 uint8) {
-	return a.Octet[1] & GetBitMask(8, 4) >> (4)
+	return a.Octet[1] & GetBitMask(8, 4) >> 4
 }
 
 // IMEISV 9.11.3.4
@@ -159,7 +160,7 @@ func (a *IMEISV) SetIdentityDigitP(identityDigitP uint8) {
 // IMEISV 9.11.3.4
 // IdentityDigitP_3 Row, sBit, len = [2, 2], 8 , 4
 func (a *IMEISV) GetIdentityDigitP_3() (identityDigitP_3 uint8) {
-	return a.Octet[2] & GetBitMask(8, 4) >> (4)
+	return a.Octet[2] & GetBitMask(8, 4) >> 4
 }
 
 // IMEISV 9.11.3.4
@@ -183,7 +184,7 @@ func (a *IMEISV) SetIdentityDigitP_2(identityDigitP_2 uint8) {
 // IMEISV 9.11.3.4
 // IdentityDigitP_5 Row, sBit, len = [3, 3], 8 , 4
 func (a *IMEISV) GetIdentityDigitP_5() (identityDigitP_5 uint8) {
-	return a.Octet[3] & GetBitMask(8, 4) >> (4)
+	return a.Octet[3] & GetBitMask(8, 4) >> 4
 }
 
 // IMEISV 9.11.3.4
@@ -207,7 +208,7 @@ func (a *IMEISV) SetIdentityDigitP_4(identityDigitP_4 uint8) {
 // IMEISV 9.11.3.4
 // IdentityDigitP_7 Row, sBit, len = [4, 4], 8 , 4
 func (a *IMEISV) GetIdentityDigitP_7() (identityDigitP_7 uint8) {
-	return a.Octet[4] & GetBitMask(8, 4) >> (4)
+	return a.Octet[4] & GetBitMask(8, 4) >> 4
 }
 
 // IMEISV 9.11.3.4
@@ -231,7 +232,7 @@ func (a *IMEISV) SetIdentityDigitP_6(identityDigitP_6 uint8) {
 // IMEISV 9.11.3.4
 // IdentityDigitP_9 Row, sBit, len = [5, 5], 8 , 4
 func (a *IMEISV) GetIdentityDigitP_9() (identityDigitP_9 uint8) {
-	return a.Octet[5] & GetBitMask(8, 4) >> (4)
+	return a.Octet[5] & GetBitMask(8, 4) >> 4
 }
 
 // IMEISV 9.11.3.4
@@ -255,7 +256,7 @@ func (a *IMEISV) SetIdentityDigitP_8(identityDigitP_8 uint8) {
 // IMEISV 9.11.3.4
 // IdentityDigitP_11 Row, sBit, len = [6, 6], 8 , 4
 func (a *IMEISV) GetIdentityDigitP_11() (identityDigitP_11 uint8) {
-	return a.Octet[6] & GetBitMask(8, 4) >> (4)
+	return a.Octet[6] & GetBitMask(8, 4) >> 4
 }
 
 // IMEISV 9.11.3.4
@@ -279,7 +280,7 @@ func (a *IMEISV) SetIdentityDigitP_10(identityDigitP_10 uint8) {
 // IMEISV 9.11.3.4
 // IdentityDigitP_13 Row, sBit, len = [7, 7], 8 , 4
 func (a *IMEISV) GetIdentityDigitP_13() (identityDigitP_13 uint8) {
-	return a.Octet[7] & GetBitMask(8, 4) >> (4)
+	return a.Octet[7] & GetBitMask(8, 4) >> 4
 }
 
 // IMEISV 9.11.3.4
@@ -303,7 +304,7 @@ func (a *IMEISV) SetIdentityDigitP_12(identityDigitP_12 uint8) {
 // IMEISV 9.11.3.4
 // IdentityDigitP_15 Row, sBit, len = [8, 8], 8 , 4
 func (a *IMEISV) GetIdentityDigitP_15() (identityDigitP_15 uint8) {
-	return a.Octet[8] & GetBitMask(8, 4) >> (4)
+	return a.Octet[8] & GetBitMask(8, 4) >> 4
 }
 
 // IMEISV 9.11.3.4

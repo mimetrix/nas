@@ -52,7 +52,7 @@ func (a *AdditionalGUTI) SetLen(len uint16) {
 // AdditionalGUTI 9.11.3.4
 // Spare Row, sBit, len = [0, 0], 4 , 1
 func (a *AdditionalGUTI) GetSpare() (spare uint8) {
-	return a.Octet[0] & GetBitMask(4, 3) >> (3)
+	return a.Octet[0] & GetBitMask(4, 3) >> 3
 }
 
 // AdditionalGUTI 9.11.3.4
@@ -76,7 +76,7 @@ func (a *AdditionalGUTI) SetTypeOfIdentity(typeOfIdentity uint8) {
 // AdditionalGUTI 9.11.3.4
 // MCCDigit2 Row, sBit, len = [1, 1], 8 , 4
 func (a *AdditionalGUTI) GetMCCDigit2() (mCCDigit2 uint8) {
-	return a.Octet[1] & GetBitMask(8, 4) >> (4)
+	return a.Octet[1] & GetBitMask(8, 4) >> 4
 }
 
 // AdditionalGUTI 9.11.3.4
@@ -100,7 +100,7 @@ func (a *AdditionalGUTI) SetMCCDigit1(mCCDigit1 uint8) {
 // AdditionalGUTI 9.11.3.4
 // MNCDigit3 Row, sBit, len = [2, 2], 8 , 4
 func (a *AdditionalGUTI) GetMNCDigit3() (mNCDigit3 uint8) {
-	return a.Octet[2] & GetBitMask(8, 4) >> (4)
+	return a.Octet[2] & GetBitMask(8, 4) >> 4
 }
 
 // AdditionalGUTI 9.11.3.4
@@ -124,7 +124,7 @@ func (a *AdditionalGUTI) SetMCCDigit3(mCCDigit3 uint8) {
 // AdditionalGUTI 9.11.3.4
 // MNCDigit2 Row, sBit, len = [3, 3], 8 , 4
 func (a *AdditionalGUTI) GetMNCDigit2() (mNCDigit2 uint8) {
-	return a.Octet[3] & GetBitMask(8, 4) >> (4)
+	return a.Octet[3] & GetBitMask(8, 4) >> 4
 }
 
 // AdditionalGUTI 9.11.3.4
@@ -160,13 +160,13 @@ func (a *AdditionalGUTI) SetAMFRegionID(aMFRegionID uint8) {
 // AdditionalGUTI 9.11.3.4
 // AMFSetID Row, sBit, len = [5, 6], 8 , 10
 func (a *AdditionalGUTI) GetAMFSetID() (aMFSetID uint16) {
-	return (uint16(a.Octet[5])<<2 + uint16((a.Octet[6])&GetBitMask(8, 2))>>6)
+	return (uint16(a.Octet[5])<<2 + uint16(a.Octet[6]&GetBitMask(8, 2))>>6)
 }
 
 // AdditionalGUTI 9.11.3.4
 // AMFSetID Row, sBit, len = [5, 6], 8 , 10
 func (a *AdditionalGUTI) SetAMFSetID(aMFSetID uint16) {
-	a.Octet[5] = uint8((aMFSetID)>>2) & 255
+	a.Octet[5] = uint8(aMFSetID>>2) & 255
 	a.Octet[6] = a.Octet[6]&GetBitMask(6, 6) + uint8(aMFSetID&3)<<6
 }
 

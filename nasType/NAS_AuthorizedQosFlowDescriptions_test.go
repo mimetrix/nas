@@ -63,11 +63,11 @@ type testAuthorizedQosFlowDescriptionsDataTemplate struct {
 }
 
 var AuthorizedQosFlowDescriptionsTestData = []nasType.AuthorizedQosFlowDescriptions{
-	{nasMessage.PDUSessionEstablishmentAcceptAuthorizedQosFlowDescriptionsType, 2, []uint8{0x00, 0x01}},
+	{Iei: nasMessage.PDUSessionEstablishmentAcceptAuthorizedQosFlowDescriptionsType, Len: 2, Buffer: []uint8{0x00, 0x01}},
 }
 
 var AuthorizedQosFlowDescriptionsExpectedTestData = []nasType.AuthorizedQosFlowDescriptions{
-	{nasMessage.PDUSessionEstablishmentAcceptAuthorizedQosFlowDescriptionsType, 2, []uint8{0x00, 0x01}},
+	{Iei: nasMessage.PDUSessionEstablishmentAcceptAuthorizedQosFlowDescriptionsType, Len: 2, Buffer: []uint8{0x00, 0x01}},
 }
 
 var AuthorizedQosFlowDescriptionsTable = []testAuthorizedQosFlowDescriptionsDataTemplate{

@@ -169,11 +169,11 @@ type testUniversalTimeAndLocalTimeZoneDataTemplate struct {
 }
 
 var UniversalTimeAndLocalTimeZoneTestData = []nasType.UniversalTimeAndLocalTimeZone{
-	{nasMessage.ConfigurationUpdateCommandUniversalTimeAndLocalTimeZoneType, [7]uint8{}},
+	{Iei: nasMessage.ConfigurationUpdateCommandUniversalTimeAndLocalTimeZoneType, Octet: [7]uint8{}},
 }
 
 var UniversalTimeAndLocalTimeZoneExpectedData = []nasType.UniversalTimeAndLocalTimeZone{
-	{nasMessage.ConfigurationUpdateCommandUniversalTimeAndLocalTimeZoneType, [7]uint8{0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01}},
+	{Iei: nasMessage.ConfigurationUpdateCommandUniversalTimeAndLocalTimeZoneType, Octet: [7]uint8{0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01}},
 }
 
 var UniversalTimeAndLocalTimeZoneTable = []testUniversalTimeAndLocalTimeZoneDataTemplate{

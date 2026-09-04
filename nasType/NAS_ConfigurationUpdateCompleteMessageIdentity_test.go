@@ -5,7 +5,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/mimetrix/nas"
+	"github.com/mimetrix/nas/nasMessage"
 	"github.com/mimetrix/nas/nasType"
 )
 
@@ -15,7 +15,7 @@ type nasTypeConfigurationUpdateCompleteMessageIdentityData struct {
 }
 
 var nasTypeConfigurationUpdateCompleteMessageIdentityTable = []nasTypeConfigurationUpdateCompleteMessageIdentityData{
-	{nas.MsgTypeConfigurationUpdateComplete, nas.MsgTypeConfigurationUpdateComplete},
+	{nasMessage.MsgTypeConfigurationUpdateComplete, nasMessage.MsgTypeConfigurationUpdateComplete},
 }
 
 func TestNasTypeNewConfigurationUpdateCompleteMessageIdentity(t *testing.T) {

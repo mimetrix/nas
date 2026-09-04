@@ -1,10 +1,9 @@
 package nasType
 
-
 import (
-    //"github.com/davecgh/go-spew/spew"
-    "fmt"
+// "github.com/davecgh/go-spew/spew"
 )
+
 // FullNameForNetwork 9.11.3.35
 // Ext Row, sBit, len = [0, 0], 8 ,1
 // CodingScheme Row, sBit, len = [0, 0], 7 , 3
@@ -12,17 +11,16 @@ import (
 // NumberOfSpareBitsInLastOctet Row, sBit, len = [0, 0], 3 , 3
 // TextString Row, sBit, len = [1, 1], 4 , INF
 type FullNameForNetwork struct {
-	Iei    uint8   `json:"-"`
-	Len    uint8   `json:"-"`
-	Buffer []uint8 `json:"-"`
-    NetworkName string 
+	Iei         uint8   `json:"-"`
+	Len         uint8   `json:"-"`
+	Buffer      []uint8 `json:"-"`
+	NetworkName string
 }
 
-func (f *FullNameForNetwork) DecodeNASType() error{
+func (f *FullNameForNetwork) DecodeNASType() error {
+	f.NetworkName = string(f.GetTextString())
 
-    f.NetworkName = fmt.Sprintf("%s",f.GetTextString())
-    
-    return nil
+	return nil
 }
 
 func NewFullNameForNetwork(iei uint8) (fullNameForNetwork *FullNameForNetwork) {
@@ -59,7 +57,7 @@ func (a *FullNameForNetwork) SetLen(len uint8) {
 // FullNameForNetwork 9.11.3.35
 // Ext Row, sBit, len = [0, 0], 8 ,1
 func (a *FullNameForNetwork) GetExt() (ext uint8) {
-	return a.Buffer[0] & GetBitMask(8, 7) >> (7)
+	return a.Buffer[0] & GetBitMask(8, 7) >> 7
 }
 
 // FullNameForNetwork 9.11.3.35
@@ -71,7 +69,7 @@ func (a *FullNameForNetwork) SetExt(ext uint8) {
 // FullNameForNetwork 9.11.3.35
 // CodingScheme Row, sBit, len = [0, 0], 7 , 3
 func (a *FullNameForNetwork) GetCodingScheme() (codingScheme uint8) {
-	return a.Buffer[0] & GetBitMask(7, 4) >> (4)
+	return a.Buffer[0] & GetBitMask(7, 4) >> 4
 }
 
 // FullNameForNetwork 9.11.3.35
@@ -83,7 +81,7 @@ func (a *FullNameForNetwork) SetCodingScheme(codingScheme uint8) {
 // FullNameForNetwork 9.11.3.35
 // AddCI Row, sBit, len = [0, 0], 4 , 1
 func (a *FullNameForNetwork) GetAddCI() (addCI uint8) {
-	return a.Buffer[0] & GetBitMask(4, 3) >> (3)
+	return a.Buffer[0] & GetBitMask(4, 3) >> 3
 }
 
 // FullNameForNetwork 9.11.3.35
@@ -107,14 +105,14 @@ func (a *FullNameForNetwork) SetNumberOfSpareBitsInLastOctet(numberOfSpareBitsIn
 // FullNameForNetwork 9.11.3.35
 // TextString Row, sBit, len = [1, 1], 4 , INF
 func (a *FullNameForNetwork) GetTextString() (textString []uint8) {
-    textLen := len(a.Buffer)
-    for i:=1; i< textLen; i++ {
-        c := a.Buffer[i]
-        if c != 0{
-            textString = append(textString,c) 
-        }
-    }
-    return textString
+	textLen := len(a.Buffer)
+	for i := 1; i < textLen; i++ {
+		c := a.Buffer[i]
+		if c != 0 {
+			textString = append(textString, c)
+		}
+	}
+	return textString
 }
 
 // FullNameForNetwork 9.11.3.35

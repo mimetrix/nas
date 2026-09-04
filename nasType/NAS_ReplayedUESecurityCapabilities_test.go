@@ -703,11 +703,11 @@ type testReplayedUESecurityCapabilitiesDataTemplate struct {
 }
 
 var replayedUESecurityCapabilitiesTestData = []nasType.ReplayedUESecurityCapabilities{
-	{nasMessage.SecurityModeCommandReplayedS1UESecurityCapabilitiesType, 8, []uint8{0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01}},
+	{Iei: nasMessage.SecurityModeCommandReplayedS1UESecurityCapabilitiesType, Len: 8, Buffer: []uint8{0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01}},
 }
 
 var replayedUESecurityCapabilitiesExpectedData = []nasType.ReplayedUESecurityCapabilities{
-	{nasMessage.SecurityModeCommandReplayedS1UESecurityCapabilitiesType, 8, []uint8{0xff, 0xff, 0xff, 0xff, 0x11, 0x12, 0x13, 0x14}},
+	{Iei: nasMessage.SecurityModeCommandReplayedS1UESecurityCapabilitiesType, Len: 8, Buffer: []uint8{0xff, 0xff, 0xff, 0xff, 0x11, 0x12, 0x13, 0x14}},
 }
 
 var replayedUESecurityCapabilitiesTable = []testReplayedUESecurityCapabilitiesDataTemplate{

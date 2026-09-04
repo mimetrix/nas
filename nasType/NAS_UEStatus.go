@@ -42,7 +42,7 @@ func (a *UEStatus) SetLen(len uint8) {
 // UEStatus 9.11.3.56
 // N1ModeReg Row, sBit, len = [0, 0], 2 , 1
 func (a *UEStatus) GetN1ModeReg() (n1ModeReg uint8) {
-	return a.Octet & GetBitMask(2, 1) >> (1)
+	return a.Octet & GetBitMask(2, 1) >> 1
 }
 
 // UEStatus 9.11.3.56

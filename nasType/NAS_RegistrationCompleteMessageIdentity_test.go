@@ -36,11 +36,11 @@ type RegistrationCompleteMessageIdentityTestDataTemplate struct {
 }
 
 var RegistrationCompleteMessageIdentityTestData = []nasType.RegistrationCompleteMessageIdentity{
-	{0x03},
+	{Octet: 0x03},
 }
 
 var RegistrationCompleteMessageIdentityExpectedTestData = []nasType.RegistrationCompleteMessageIdentity{
-	{0x03},
+	{Octet: 0x03},
 }
 
 var RegistrationCompleteMessageIdentityTable = []RegistrationCompleteMessageIdentityTestDataTemplate{

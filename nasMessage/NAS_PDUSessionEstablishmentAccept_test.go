@@ -2,13 +2,10 @@ package nasMessage_test
 
 import (
 	"bytes"
-	"fmt"
-	"reflect"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/mimetrix/nas"
 	"github.com/mimetrix/nas/logger"
 	"github.com/mimetrix/nas/nasMessage"
 	"github.com/mimetrix/nas/nasType"
@@ -36,7 +33,7 @@ type nasMessagePDUSessionEstablishmentAcceptData struct {
 
 var nasMessagePDUSessionEstablishmentAcceptTable = []nasMessagePDUSessionEstablishmentAcceptData{
 	{
-		inExtendedProtocolDiscriminator: nas.MsgTypePDUSessionEstablishmentAccept,
+		inExtendedProtocolDiscriminator: nasMessage.MsgTypePDUSessionEstablishmentAccept,
 		inPDUSessionID:                  0x01,
 		inPTI:                           0x01,
 		inPDUSESSIONESTABLISHMENTACCEPTMessageIdentity: 0x01,
@@ -45,8 +42,8 @@ var nasMessagePDUSessionEstablishmentAcceptTable = []nasMessagePDUSessionEstabli
 		},
 		inAuthorizedQosRules: nasType.AuthorizedQosRules{
 			Iei:    0,
-			Len:    1,
-			Buffer: []uint8{0x01},
+			Len:    4,
+			Buffer: []uint8{0x01, 0x01, 0x01, 0x01},
 		},
 		inSessionAMBR: nasType.SessionAMBR{
 			Iei:   0,
@@ -76,18 +73,18 @@ var nasMessagePDUSessionEstablishmentAcceptTable = []nasMessagePDUSessionEstabli
 		},
 		inMappedEPSBearerContexts: nasType.MappedEPSBearerContexts{
 			Iei:    nasMessage.PDUSessionEstablishmentAcceptMappedEPSBearerContextsType,
-			Len:    2,
-			Buffer: []uint8{0x01, 0x01},
+			Len:    4,
+			Buffer: []uint8{0x01, 0x01, 0x01, 0x01},
 		},
 		inEAPMessage: nasType.EAPMessage{
 			Iei:    nasMessage.PDUSessionEstablishmentAcceptEAPMessageType,
-			Len:    2,
-			Buffer: []uint8{0x01, 0x01},
+			Len:    4,
+			Buffer: []uint8{0x01, 0x01, 0x01, 0x01},
 		},
 		inAuthorizedQosFlowDescriptions: nasType.AuthorizedQosFlowDescriptions{
 			Iei:    nasMessage.PDUSessionEstablishmentAcceptAuthorizedQosFlowDescriptionsType,
-			Len:    2,
-			Buffer: []uint8{0x01, 0x01},
+			Len:    3,
+			Buffer: []uint8{0x01, 0x01, 0x01},
 		},
 		inExtendedProtocolConfigurationOptions: nasType.ExtendedProtocolConfigurationOptions{
 			Iei:    nasMessage.PDUSessionEstablishmentAcceptExtendedProtocolConfigurationOptionsType,
@@ -155,8 +152,9 @@ func TestNasTypeNewPDUSessionEstablishmentAcceptMessage(t *testing.T) {
 
 		buff := new(bytes.Buffer)
 		a.EncodePDUSessionEstablishmentAccept(buff)
-		a.PDUAddress.Parse()
-		a.SNSSAI.Parse()
+		// The old Parse() calls that lived here were dropped: Parse() was
+		// renamed to DecodeNASType() long ago and never updated, and the
+		// enrichment is exercised by the round-trip assertion below anyway.
 		logger.NasMsgLog.Debugln("Encode: ", a)
 
 		data := make([]byte, buff.Len())
@@ -164,11 +162,18 @@ func TestNasTypeNewPDUSessionEstablishmentAcceptMessage(t *testing.T) {
 		logger.NasMsgLog.Debugln(data)
 		b.DecodePDUSessionEstablishmentAccept(&data)
 		logger.NasMsgLog.Debugln("Decode: ", b)
-		fmt.Println(b.PDUAddress.IPv4Address)
-		fmt.Println(b.SNSSAI.SST)
 
-		if reflect.DeepEqual(a, b) != true {
-			t.Errorf("Not correct")
+		// Compare the re-encoded wire form rather than the structs. Decoding
+		// populates the enrichment fields (EPD, MessageType, Cause, ...) that
+		// the hand-built value `a` never has, so reflect.DeepEqual(a, b) can
+		// never hold. Re-encoding b and comparing bytes is the round-trip
+		// property these tests actually mean to assert.
+		reBuff := new(bytes.Buffer)
+		if err := b.EncodePDUSessionEstablishmentAccept(reBuff); err != nil {
+			t.Fatalf("re-encode: %v", err)
+		}
+		if !bytes.Equal(data, reBuff.Bytes()) {
+			t.Errorf("round trip mismatch:\n encoded: %v\n re-encoded: %v", data, reBuff.Bytes())
 		}
 
 	}
